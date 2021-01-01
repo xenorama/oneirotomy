@@ -5,16 +5,26 @@ Written by Tim Heinze © 2020, [www.xenorama.com](www.xenorama.com)
 ## Purpose
 Provide a set of objects which support offline, frame-by-frame, hiQ rendering of generative, ineractive content built in Max/MSP/Jitter. Designed to be implemented as intuitively as possible in any previously developed patching environment, limited only by the latter's complexity.
 
-#### Header 4
+#### Video application examples:
+* audio-reactive
+* timing-sensitive
+* realtime
+* timelines
 
 ## Requirements
-Cycling '74 Max. jit.world context.
+* [Cycling '74 Max](https://cycling74.com/)
+* [jit.world context](https://docs.cycling74.com/max7/refpages/jit.world)
 
-### Use and implementation
-Add the objects in specific ways to your jit.world's rendering process in Max.
+#### Implementation:
+* donload the ZIP-file
+* add the resulting folder to Max's searchpath, i.e. the _packages_ folder
+* check the helpfiles and reference pages of all objects to get an overview, especially **the.jit.thalamus** lying at the core of the process
+* add the objects in documented ways to any jit.world's rendering process in Max
 
-### Edit & Development
-Advanced knowledge of Max/MSP/Jitter.
+#### Edit & Development:
+* advanced knowledge of Max/MSP/Jitter
+* [dictionaries](https://docs.cycling74.com/max7/refpages/dict)
+* [gen~](https://docs.cycling74.com/max7/refpages/gen~)
 
 ## Nomenclature
 **Oneirotomy** (/ɒnɪˈrɒlədʒi/; from Greek ὄνειρον, oneiron, «dream»; and /tomé/; «cut, slice») is a neologism to be translated as _dream slice_, where individual frames of realtime video can be sliced and reproduced in non-realtime.
