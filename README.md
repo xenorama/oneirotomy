@@ -3,7 +3,9 @@ Tools for non-realtime Rendering of generative content in Max/MSP/Jitter
 Written by Tim Heinze © 2020, [www.xenorama.com](www.xenorama.com)
 
 ## Purpose
-Provide a set of objects which support offline, frame-by-frame, hiQ rendering of generative, ineractive content built in Max/MSP/Jitter. Designed to be implemented as intuitively as possible in any previously developed patching environment, limited only by the latter's complexity. 
+Provide a set of objects which support offline, frame-by-frame, hiQ rendering of generative, ineractive content built in Max/MSP/Jitter. Designed to be implemented as intuitively as possible in any previously developed patching environment, limited only by the latter's complexity.
+
+#### Header 4
 
 ## Requirements
 Cycling '74 Max. jit.world context.
