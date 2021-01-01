@@ -1,4 +1,4 @@
-# The Prefrontal Cortex
+# Oneirotomy
 Tools for non-realtime Rendering of generative content in Max/MSP/Jitter
 Written by Tim Heinze © 2020, [www.xenorama.com](www.xenorama.com)
 
@@ -15,7 +15,8 @@ Add the objects in specific ways to your jit.world's rendering process in Max.
 Advanced knowledge of Max/MSP/Jitter.
 
 ## Nomenclature
-All objects carry names of anatomic—or related—terms pertaining to their inherit function in the offline rendering and rebuilding process of generative patches.
+**Oneirotomy** (/ɒnɪˈrɒlədʒi/; from Greek ὄνειρον, oneiron, «dream»; and /tomé/; «cut, slice») is a neologism to be translated as _dream slice_, where individual frames of onieiric video generation can be sliced and reproduced in non-realtime.
+All objects carry names of anatomic—or related—terms pertaining to their inherent function in the offline rendering chain and rebuilding process of generative patches (the «dream»).
 
 ## the.prefix
 «THe» are somewhat my initials: Tim Heinze.
