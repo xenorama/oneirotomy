@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="the.jit.amygdala~" module="jitter" category="Jitter System">
+
+	<digest>
+		Poke signal data to a poly-dimensional matrix for offline rendering.
+	</digest>
+
+	<description>
+		Written by Tim Heinze © 2020, www.xenorama.com. <br/>
+		Capture signal data to a specified poly-dimensional jit.matrix for offline reading and rendering, controlled by <o>the.jit.thalamus</o>. Designed to replace a <o>jit.poke~</o> with flexible <at>dimcount</at> (by default: max. 13) and variable target plane.
+		<br/>
+		Its counterpart <o>the.mc.jit.amygala</o> is to be placed after any named matrix otherwise being populated by <o>jit.poke~</o> to iterate through the recorded frames at render rate.
+	</description>
+
+	<!--METADATA (REMOVE FOR SIMPLICITY) -->
+	<metadatalist>
+		<metadata name="author">Tim Heinze</metadata>
+		<metadata name="tag">Xenorama</metadata>
+		<metadata name="tag">Offline Video Rendering</metadata>
+		<metadata name="tag">Jitter System</metadata>
+	</metadatalist>
+
+	<!--INLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--OUTLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--ARGUMENTS-->
+	<objarglist>
+		<objarg name="render-context" optional="0" type="symbol" size="1">
+			<digest>
+				Specify a named render context for all children objects to sync to.
+			</digest>
+			<description>
+				 For convenience, this can be identical to one's world render context name but is to be considered independent. It is necessary to provide a context name for all members of the offline render family to sync and respond to.
+			</description>
+		</objarg>
+		<objarg name="matrix-name" optional="0" type="symbol" size="1">
+			<digest>
+				Matrix name
+			</digest>
+			<description>
+				The name of the <m>jit_matrix</m> to access (default = 0). Identical to the matrix used before with <o>jit.poke</o>
+			</description>
+		</objarg>
+		<objarg name="dim_inputcount" optional="0" type="int" size="1">
+			<digest>
+				Number of dimensions
+			</digest>
+			<description>
+				The number of dimensions in the named matrix (maximum: 13)
+			</description>
+		</objarg>
+		<objarg name="plane-index" optional="0" type="int" size="1">
+			<digest>
+				Plane for cell value to be replaced by leftmost channel
+			</digest>
+			<description>
+				The plane in a cell whose value is replaced by leftmost channel in the multi-channel signal (default = 0)
+			</description>
+		</objarg>
+	</objarglist>
+
+	<!--ATTRIBUTES (REMOVE FOR SIMPLICITY) -->
+
+<attributelist>
+	<attribute name="verbose" get="1" set="1" type="bool" size="1">
+		<digest>
+		Toggle continuous matrix monitoring
+		</digest>
+		<description>
+		When enabled will output a temporary <m>jit_matrix</m> representing an abstract compression of the running multich-channel audio upon completion of a single dimension-scan.
+		<br/>
+		When disabled, a <m>bang</m> in leftmost inlet triggers output of most recent <m>jit_matrix</m>
+		<br/>
+		The default is 0 (disabled)
+		</description>
+</attribute>
+<attribute name="autoclear" get="1" set="1" type="bool" size="1">
+	<digest>
+	Clear the compressed matrix before recording
+	</digest>
+	<description>
+	Clear the compressed matrix before recording. Ensures that later video rendering will only add the recorded data. <br/>
+	<at>autoclear</at> is disabled (0) by default
+	<br/>
+	Unlike <o>the.mc.jit.amygdala</o>—where <at>autoclear</at> purges the actual target matrix—the matrix being cleared in this case is the recording (compressed) matrix.
+	</description>
+</attribute>
+<attribute name="exportname" get="1" set="1" type="symbol" size="1">
+	<digest>
+		Specify a unique name to write to.
+	</digest>
+	<description>
+		Specify a unique name to export to after completion of the capturing process, managed by <o>the.jit.thalamus</o>. The resulting filetype is <m>jxf</m> (Jitter binary data file) and can be re-exported/imported using the <m>export</m> and <m>import</m> messages, respectively.
+	</description>
+</attribute>
+<attribute name="active" get="1" set="1" type="int" size="1">
+	<digest>
+		Set the active flag
+	</digest>
+	<description>
+		Set the active flag. There are 4 active states available suitable for different purposes:
+		<br/>
+		<br/>0 = ignore this object and poke signal data without recording
+		<br/>1 = operate normally (default); poke and record
+		<br/>2 = poke but do not record any new data
+		<br/>3 = (idle)
+		<br/>4 = record but never poke directly to matrix
+		<br/>5 = mute all activity
+		<br/>
+		<br/>Note that while recording is disabled, the automatic export upon recording completion (if an <at>exportname</at> is specified) is also disabled and previous files will not be overwritten.
+	</description>
+</attribute>
+	</attributelist>
+		<!--MESSAGES-->
+
+	<methodlist>
+		<method name="bang">
+			<arglist />
+			<digest>
+				Output temporary data matrix
+			</digest>
+			<description>
+				Output temporary data matrix from rightmost outlet
+			</description>
+		</method>
+		<method name="multichannelsignal">
+			<arglist />
+			<digest>
+				Realtime audio to write to the matrix
+			</digest>
+			<description>
+				<o>the.mc.jit.amygdala~</o> expects a <m>multi-channel signal</m>, comprised of channels pertaining to the object box <m>arguments</m>
+				<br/>
+				<br/>
+				<at>channel 1: value to write</at> <br/>
+				<at>channel 2: dim[0]</at> <br/>
+				… <br/>
+				<at>channel n: dim[n]</at> <br/>
+			</description>
+		</method>
+		<method name="plane">
+			<arglist>
+				<arg name="index" optional="0" type="int" />
+			</arglist>
+			<digest>
+				Specify the plane in the target matrix
+			</digest>
+			<description>
+				During recording, the plane in the target matrix can be changed with the <m>plane $1</m> message
+			</description>
+		</method>
+		<method name="export">
+			<arglist>
+				<arg name="filename" optional="1" type="symbol" />
+			</arglist>
+			<digest>
+				Export as Jitter binary data file
+			</digest>
+			<description>
+				If an <at>exportname</at> has previously been specified, the jxf-file will be written to the <m>dir</m> as specified by <o>the.jit.thalamus</o>.
+				<br/> If an optional argument is provided (symbol), a jxf-file with this name will be written to disk.
+			</description>
+		</method>
+		<method name="import">
+			<arglist>
+				<arg name="index" optional="1" type="symbol" />
+			</arglist>
+			<digest>
+				Import Jitter binary data file
+			</digest>
+			<description>
+				If an <at>exportname</at> has previously been specified, the jxf-file will be read from the <m>dir</m> as specified by <o>the.jit.thalamus</o>.
+				<br/> If an optional argument is provided (symbol), it will be attempted to read a jxf-file with this name from disk.
+			</description>
+		</method>
+	</methodlist>
+
+	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
+	<seealsolist>
+		<seealso name="the.jit.thalamus~"/>
+		<seealso name="the.mc.jit.amygdala"/>
+		<seealso name="the.jit.amygdala~"/>
+		<seealso name="the.jit.amygdala"/>
+		<seealso name="the.jit.cochlea~"/>
+		<seealso name="the.mc.pac~"/>
+		<seealso name="the.jit.retina"/>
+		<seealso name="the.cerebellum"/>
+	</seealsolist>
+
+</c74object>

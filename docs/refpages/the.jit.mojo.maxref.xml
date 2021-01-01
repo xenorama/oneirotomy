@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="the.jit.mojo" module="jitter" category="Jitter System">
+
+	<digest>
+		Control a <o>jit.mo.func</o> object in non-realtime
+	</digest>
+
+	<description>
+		Written by Tim Heinze © 2020, www.xenorama.com. <br/>
+		Objects from the jit.mo family operate in predictable and expected manner when a <o>jit.world</o> is currently enabled. <o>the.jit.mojo</o> can be attached to a <o>jit.mo.func</o> to progress through its phase during offline rendering. Any <at>speed</at> automation must be applied to the <o>jit.mojo</o> instead while the <o>jit.mo.func</o> will be automatically set to a <at>speed</at> of 0.
+	</description>
+
+	<!--METADATA (REMOVE FOR SIMPLICITY) -->
+	<metadatalist>
+		<metadata name="author">Tim Heinze</metadata>
+		<metadata name="tag">Xenorama</metadata>
+		<metadata name="tag">Offline Video Rendering</metadata>
+		<metadata name="tag">Jitter System</metadata>
+	</metadatalist>
+
+	<!--INLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--OUTLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--ARGUMENTS-->
+	<objarglist>
+		<objarg name="render-context" optional="0" type="symbol" size="1">
+			<digest>
+				Specify a named render context for all children objects to sync to.
+			</digest>
+			<description>
+				For convenience, this can be identical to one's world render context name but is to be considered independent. It is necessary to provide a context name for all members of the offline render family to sync and respond to.
+			</description>
+		</objarg>
+	</objarglist>
+
+	<!--ATTRIBUTES (REMOVE FOR SIMPLICITY) -->
+	<attributelist>
+		<attribute name="speed" get="1" set="1" type="int" size="1">
+			<digest>
+				Control the speed of an attached <o>jit.mo.func</o>.
+			</digest>
+			<description>
+				Any <at>speed</at> automation must be applied to the <o>jit.mojo.</o> instead while the <o>jit.mo.func</o> must be set to a <at>speed</at> of 0 at all times to avoid inevitable timing conflicts.
+				<br/> The speed is set in Hz, analogous to the same <o>jit.mo.func</o> attribute.
+			</description>
+		</attribute>
+		<attribute name="active" get="1" set="1" type="int" size="1">
+			<digest>
+				Set the active flag
+			</digest>
+			<description>
+				Set the active flag. There are 4 active states available suitable for different purposes:
+				<br/>
+				<br/>0 = ignore this object and pass everything through without recording or recalling
+				<br/>1 = operate normally (default); playback, record and output during rendering
+				<br/>2 = playback and output previously recorded data normally but do not record any new data
+				<br/>3 = playback and record normally but do not output data during rendering
+				<br/>4 = record and output during rendering but never pass incoming data
+				<br/>5 = mute all activity
+				<br/>
+				<br/>Note that while recording is disabled, the automatic export upon recording completion (if an <at>exportname</at> is specified) is also disabled and previous files will not be overwritten.
+			</description>
+		</attribute>
+	</attributelist>
+
+		<!--MESSAGES-->
+
+	<methodlist>
+		<method name="speed">
+			<arglist>
+				<arg name="Hz" optional="0" type="float" />
+			</arglist>
+			<digest>
+				Control the speed of an attached <o>jit.mo.func</o>.
+			</digest>
+			<description>
+				Any <at>speed</at> automation must be applied to the <o>jit.mojo.</o> instead while the <o>jit.mo.func</o> must be set to a <at>speed</at> of 0 at all times to avoid inevitable timing conflicts.
+				<br/> The speed is set in Hz, analogous to the same <o>jit.mo.func</o> attribute.
+			</description>
+		</method>
+	</methodlist>
+
+	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
+	<seealsolist>
+		<seealso name="the.jit.thalamus"/>
+		<seealso name="the.jit.cochlea~"/>
+		<seealso name="the.jit.amygdala~"/>
+		<seealso name="the.mc.jit.mandelbulb~"/>
+		<seealso name="the.cerebellum"/>
+		<seealso name="the.jit.retina"/>
+		<seealso name="jit.mo.func"/>
+		<seealso name="jit.mo.join"/>
+		<seealso name="the.jit.retina"/>
+	</seealsolist>
+
+</c74object>

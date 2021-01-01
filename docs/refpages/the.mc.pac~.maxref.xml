@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="the.mc.pac~" module="jitter" category="Jitter System">
+
+	<digest>
+		Record multi-channel MSP audio in line with a frame-based render process.
+	</digest>
+
+	<description>
+		Written by Tim Heinze © 2020, www.xenorama.com. <br/>
+		PAC stands for «Primary Auditory Cortex» and represents an object that allows recording of multi-channel MSP audio prior to rendering video frame-by-frame, managed by <o>the.jit.thalamus</o>. Useful when rendering hiQ video from audio-reactive patches, the result is the corresponding audio to the final video.
+	</description>
+
+	<!--METADATA (REMOVE FOR SIMPLICITY) -->
+	<metadatalist>
+		<metadata name="author">Tim Heinze</metadata>
+		<metadata name="tag">Xenorama</metadata>
+		<metadata name="tag">Offline Video Rendering</metadata>
+		<metadata name="tag">Jitter System</metadata>
+	</metadatalist>
+
+	<!--INLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--OUTLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--ARGUMENTS-->
+	<objarglist>
+		<objarg name="render-context" optional="0" type="symbol" size="1">
+			<digest>
+				Specify a named render context for all children objects to sync to.
+			</digest>
+			<description>
+				 For convenience, this can be identical to one's world render context name but is to be considered independent. It is necessary to provide a context name for all members of the offline render family to sync and respond to.
+			</description>
+		</objarg>
+		<objarg name="number-of-channels" optional="0" type="int" size="1">
+			<digest>
+				Specify the number of expected channels in the multich-channel signal.
+			</digest>
+			<description>
+				Specify the number of expected channels in the multich-channel signal.
+			</description>
+		</objarg>
+	</objarglist>
+
+	<!--ATTRIBUTES (REMOVE FOR SIMPLICITY) -->
+	<attributelist>
+		<attribute name="exportname" get="1" set="1" type="symbol" size="1">
+			<digest>
+				Specify a unique name to write to.
+			</digest>
+			<description>
+				Specify a unique name to export to after completion of the recording process, managed by <o>the.jit.thalamus</o>. The resulting filetype is <m>aif</m>
+			</description>
+		</attribute>
+		<attribute name="active" get="1" set="1" type="int" size="1">
+			<digest>
+				Set the active flag
+			</digest>
+			<description>
+				Set the active flag. There are 4 active states available suitable for different purposes:
+				<br/>
+				<br/>0 = ignore this object
+				<br/>1 = operate normally (default); enable recording and auto-export (see the <at>exportname</at> and <m>export</m> listings)
+				<br/>2 = (idle)
+				<br/>3 = (idle)
+				<br/>4 = (dile)
+				<br/>5 = mute all activity
+				<br/>
+				<br/>Note that while recording is disabled, the automatic export upon recording completion (if an <at>exportname</at> is specified) is also disabled and previous files will not be overwritten.
+			</description>
+		</attribute>
+	</attributelist>
+
+		<!--MESSAGES-->
+
+	<methodlist>
+		<method name="multichannelsignal">
+			<arglist />
+			<digest>
+				Multi-channel MSP Audio to record
+			</digest>
+			<description>
+				Multi-channel MSP Audio to record. In line with the prupose of this object, the multichannelsignal would be the absolute output one actually hears along with the video. Check the <o>adoutput~</o> object for reference.
+			</description>
+		</method>
+		<method name="bang">
+			<arglist />
+			<digest>
+				Open the buffer window of monitoring.
+			</digest>
+			<description>
+				Opens a window displaying the temporary buffer with all its audio channels.
+			</description>
+		</method>
+	</methodlist>
+
+	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
+	<seealsolist>
+		<seealso name="the.jit.thalamus"/>
+		<seealso name="the.jit.cochlea~"/>
+		<seealso name="the.jit.amygdala~"/>
+		<seealso name="the.mc.jit.mandelbulb~"/>
+		<seealso name="the.cerebellum"/>
+		<seealso name="the.jit.retina"/>
+	</seealsolist>
+
+</c74object>

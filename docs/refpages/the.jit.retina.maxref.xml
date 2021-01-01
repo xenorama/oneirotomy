@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="the.jit.retina" module="jitter" category="Jitter System">
+
+	<digest>
+		Capture varying states of timed matrices.
+	</digest>
+
+	<description>
+		Written by Tim Heinze © 2020, www.xenorama.com. <br/>
+		Capture varying states of incoming matrices to iterate through them frame-by-frame during offline rendering, managed by a central <o>the.jit.thamalus</o> in <m>capture</m> mode. Use this object to recall timed visual data output by objects like <o>jit.mo.join</o> which only work as expected when <o>jit.world</o> is enabled.
+	</description>
+
+	<!--METADATA (REMOVE FOR SIMPLICITY) -->
+	<metadatalist>
+		<metadata name="author">Tim Heinze</metadata>
+		<metadata name="tag">Xenorama</metadata>
+		<metadata name="tag">Offline Video Rendering</metadata>
+		<metadata name="tag">Jitter System</metadata>
+	</metadatalist>
+
+	<!--INLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--OUTLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--ARGUMENTS-->
+	<objarglist>
+		<objarg name="render-context" optional="0" type="symbol" size="1">
+			<digest>
+				Specify a named render context for all children objects to sync to.
+			</digest>
+			<description>
+				For convenience, this can be identical to one's world render context name but is to be considered independent. It is necessary to provide a context name for all members of the offline render family to sync and respond to.
+			</description>
+		</objarg>
+	</objarglist>
+
+	<!--ATTRIBUTES (REMOVE FOR SIMPLICITY) -->
+	<attributelist>
+		<attribute name="verbose" get="1" set="1" type="bool" size="1">
+			<digest>
+			Toggle continuous matrix monitoring
+			</digest>
+			<description>
+			When enabled will output a temporary <m>jit_matrix</m> representing an progressive fill of the running incoming matrix at every frame. Disabling may enhance efficiency of capture.
+			<br/>
+			When disabled, a <m>bang</m> in leftmost inlet triggers output of most recent <m>jit_matrix</m>
+			<br/>
+			The default is 0 (disabled)
+			</description>
+	</attribute>
+		<attribute name="exportname" get="1" set="1" type="symbol" size="1">
+			<digest>
+				Specify a unique name to write to.
+			</digest>
+			<description>
+				Specify a unique name to export to after completion of the capturing process, managed by <o>the.jit.thalamus</o>. The resulting filetype is <m>png</m> and be re-exported/imported using the <m>export</m> and <m>import</m> messages, respectively.
+			</description>
+		</attribute>
+		<attribute name="active" get="1" set="1" type="int" size="1">
+			<digest>
+				Set the active flag
+			</digest>
+			<description>
+				Set the active flag. There are 4 active states available suitable for different purposes:
+				<br/>
+				<br/>0 = ignore this object and pass everything through without recording or recalling
+				<br/>1 = operate normally (default); playback, record and output during rendering
+				<br/>2 = playback and output previously recorded data normally but do not record any new data
+				<br/>3 = playback and record normally but do not output data during rendering
+				<br/>4 = record and output during rendering but never pass incoming data
+				<br/>5 = mute all activity
+				<br/>
+				<br/>Note that while recording is disabled, the automatic export upon recording completion (if an <at>exportname</at> is specified) is also disabled and previous files will not be overwritten.
+			</description>
+		</attribute>
+	</attributelist>
+
+		<!--MESSAGES-->
+
+	<methodlist>
+		<method name="jit_matrix">
+			<arglist />
+			<digest>
+				Running timed matrix to capture.
+			</digest>
+			<description>
+				Running timed matrix to capture. Connect inbetween the outlet of a <o>jit.mo.join</o> and its subsequent nodes to capture its matrix output before rendering the same content offline.
+			</description>
+		</method>
+		<method name="bang">
+			<arglist />
+			<digest>
+				Output the entire captured matrix.
+			</digest>
+			<description>
+				In right inlet: Output the entire captured matrix from the rightmost outlet.
+			</description>
+		</method>
+		<method name="export">
+			<arglist>
+				<arg name="filename" optional="1" type="symbol" />
+			</arglist>
+			<digest>
+				Export as Jitter binary data file
+			</digest>
+			<description>
+				If an <at>exportname</at> has previously been specified, the jxf-file will be written to the <m>dir</m> as specified by <o>the.jit.thalamus</o>.
+				<br/> If an optional argument is provided (symbol), a jxf-file with this name will be written to disk.
+			</description>
+		</method>
+		<method name="import">
+			<arglist>
+				<arg name="index" optional="1" type="symbol" />
+			</arglist>
+			<digest>
+				Import Jitter binary data file
+			</digest>
+			<description>
+				If an <at>exportname</at> has previously been specified, the jxf-file will be read from the <m>dir</m> as specified by <o>the.jit.thalamus</o>.
+				<br/> If an optional argument is provided (symbol), it will be attempted to read a jxf-file with this name from disk.
+			</description>
+		</method>
+	</methodlist>
+
+	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
+	<seealsolist>
+		<seealso name="the.jit.thalamus"/>
+		<seealso name="the.jit.cochlea~"/>
+		<seealso name="the.jit.amygdala~"/>
+		<seealso name="the.mc.jit.mandelbulb~"/>
+		<seealso name="the.cerebellum"/>
+		<seealso name="the.jit.retina"/>
+	</seealsolist>
+
+</c74object>
