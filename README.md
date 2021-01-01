@@ -1,6 +1,6 @@
 # The Prefrontal Cortex
 Tools for non-realtime Rendering of generative content in Max/MSP/Jitter
-Written by Tim Heinze (c) 2020, [www.xenorama.com](www.xenorama.com)
+Written by Tim Heinze © 2020, [www.xenorama.com](www.xenorama.com)
 
 ## "THE" Prefix
 THE are somewhat my initials: Tim Heinze.
