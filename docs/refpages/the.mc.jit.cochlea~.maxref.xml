@@ -30,10 +30,10 @@
 	<objarglist>
 		<objarg name="render-context" optional="0" type="symbol" size="1">
 			<digest>
-				Specify a named render context for all children objects to sync to.
+				Specify a named render context to bind to.
 			</digest>
 			<description>
-				 For convenience, this can be identical to one's world render context name but is to be considered independent. It is necessary to provide a context name for all members of the offline render family to sync and respond to.
+				For convenience, this can be identical to one's world render context name but is to be considered independent. <o>the.jit.thalamus</o> with a unique context name is required running in parallel for all members of the offline render family to sync and respond to.
 			</description>
 		</objarg>
 		<objarg name="number-of-channels" optional="0" type="int" size="1">
