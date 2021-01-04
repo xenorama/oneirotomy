@@ -9,6 +9,7 @@
 * stripped the _jit.poke~_ equivalents to one single **the.jit.amygdala~**
 * chucked _jit.concat_ due to frame drops in favour of _jit.matrixset_ with blocks of matrices
 * _node.script_ used for managing temp-files
+* changed username
 
 ### bugs
 
