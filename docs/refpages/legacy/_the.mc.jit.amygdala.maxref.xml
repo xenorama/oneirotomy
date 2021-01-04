@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="the.mc.jit.amygdala" module="jitter" category="Jitter System">
+
+	<digest>
+		Rebuild a signal-driven, poly-dimensional named matrix during offline video rendering.
+	</digest>
+
+		<description>
+			Written by Tim Heinze © 2020, www.xenorama.com. <br/>
+			Iterates through and thereby rebuilds realtime recorded matrix states (using <o>the.mc.jit.amygdala~</o>) and is to be placed after any named <o>jit.matrix</o> populated by the latter using multi-channel signals.
+			<br/>
+			It supports matrices of any dimcount between 0 and 13 with multiple planes.
+			<br/>
+			Its counterpart <o>the.mc.jit.amygdala~</o> is to be fed with a multi-channel signal, likewise replacing a corresponding <o>jit.poke~</o>.
+		</description>
+
+	<!--METADATA (REMOVE FOR SIMPLICITY) -->
+	<metadatalist>
+		<metadata name="author">Tim Heinze</metadata>
+		<metadata name="tag">Xenorama</metadata>
+		<metadata name="tag">Offline Video Rendering</metadata>
+		<metadata name="tag">Jitter System</metadata>
+	</metadatalist>
+
+	<!--INLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--OUTLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--ARGUMENTS-->
+	<objarglist>
+		<objarg name="render-context" optional="0" type="symbol" size="1">
+			<digest>
+				Specify a named render context to bind to.
+			</digest>
+			<description>
+				For convenience, this can be identical to one's world render context name but is to be considered independent. <o>the.jit.thalamus</o> with a unique context name is required running in parallel for all members of the offline render family to sync and respond to.
+			</description>
+		</objarg>
+		<objarg name="matrix-name" optional="0" type="symbol" size="1">
+			<digest>
+				Matrix name
+			</digest>
+			<description>
+				The name of the <m>jit_matrix</m> to access (default = 0). Identical to the matrix used before with <o>jit.poke</o>
+			</description>
+		</objarg>
+	</objarglist>
+
+	<!--ATTRIBUTES (REMOVE FOR SIMPLICITY) -->
+
+<attributelist>
+	<attribute name="autoclear" get="1" set="1" type="bool" size="1">
+	<digest>
+	Clear the matrix before recording
+	</digest>
+	<description>
+	Clear the matrix before recording. Ensures that later video rendering will start out clean regardless of its most recent state. <br/>
+	<at>autoclear</at> is enabled (1) by default
+	<br/>
+	Unlike <o>the.mc.jit.amygdala~</o>—where <at>autoclear</at> purges the recording matrix—the matrix being cleared in this case is the actual target matrix.
+	</description>
+</attribute>
+<attribute name="active" get="1" set="1" type="int" size="1">
+	<digest>
+		Set the active flag
+	</digest>
+	<description>
+		Set the active flag. There are 4 active states available suitable for different purposes:
+		<br/>
+		<br/>0 = ignore this object and pass everything through without recording or recalling
+		<br/>1 = operate normally (default); playback, record and output during rendering
+		<br/>2 = (idle)
+		<br/>3 = playback and record normally but do not output data during rendering
+		<br/>4 = record and output during rendering but never pass incoming data
+		<br/>5 = mute all activity
+	</description>
+</attribute>
+	</attributelist>
+		<!--MESSAGES-->
+
+	<methodlist>
+		<method name="jit_matrix">
+			<arglist />
+			<digest>
+				Target matrix through.
+			</digest>
+			<description>
+				To implement <o>the.mc.jit.amygdala</o>, it should be placed after the named matrix it replaces during offline nredering.
+				<br/> During playback mode of <o>the.jit.thalamus</o> the named input matrix is passed through unaffected.
+			</description>
+		</method>
+	</methodlist>
+
+	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
+	<seealsolist>
+		<seealso name="the.jit.thalamus~"/>
+		<seealso name="the.mc.jit.amygdala"/>
+		<seealso name="the.jit.amygdala~"/>
+		<seealso name="the.jit.amygdala"/>
+		<seealso name="the.jit.cochlea~"/>
+		<seealso name="the.mc.pac~"/>
+		<seealso name="the.jit.retina"/>
+		<seealso name="the.cerebellum"/>
+	</seealsolist>
+
+</c74object>
