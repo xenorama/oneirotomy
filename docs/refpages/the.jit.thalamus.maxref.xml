@@ -294,6 +294,36 @@
 				<br/>Note that any accumulative data cannot be reproduced correctly when previewing non-linearly
 			</description>
 		</method>
+		<method name="solo">
+			<arglist>
+				<arg name="object-exportname" optional="0" type="symbol" />
+				<arg name="solo-mode" optional="0" type="int" />
+			</arglist>
+	<digest>
+		Toggle solo mode for children objects
+	</digest>
+	<description>
+		According to the numeric argument, will toggle the recording/rendering behaviour of the object with the <m>exportname</m> provided as argument 1 in relation to other objects in the context
+		<br/>
+		<br/>0 = use current <at>active</at> flag if no other object is running <m>@solo 1</m> or <m>@solo 2</m>, otherwise will set the object to <m>active 0</m> (bypass)
+		<br/>1 = toggle <at>active</at> operation mode to <m>1</m> (operate) along with other objects <m>@solo 1</m>, but not if any object is running <m>@solo 2</m>, in which case it will be muted
+		<br/>2 = unique operation, operate only this object. This will set all other objects' <at>active</at> flag to <m>5</m> (mute)
+		<br/>
+		<br/>
+		The message <m>solo 0</m> unsolos all objects and returns them to their set active flag
+	</description>
+</method>
+		<method name="unsolo">
+	<arglist />
+	<digest>
+		Remove all solo states in children objects
+	</digest>
+	<description>
+		The message <m>unsolo</m> does not remove the <m>solo</m> state of the previous object alone but does so for all other objects in the context as well, each of which will assume their set <m>active</m> flag thereafter.
+		<br/>
+		Same as sending the message <m>solo 0</m>
+	</description>
+</method>
 		<method name="exportattrs">
 			<arglist />
 			<digest>

@@ -10,26 +10,23 @@
 * chucked _jit.concat_ due to frame drops in favour of _jit.matrixset_ with blocks of matrices
 * _node.script_ used for managing temp-files
 * changed username
+* added _solo_ listing for **amygdala~, pac~, cerebellum** and **the.jit.thalamus**, respectively
+* added **the.conformpath.user** which uses _gestalt_ to query current username (macOS-path); necessary to delete temporary files in **the.mc.jit.amygdala~**
+* implemented an optional receive port for _the.sub.abstractions_ (like **the.jit.thalamus.habenula** to sync dict settings reliably
 
 ### bugs
 
 * **the.jit.thalamus** reverts to _length 1 frames_ after recording in fixed length with **the.jit.amygdala~**
-* _jit.concat_ cannot serve as accumulative objects for recording, it begins to lag behind linearly; instead the procedure may be:
-  1. define fixed dim for target matrix
-  1. when poked fully, send to another matrix and write as _jxf_ with incremented index to target _dir_ (using **defer** for the latter), clear in time and repoke~/continue poking
-  1. when recording finishes, write a summary to disk using **dict** (i.e. how many matrices, _dim_, _planecount_), read all written _jxf_ into a matrix successively, populating an **jit.matrixset** and another **jit.matrixset** in the corresponding rebuild-node (**the.mc.jit.amygdala** for example) if no _exportname_ is set, otherwise
-  1. write the **jit.matrixset** contents to disk under the given _exportname_ and import it immediately in the corresponding rebuild-node
-  1. use _node.script_ to delete all the temporary matrix _jxf_ files in the target _dir_
-    1. adapt path using **conform.path** somehow, or research on how to do this with **nose.script** given it requires a ~-based path (macOS at least)
+* no support so far for _jit.anim.drive_, as it operates freely (similar to _jit.mo.func_) but cannot be controlled using a _phase_ message. It therefore requires another object to control and imitate its active state.
+
 
 ### to do
 
 * clean up **the.jit.thalamus** and strip initialisation routines
 * document _the.sub.abstractions_—at least scarcely—with a _$1.maxref.xml_ to support argument guidance upon creation as well as orientation for development.
-* implement an optional receive port for _the.sub.abstractions_ (like **the.jit.thalamus.habenula** to sync dict settings reliably
-*
 * replace _active_ attribute by _mode_ (find alternatve for **the.jit.pinealis** or do not use it there)
 * update graphics
+* _jit.anim.drive_ support (new object with detailed helpfile necessary)
 * create an idle, representative object for all children with their mutual attributes
 * print error messages for unsupported arguments/attributes
 
