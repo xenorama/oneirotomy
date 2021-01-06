@@ -4,8 +4,8 @@ max objectfile cerebellum the.cerebellum;
 
 max objectfile mc.jit.amygdala~ the.mc.jit.amygdala~;
 
-max objectfile jit.cochlea~ the.jit.cochlea~;
-max objectfile mc.jit.cochlea~ the.mc.jit.cochlea~;
+max objectfile jit.cochlea~ the.cochlea~;
+max objectfile mc.jit.cochlea~ the.mc.cochlea~;
 
 max objectfile mc.pac~ the.mc.pac~;
 
