@@ -39,6 +39,11 @@ Used to avoid conflicts between other people's abstractions and externals.
 The creation of this library was inspired by [Julien Bayle's Post on the Cycling '74 Forum](https://cycling74.com/forums/offline-rendering-frame-per-frame-and-hiq-video-production-with-max). The debate about techniques to capture and render generative video content reliably and in any quality shall hoepfully profit from it.
 
 ## Contents
-* the.jit.thalamus
-* the.cerebellum
-* tbc … 
+* the.jit.thalamus • core handling of offline rendering and recording
+* the.cerebellum • record timing data
+* the.cochlea~ • record signals, mc-version available
+* the.jit.mojo • manage jit.mo.func in non-realtime
+* the.jit.pinealis • perform framecheck
+* the.mc.jit.amygdala~ • replace a jit.poke~ object for non-realtime rebuilding
+* the.mc.pac~ • record audio for video renderings
+* a handful of sub-abstractions, to be disregarded during normal use
