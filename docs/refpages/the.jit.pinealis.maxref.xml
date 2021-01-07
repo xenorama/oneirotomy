@@ -48,7 +48,7 @@
 			The default is 1 (enabled)
 			</description>
 	</attribute>
-		<attribute name="mode" get="1" set="1" type="symbol" size="1">
+		<attribute name="boundmode" get="1" set="1" type="symbol" size="1">
 			<digest>
 				Specify the frame incrementation mode
 			</digest>
@@ -63,6 +63,19 @@
 				<br/><at>palindrome </at>: same as <m>fold</m>
 				<br/><at>clamp </at>: same as <m>clip</m>
 				<br/><at>ignore </at>: same as <m>none</m>
+			</description>
+		</attribute>
+				<attribute name="container" get="1" set="1" type="symbol" size="1">
+			<digest>
+				Specify the type of video footage
+			</digest>
+			<description>
+				Videos can be available either as moviefile or image sequence. The word <at>container</at>, followed by a symbol specifying a filetype, will attempt to load the corresponding file provided by the most previously completed render process, or by the <m>read</m> message.
+				<br/> There are three different modes available:
+				<br/>
+				<br/><at>auto </at>: adapt to the current filetype in <o>the.jit.thalamus</o> (default)
+				<br/><at>mov </at>: load a moviefile
+				<br/><at>img_sequence </at>: load the first of an available image sequence, the <m>int</m> message will increment through the images as frames (leftmost outlet)
 			</description>
 		</attribute>
 	</attributelist>

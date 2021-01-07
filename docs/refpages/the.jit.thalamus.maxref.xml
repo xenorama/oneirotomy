@@ -159,10 +159,30 @@
 			Toggle DSP off during offline rendering
 		</digest>
 		<description>
-		Will disable DSP during video rendering process and restore to previous state upon render completion.
+		Will disable DSP during video rendering process or a potential matrix capturing process and will restore previous DSP state upon render completion.
 		<br/>
 		The default is 1 (toggle DSP off)
 		</description>
+</attribute>
+<attribute name="toggleworld" get="1" set="1" type="bool" size="1">
+	<digest>
+		Toggle <o>jit.world</o> off during audio or data recording
+	</digest>
+	<description>
+	Will disable jit.world rendering during audio or data recording and will reactivate it once recording has stopped.
+	<br/>
+	The default is 1 (toggle video rendering off)
+	</description>
+</attribute>
+<attribute name="toggledsp" get="1" set="1" type="bool" size="1">
+	<digest>
+		Toggle DSP off during offline rendering
+	</digest>
+	<description>
+	Will disable DSP during video rendering process and restore to previous state upon render completion.
+	<br/>
+	The default is 1 (toggle DSP off)
+	</description>
 </attribute>
 <attribute name="tf_support" get="1" set="1" type="bool" size="1">
 	<digest>
@@ -171,7 +191,7 @@
 	<description>
 		Support a render process including Transform Feedback on a <o>jit.gl.mesh</o> using <o>jit.gl.tf</o>. Essentially, it deactivates the <at>fsaa</at> toggling prior to rendering, which otherwise requires a manual reactivation of the <o>jit.gl.tf</o>.
 	<br/>
-	The default is 0 (no <o>jit.gl.tf</o> support)
+	The default is 0 (no <o>jit.gl.tf</o> support), the <at>fsaa</at> setting is by default on and would otherwise be overriden by <at>tf_support</at>.
 	</description>
 </attribute>
 	</attributelist>
@@ -280,6 +300,11 @@
 				<br/>
 				<br/>
 				Default: <m>length 1000. ms</m>, if the current framerate is set to <m>30.</m> (see also the <at>fps</at> listing), this would yield a length of <m>30 frames</m> and would equal the current <m>samplerate</m> (provided in samples per minute = 1000ms.)
+				<br/>
+				<br/>
+				The word <m>length</m> without any arguments sets the recording mode to 'free' and will not stop until the <m>stop</m> message is received in the leftmost inlet or toggled in the GUI.
+				<br/> Alternatively, the arguments <m>free</m> and <m>fixed</m> toggle between an assumed performance mode and a fixed time, provided by the respective arguments in a separate message.
+				<br/> Note that a lot of data can ptoentially be accumulated in 'free' recording mode when stretched extensively. This pertains to analysed signals, as well as regular timing data and especially matrix-based anylsis. The latter, however, is currently happening in <o>the.mc.jit.amygdala~</o> where matrices are handled and written to disk in  temporary blocks to later populate a <o>jit.matrixset</o>.
 			</description>
 		</method>
 		<method name="preview">
@@ -287,13 +312,44 @@
 				<arg name="position" optional="0" type="float" />
 			</arglist>
 			<digest>
-				Normalised position (0. - 1.)
+				Normalised position (0. - 1.) (not yet supported)
 			</digest>
 			<description>
 				Output the corresponding frame at the normalised position while not rendering by <o>jit.world</o> for all children objects.
-				<br/>Note that any accumulative data cannot be reproduced correctly when previewing non-linearly
+				<br/>Note that any accumulative data cannot be reproduced correctly when previewing non-linearly.
+				<br/>This method is not yet supported and may require fundamental recoding as well as documenting.
 			</description>
 		</method>
+		<method name="solo">
+			<arglist>
+				<arg name="object-exportname" optional="0" type="symbol" />
+				<arg name="solo-mode" optional="0" type="int" />
+			</arglist>
+	<digest>
+		Toggle solo mode for children objects
+	</digest>
+	<description>
+		According to the numeric argument, will toggle the recording/rendering behaviour of the object with the <m>exportname</m> provided as argument 1 in relation to other objects in the context
+		<br/>
+		<br/>0 = use current <at>active</at> flag if no other object is running <m>@solo 1</m> or <m>@solo 2</m>, otherwise will set the object to <m>active 0</m> (bypass)
+		<br/>1 = toggle <at>active</at> operation mode to <m>1</m> (operate) along with other objects <m>@solo 1</m>, but not if any object is running <m>@solo 2</m>, in which case it will be muted
+		<br/>2 = unique operation, operate only this object. This will set all other objects' <at>active</at> flag to <m>5</m> (mute)
+		<br/>
+		<br/>
+		The message <m>solo 0</m> unsolos all objects and returns them to their set active flag
+	</description>
+</method>
+		<method name="unsolo">
+	<arglist />
+	<digest>
+		Remove all solo states in children objects
+	</digest>
+	<description>
+		The message <m>unsolo</m> does not remove the <m>solo</m> state of the previous object alone but does so for all other objects in the context as well, each of which will assume their set <m>active</m> flag thereafter.
+		<br/>
+		Same as sending the message <m>solo 0</m>
+	</description>
+</method>
 		<method name="exportattrs">
 			<arglist />
 			<digest>

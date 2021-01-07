@@ -62,6 +62,7 @@
 				<br/>5 = mute all activity
 				<br/>
 				<br/>Note that while recording is disabled, the automatic export upon recording completion (if an <at>exportname</at> is specified) is also disabled and previous files will not be overwritten.
+				<br/>Furthermore, the <at>active</at> flag is overriden by the <m>solo</m> state of the object
 			</description>
 		</attribute>
 	</attributelist>
@@ -81,6 +82,27 @@
 				<br/> The speed is set in Hz, analogous to the same <o>jit.mo.func</o> attribute.
 			</description>
 		</method>
+		<method name="solo">
+	<arglist />
+	<digest>
+		Toggle solo mode for operation
+	</digest>
+	<description>
+		According to the numeric argument, will toggle the object's recording/rendering behaviour in relation to other objects in the context
+		<br/>0 = use current <at>active</at> flag if no other object is running <m>@solo 1</m> or <m>@solo 2</m>, otherwise will set the object to <m>active 0</m> (bypass)
+		<br/>1 = toggle <at>active</at> operation mode to <m>1</m> (operate) along with other objects <m>@solo 1</m>, but not if any object is running <m>@solo 2</m>, in which case it will be muted
+		<br/>2 = unique operation, operate only this object. This will set all other objects' <at>active</at> flag to <m>5</m> (mute)
+	</description>
+</method>
+		<method name="unsolo">
+	<arglist />
+	<digest>
+		Remove all solo states in sibling objects
+	</digest>
+	<description>
+		The message <m>unsolo</m> does not remove the <m>solo</m> state of this object alone—as would the message <m>solo 0</m>—but does so for all other objects in the context as well.
+	</description>
+</method>
 	</methodlist>
 
 	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->

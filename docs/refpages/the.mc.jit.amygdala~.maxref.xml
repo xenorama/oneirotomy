@@ -4,14 +4,12 @@
 <c74object name="the.jit.amygdala~" module="jitter" category="Jitter System">
 
 	<digest>
-		Poke signal data to a poly-dimensional matrix for offline rendering.
+		Poke signal data to a named matrix and store progressions for non-realtime rendering
 	</digest>
 
 	<description>
 		Written by Tim Heinze © 2020, www.xenorama.com. <br/>
-		Capture signal data to a specified poly-dimensional jit.matrix for offline reading and rendering, controlled by <o>the.jit.thalamus</o>. Designed to replace a <o>jit.poke~</o> with flexible <at>dimcount</at> (by default: max. 13) and variable target plane.
-		<br/>
-		Its counterpart <o>the.mc.jit.amygala</o> is to be placed after any named matrix otherwise being populated by <o>jit.poke~</o> to iterate through the recorded frames at render rate.
+		Capture signal data to a specified <o>jit.matrix</o> for offline reading and rendering, controlled by <o>the.jit.thalamus</o>. Designed to replace a <o>jit.poke~</o> with flexible <at>dimcount</at> (by default: max. 13) and variable target plane. It records temporary blocks of matrices which are deleted upon completion of the recording process and compiled into a <m>jxf</m>-file to be read by an internal <o>jit.matrixset</o>. This requires the implementation of <o>node.script</o>.
 	</description>
 
 	<!--METADATA (REMOVE FOR SIMPLICITY) -->
@@ -57,13 +55,12 @@
 				Plane for cell value to be replaced by leftmost channel
 			</digest>
 			<description>
-				The plane in a cell whose value is replaced by leftmost channel in the multi-channel signal (default = 0)
+				The plane in a cell whose value is replaced by leftmost channel in the multi-channel signal (default = 0). The target plane can be changed dynamically with the <m>plane</m> message.
 			</description>
 		</objarg>
 	</objarglist>
 
 	<!--ATTRIBUTES (REMOVE FOR SIMPLICITY) -->
-
 <attributelist>
 	<attribute name="verbose" get="1" set="1" type="bool" size="1">
 		<digest>
@@ -84,8 +81,6 @@
 	<description>
 	Clear the compressed matrix before recording. Ensures that later video rendering will only add the recorded data. <br/>
 	<at>autoclear</at> is disabled (0) by default
-	<br/>
-	Unlike <o>the.mc.jit.amygdala</o>—where <at>autoclear</at> purges the actual target matrix—the matrix being cleared in this case is the recording (compressed) matrix.
 	</description>
 </attribute>
 <attribute name="exportname" get="1" set="1" type="symbol" size="1">
@@ -94,6 +89,17 @@
 	</digest>
 	<description>
 		Specify a unique name to export to after completion of the capturing process, managed by <o>the.jit.thalamus</o>. The resulting filetype is <m>jxf</m> (Jitter binary data file) and can be re-exported/imported using the <m>export</m> and <m>import</m> messages, respectively.
+		<br/>Same as <at>name</at>
+	</description>
+</attribute>
+<attribute name="name" get="1" set="1" type="symbol" size="1">
+	<digest>
+		Specify a unique name to write to.
+	</digest>
+	<description>
+		Specify a unique name to export to after completion of the capturing process, managed by <o>the.jit.thalamus</o>. The resulting filetype is <m>jxf</m> (Jitter binary data file) and can be re-exported/imported using the <m>export</m> and <m>import</m> messages, respectively.
+		<br/>
+		Same as <at>exportname</at>
 	</description>
 </attribute>
 <attribute name="active" get="1" set="1" type="int" size="1">
@@ -103,7 +109,7 @@
 	<description>
 		Set the active flag. There are 4 active states available suitable for different purposes:
 		<br/>
-		<br/>0 = ignore this object and poke signal data without recording
+		<br/>0 = bypass this object and poke signal data without recording
 		<br/>1 = operate normally (default); poke and record
 		<br/>2 = poke but do not record any new data
 		<br/>3 = (idle)
@@ -111,6 +117,7 @@
 		<br/>5 = mute all activity
 		<br/>
 		<br/>Note that while recording is disabled, the automatic export upon recording completion (if an <at>exportname</at> is specified) is also disabled and previous files will not be overwritten.
+		<br/>Furthermore, the <at>active</at> flag is overriden by the <m>solo</m> state of the object
 	</description>
 </attribute>
 	</attributelist>
@@ -162,6 +169,8 @@
 			<description>
 				If an <at>exportname</at> has previously been specified, the jxf-file will be written to the <m>dir</m> as specified by <o>the.jit.thalamus</o>.
 				<br/> If an optional argument is provided (symbol), a jxf-file with this name will be written to disk.
+				<br/> The resulting file is designed to populate a <o>jit.matrixset</o> which in return is being read from during offline rendering of complex matrix data.
+				<br/> An additional <m>json</m>-file is also written, holding information about the blocks of recorded data.
 			</description>
 		</method>
 		<method name="import">
@@ -176,17 +185,34 @@
 				<br/> If an optional argument is provided (symbol), it will be attempted to read a jxf-file with this name from disk.
 			</description>
 		</method>
+				<method name="solo">
+			<arglist />
+			<digest>
+				Toggle solo mode for operation
+			</digest>
+			<description>
+				According to the numeric argument, will toggle the object's recording/rendering behaviour in relation to other objects in the context
+				<br/>0 = use current <at>active</at> flag if no other object is running <m>@solo 1</m> or <m>@solo 2</m>, otherwise will set the object to <m>active 0</m> (bypass)
+				<br/>1 = toggle <at>active</at> operation mode to <m>1</m> (operate) along with other objects <m>@solo 1</m>, but not if any object is running <m>@solo 2</m>, in which case it will be muted
+				<br/>2 = unique operation, operate only this object. This will set all other objects' <at>active</at> flag to <m>5</m> (mute)
+			</description>
+		</method>
+				<method name="unsolo">
+			<arglist />
+			<digest>
+				Remove all solo states in sibling objects
+			</digest>
+			<description>
+				The message <m>unsolo</m> does not remove the <m>solo</m> state of this object alone—as would the message <m>solo 0</m>—but does so for all other objects in the context as well.
+			</description>
+		</method>
 	</methodlist>
 
 	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
 	<seealsolist>
 		<seealso name="the.jit.thalamus~"/>
-		<seealso name="the.mc.jit.amygdala"/>
-		<seealso name="the.jit.amygdala~"/>
-		<seealso name="the.jit.amygdala"/>
 		<seealso name="the.jit.cochlea~"/>
 		<seealso name="the.mc.pac~"/>
-		<seealso name="the.jit.retina"/>
 		<seealso name="the.cerebellum"/>
 	</seealsolist>
 
