@@ -29,6 +29,7 @@
 * _jit.anim.drive_ support (new object with detailed helpfile necessary)
 * create an idle, representative object for all children with their mutual attributes
 * print error messages for unsupported arguments/attributes
+* add _preview_ functionality to **the.jit.thalamus**
 
 
 
