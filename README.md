@@ -25,7 +25,7 @@ Provide a set of objects which support offline, frame-by-frame, hiQ rendering of
 #### Edit & Development:
 * advanced knowledge of Max/MSP/Jitter
 * [dictionaries](https://docs.cycling74.com/max7/refpages/dict)
-* [gen~](https://docs.cycling74.com/max7/refpages/gen~)
+* some [gen~](https://docs.cycling74.com/max7/refpages/gen~) for **the.mc.pac~**
 
 ## Nomenclature
 **Oneirotomy** (/ɒnɪˈrɒlədʒi/; from Greek ὄνειρον, oneiron, «dream»; and /tomé/; «cut, slice») is a neologism to be translated as _dream slice_, where individual frames of realtime video can be sliced and reproduced in non-realtime.
@@ -46,4 +46,4 @@ The creation of this library was inspired by [Julien Bayle's Post on the Cycling
 * the.jit.pinealis • perform framecheck
 * the.mc.jit.amygdala~ • replace a jit.poke~ object for non-realtime rebuilding
 * the.mc.pac~ • record audio for video renderings
-* a handful of sub-abstractions, to be disregarded during normal use
+* a handful of sub-abstractions, to be disregarded during normal use, perhaps interesting when developing further
