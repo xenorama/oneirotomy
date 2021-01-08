@@ -3,7 +3,7 @@ Tools for non-realtime Rendering of generative content in Max/MSP/Jitter
 Written by Tim Heinze © 2020, [www.xenorama.com](www.xenorama.com)
 
 ## Purpose
-Provide a set of objects which support offline, frame-by-frame, hiQ rendering of generative, ineractive content built in Max/MSP/Jitter. Designed to be implemented as intuitively as possible in any previously developed patching environment, limited only by the latter's complexity.
+Provide a set of **abstractions** which support offline, frame-by-frame, hiQ rendering of generative, ineractive content built in Max/MSP/Jitter. Designed to be implemented as intuitively as possible in any previously developed patching environment, limited only by the latter's complexity. Note that these are not _externals_ but **abstractions** and can be modified freely.
 
 #### Video application examples:
 * audio-reactive
@@ -47,3 +47,6 @@ The creation of this library was inspired by [Julien Bayle's Post on the Cycling
 * the.mc.jit.amygdala~ • replace a jit.poke~ object for non-realtime rebuilding
 * the.mc.pac~ • record audio for video renderings
 * a handful of sub-abstractions, to be disregarded during normal use, perhaps interesting when developing further
+
+## Limitations
+In the course of non-realtime rendering, all timed movements have to be captured beforehand to be iterated through during the rendering process which is to happen offline, at a later stage. While signals, data and matrices can be mapped to individual frames in the process, the use of some objects and algorithms is not as straight forward — especially those receiving their motion information from a running jit.world, which is disabled during rendering individual frame and triggered manually. This pertains mostly to the jit.mo.func objects which need their _pahse_ to be controlled by **the.jit.mojo** object. The use of _jit.anim.drive_ cannot be supported just yet and requires a manual substitution using max messages at the moment.
