@@ -122,6 +122,15 @@
 		The message <m>unsolo</m> does not remove the <m>solo</m> state of this object alone—as would the message <m>solo 0</m>—but does so for all other objects in the context as well.
 	</description>
 </method>
+<method name="getstate">
+<arglist />
+<digest>
+Query information about this object's current state
+</digest>
+<description>
+The message <m>getstate</m> will post relevant status information about this object to the Max Console and open the latter for viewing. Sending this message to <o>the.jit.thalamus</o> will do so for all objects in the current context. Send this message to monitor whether objects will record or render and whether a meaningful name has been allocated to them.
+</description>
+</method>
 	</methodlist>
 
 	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->

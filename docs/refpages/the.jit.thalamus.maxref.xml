@@ -350,6 +350,15 @@
 		Same as sending the message <m>solo 0</m>
 	</description>
 </method>
+<method name="getstate">
+<arglist />
+<digest>
+Query information about current objects in the context
+</digest>
+<description>
+The message <m>getstate</m> will post relevant status information about every object in the current context to the Max Console and open the latter for viewing. Sending this message to individual objects will do so for the respective ones only. Send this message to monitor which objects will record or render and whether a meaningful name has been allocated to them.
+</description>
+</method>
 		<method name="exportattrs">
 			<arglist />
 			<digest>
