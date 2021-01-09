@@ -20,6 +20,7 @@ Provide a set of **abstractions** which support offline, frame-by-frame, hiQ ren
 * add the resulting folder to Max's searchpath, i.e. the _packages_ folder
 * check the helpfiles and reference pages of all objects to get an overview, especially **the.jit.thalamus** lying at the core of the process
 * check also the limitations of certain work-flows and objects, as not all functionality can be provided natively and/or instantaneously
+* generally, consider which parts of your patch translate from timing-sensitive or signal domain to video domain
 * add the objects in documented ways to any jit.world's rendering process in Max
 
 #### Edit & Development:
