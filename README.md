@@ -90,8 +90,8 @@ Depending on whether a video _length_ was specified before recording audio, it e
 **the.jit.mojo** replaces the _speed_ attribute of any **jit.mo.func** object in the patch to control its _phase_ whenever jit.world is not running (like in non-realtime mode). It must therefore connect to any **jit.mo.func** object producing matrix data and will handle the rest.
 
 ## Feedback and development
-Please share your experience and ideas for development at any time. There will be plenty to discuss and optimize for sure.
-We shall thank you very much in advance for any input.
+Please share your experience and ideas for development at any time. There will be plenty to discuss and optimize for sure, given that many territories of Max patching have hardly been touched upon in the course of developing this library. 
+We shall thank you very much in advance for any input or feedback.
 
 Tim Heinze
-Xenorama
+**Xenorama**
