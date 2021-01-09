@@ -22,6 +22,11 @@ Provide a set of **abstractions** which support offline, frame-by-frame, hiQ ren
 * check also the limitations of certain work-flows and objects, as not all functionality can be provided natively and/or instantaneously
 * generally, consider which parts of your patch translate from timing-sensitive or signal domain to video domain
 * add the objects in documented ways to any jit.world's rendering process in Max
+* specify all desired settings to **the.jit.thalamus** _prior_ to recording and subseuent rendering (i.e., chaning the _framerate_ is likely to purge all previously captured data or to distort the results)
+Note that since these objects are **abstractions**, they cannot link with an **attrui** nor can they respond to the **universal** object for example
+
+#### General Approach
+In **Oneirotomy**, the approach to render lossless hiQ video is to capture and record everything that is subject to precise timing and which operates at high priority in the scheduler before starting the step-by-step rendering process. The latter is performed _offline_ and will ignore all realtime data while rebuilding what has been recorded. Needless to say, the rendering times may extend heavily.
 
 #### Edit & Development:
 * advanced knowledge of Max/MSP/Jitter
@@ -37,7 +42,7 @@ All objects carry names of anatomic—or related—terms pertaining to their equ
 Used to avoid conflicts between other people's abstractions and externals.
 
 ## Related Topics
-The creation of this library was inspired by [Julien Bayle's Post on the Cycling '74 Forum](https://cycling74.com/forums/offline-rendering-frame-per-frame-and-hiq-video-production-with-max) and the current need of mine to make visual content produced with Jitter available to a complex hiQ video. The debate about techniques to capture and render generative video content reliably and in any quality shall hopefully profit from it.
+The creation of this library was inspired by [Julien Bayle's Post on the Cycling '74 Forum](https://cycling74.com/forums/offline-rendering-frame-per-frame-and-hiq-video-production-with-max) and the current need of mine to make visual content produced with Jitter available to a complex hiQ video for a multi-layered performance. The debate about techniques to capture and render generative video content reliably and in any quality shall hopefully profit from it likewise.
 
 ## Contents
 * the.jit.thalamus • core handling of offline rendering and recording
@@ -51,6 +56,7 @@ The creation of this library was inspired by [Julien Bayle's Post on the Cycling
 
 ## Limitations
 In the course of non-realtime rendering, all timed movements have to be captured beforehand to be iterated through during the rendering process which is to happen offline, at a later stage. While signals, data and matrices can be mapped to individual frames in the process, the use of some objects and algorithms is not as straight forward — especially those receiving their motion information from a running jit.world, which is disabled during rendering individual frame and triggered manually. This pertains mostly to the jit.mo.func objects which need their _phase_ to be controlled by **the.jit.mojo** object. The use of _jit.anim.drive_ cannot be supported just yet and requires a manual substitution using max messages at the moment.
+Furthermore, the use of a **jit.world** render context is required and contexts hosted by a **jit.gl.render** cannot be supported without further ado.
 
 # General Implementation
 This system comes into play wherever timing-sensitive content (like _signals_ or _timed data_) translates into video content, eventually. Basically, the provided objects are to be inserted as late in the data chain (as close to the matrix/texture domain) as possible and as early as necessary (i.e. when one value controls several pieces of video content in perhaps different ways).
@@ -82,3 +88,10 @@ Depending on whether a video _length_ was specified before recording audio, it e
 
 ### Control progression of **jit.mo.func** objects during offline rendering
 **the.jit.mojo** replaces the _speed_ attribute of any **jit.mo.func** object in the patch to control its _phase_ whenever jit.world is not running (like in non-realtime mode). It must therefore connect to any **jit.mo.func** object producing matrix data and will handle the rest.
+
+## Feedback and development
+Please share your experience and ideas for development at any time. There will be plenty to discuss and optimize for sure.
+We shall thank you very much in advance for any input.
+
+Tim Heinze
+Xenorama
