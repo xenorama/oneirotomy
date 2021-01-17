@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="the.cerebellum" module="jitter" category="Jitter System">
+
+	<digest>
+		Perform a comprehensive frame check on an audio buffer~ accompanying a rendered video
+	</digest>
+
+	<description>
+		Written by Tim Heinze © 2020, www.xenorama.com. <br/>
+		Scan through an audio buffer~ or sample file in steps of video frames. The audio frames are captured, frozen and windowed as FFT-frames to compare a movie-file or image sequence, for instance with <o>the.jit.pinealis</o>.
+		To save time and memory, a coarse frame check can be applied when working with large files.
+	</description>
+
+	<!--METADATA (REMOVE FOR SIMPLICITY) -->
+	<metadatalist>
+		<metadata name="author">Tim Heinze</metadata>
+		<metadata name="tag">Xenorama</metadata>
+		<metadata name="tag">Offline Video Rendering</metadata>
+		<metadata name="tag">Jitter System</metadata>
+	</metadatalist>
+
+	<!--INLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--OUTLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--ARGUMENTS-->
+	<objarglist>
+		<objarg name="render-context" optional="0" type="symbol" size="1">
+			<digest>
+				Specify a named render context to bind to.
+			</digest>
+			<description>
+				For convenience, this can be identical to one's world render context name but is to be considered independent. <o>the.jit.thalamus</o> with a unique context name is required running in parallel for all members of the offline render family to sync and respond to.
+			</description>
+		</objarg>
+		<objarg name="buffer-name" optional="1" type="symbol" size="1">
+			<digest>
+				Specify a <o>buffer~</o> to reaad from
+			</digest>
+			<description>
+				Any present buffer~ can be read from. Change the audio channel with the <at>channel</at> attribute/message.
+			</description>
+		</objarg>
+		<objarg name="autostart" optional="1" type="bool" size="1">
+			<digest>
+				Start with the first frame on load
+			</digest>
+			<description>
+				See also the <at>autostart</at> listing.
+			</description>
+		</objarg>
+	</objarglist>
+
+	<!--ATTRIBUTES (REMOVE FOR SIMPLICITY) -->
+	<attributelist>
+	<attribute name="buffer" get="1" set="1" type="symbol" size="1">
+		<digest>
+			Specify a <o>buffer~</o> to reaad from
+		</digest>
+		<description>
+			Any present buffer~ can be read from. Change the audio channel with the <at>channel</at> attribute/message.
+		</description>
+	</attribute>
+	<attribute name="file" get="1" set="1" type="symbol" size="1">
+		<digest>
+			Specify a sample file to import from disk
+		</digest>
+		<description>
+			The sample file under the valid path will be imported into the buffer and read from.
+		</description>
+	</attribute>
+	<attribute name="autostart" get="1" set="1" type="bool" size="1">
+		<digest>
+		Start with the first frame on load
+		</digest>
+		<description>
+		Upon instantiation, the <m>autostart</m> flag will immediately start the audio playback of the first frame, if set to <m>1</m>.
+		<br/>
+		The default is 0 (mute)
+		</description>
+</attribute>
+<attribute name="window" get="1" set="1" type="bool" size="1">
+	<digest>
+		Perform windowing to smoothen audio output (requires realtime scan of audiofile)
+	</digest>
+	<description>
+		By default, <o>the.jit.tinnitus~</o> will calculate every frame on input and hence does not apply a smooth windowing function between the frames. When <at>window</at> is set to <m>1</m> (default), the entire audio file is played back and analysed fully to support smooth windowing. Additionally, the rightmost outlet will output a spectral <m>jit_matrix</m> containing a preview of the entire audio spectogram. Upon recalling individual frames, a vertical pointer will highlight the currently audible frame. Note that only calculated frames will yield audio output when called upon and hence the length of the audiofile has to pass before the full spectrum is available. Use a <o>jit.pwindow</o> to monitor the status. Notifications are sent to the max window for start and finish of spectral analysis.
+		<br/>
+		Deactivate this function when working with very long videofiles and audiofiles and if a coarse frame check suffices.
+	<br/>
+	The default is 1 (scan entire buffer for clean frame output)
+	</description>
+</attribute>
+	<attribute name="channel" get="1" set="1" type="int" size="1">
+		<digest>
+			Set the audio channel to read from
+		</digest>
+		<description>
+			If the buffer or audiofile hosts more than one audio-channel, the message <m>channel</m> followed by a positive integer number will start reading from the respective audio-channel. The Number is clipped to the maximum size.
+			<br/>
+			The default channel is 1.
+		</description>
+	</attribute>
+	<attribute name="fps" get="1" set="1" type="float" size="1">
+		<digest>
+			Set the frames per second to match video
+		</digest>
+		<description>
+			If a custom video is loaded into <o>the.jit.pinealis</o> with a different framerate, this can be adapted to match.
+			<br/>
+			An fps of 30. is expected and set by default.
+		</description>
+	</attribute>
+	<attribute name="pws" get="1" set="1" type="int" size="1">
+		<digest>
+			Use mouse information on a <o>jit.pwindow</o> to scrub through frames
+		</digest>
+		<description>
+			If a <o>jit.pwindow</o> is attached to the rightmost outlet of <o>the.jit.tinnitus~</o>, the former's rightmost outlet can be routed back into <o>the.jit.tinnitus~</o>'s rightmost inlet to click-scrub through the spectrogram.
+			<br/>Specifying the pwindow size <at>pws</at> will interpret the mouse data accordingly.
+			<br/> The default is 80 as mostly <o>jit.pwindow</o> defaults to <m>dim 80 60</m>. One may use the <o>getattr</o> to automatically grab the preview window's dim attribute to set the <at>pws</at>. However, this information is not updated (in Max 8.1.7) and the <o>jit.pwindow</o> needs to be removed and re-instantiated (undo) for the attribute to be refetched by <o>getattr</o> when choosing this method and before scrubbing with the mouse.
+		</description>
+	</attribute>
+</attributelist>
+
+	<!--MESSAGES-->
+
+	<methodlist>
+		<method name="int">
+			<arglist/>
+			<digest>
+				Frame to freeze and playback
+			</digest>
+			<description>
+				An integer value will read an fft-frame from the named buffer, in steps specified by the <m>fps</m> listing of <o>the.jit.thalamus</o> to match the progression of the previously rendered videofile.
+				<br/>
+				The default framerate is <m>30</m> frames per second, equalling <m>1470 samples</m> between successive fft-frames. See also the <at>fps</at> listing.
+			</description>
+		</method>
+		<method name="bang">
+			<arglist/>
+			<digest>
+				Start/stop playback
+			</digest>
+			<description>
+				Depending on the <at>autostart</at> attribute, or the current state of playback, will either stop or start the playback.
+			</description>
+		</method>
+		<method name="export">
+			<arglist/>
+			<digest>
+				Save spectrogram to disk
+			</digest>
+			<description>
+				If <at>window</at> is set to <m>1</m>, the resulting spectrogram can be exported as Jitter binary data file and read into <o>the.jit.tinnitus</o> using the <m>import</m> message.
+			</description>
+		</method>
+		<method name="import">
+			<arglist/>
+			<digest>
+				Load spectrogram from disk
+			</digest>
+			<description>
+				Will set <at>window</at> to <m>1</m> and load a previously stored spectrogram as Jitter binary data file into <o>the.jit.tinnitus</o>. The loaded data makes the reference to a <o>buffer~</o> redundant and audio is being rebuilt from the data alone.
+			</description>
+		</method>
+		<method name="exportimage">
+			<arglist>
+				<arg name="filetype" optional="1" type="symbol" />
+				<arg name="scale-to-videoframes" optional="1" type="symbol" />
+			</arglist>
+			<digest>
+				Save spectrogram as picture file
+			</digest>
+			<description>
+				Save spectrogram as picture file as <m>png</m> unless the second argument is <m>tiff</m> or <m>jpeg</m>. This pertains only to the <m>amplification</m> data of the FFT bins and not their phase, therefore the exported image cannot replicate an audio signal but can be used as mapping foundation for further visual processing.
+				<br/>To support the latter in the context of the corresponding videofile, the image can be scaled to the absolute number of videoframes at its framerate, mostly yielding a lower resolution while timing remains unaffected. In this case, the absolute frame in the video will correlate with the frame of the spectrogram of the audio at the same position.
+				<br/>The argument <m>scaled</m> can be added the <m>exportimage</m> message—also if a filetype has been specified as second argument—to scale the spectrogram.
+			</description>
+		</method>
+		<method name="clear">
+			<arglist/>
+			<digest>
+				Remove data from memory
+			</digest>
+			<description>
+				Will clear the internal jit_matrix and remove its contents from memory, as well as output a blank matrix and zero signal.
+			</description>
+		</method>
+	</methodlist>
+
+	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
+	<seealsolist>
+		<seealso name="the.jit.thalamus~"/>
+		<seealso name="the.jit.pinealis"/>
+	</seealsolist>
+
+</c74object>

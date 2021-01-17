@@ -37,3 +37,11 @@
 * update reference pages
 * update helpfiles
 * create another branch for changes
+
+## Notes
+
+Fruitful new year everyone—!
+This weekend a pretty big project starts to take shape and I have spent the best part of the last couplo weeks compiling a library to take all my recent audio-based Jitter-work to the renderer. Given we are working with an Orchestra and our own multichannel sounds a lot is to be rendered in hiQ without frame drops directly from Jitter (in my case at least) in all manner of forms. So far, testing any of my realtime-audio-setups has yielded next to 100% of the expected results in both .mov and image sequences rendered offline, albeit, I had to tweak the setting here and there. Hence I am of course happy to share the abstractions in use here.
+While many of you may come up with prompt limitations in your setups, it'll be super interesting to progress from here and see how it can be supported. Partly for my own overview and troubleshooting procedures, I've documented all abstractions pretty meticulously in form of helpfiles and reference pages (not so much comments) given they could otherwise not be handled intuitively. Feedback of course welcome.
+
+https://github.com/xenorama/oneirotomy/tree/dev-com
