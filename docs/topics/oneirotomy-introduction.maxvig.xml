@@ -1,42 +1,49 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <?xml-stylesheet href="_c74_vig.xsl" type="text/xsl"?>
-<vignette name="Xenorama Object Functional Overview" package="Xenorama">
+<vignette name="Oneirotomy Object Functional Overview" package="Oneirotomy">
   <metadatalist>
     <metadata name="author">Tim Georg Heinze</metadata>
     <metadata name="tag">Xenorama</metadata>
   </metadatalist>
 
-  <h1>Xenorama Object Functional Overview</h1>
+  <h1>Oneirotomy Object Functional Overview</h1>
 
-	<h2>Performance Management</h2>
+	<h2>Rendering Manager</h2>
   <ul>
-    <li><openfilelink filename="xen.app.switch.maxhelp">xen.app.switch</openfilelink> - Schedule internal application processing</li>
-    <li><openfilelink filename="xen.max.quit.maxhelp">xen.max.quit</openfilelink> - Shutdown or reboot the current Max application</li>
-    <li><openfilelink filename="xen.dsp.fade~.maxhelp">xen.dsp.fade~</openfilelink> - Linear signal fade in/out.</li>
-    <li><openfilelink filename="xen.jit.fade.maxhelp">xen.jit.fade</openfilelink> - Linear black masking</li>
-    <li><openfilelink filename="xen.tcp.host.maxhelp">xen.tcp.host</openfilelink> - Exchange bangs with a remote UDP pair</li>
-    <li><openfilelink filename="xen.sys.audio~.maxhelp">xen.sys.audio~</openfilelink> - Control system audio outside of Max</li>
+    <li><openfilelink filename="the.jit.thalamus.maxhelp">the.jit.thalamus</openfilelink> - Manage offline rendering of realtime audiovisual content</li>
   </ul>
 
-  <h2>Network Connection</h2>
+  <h2>Domain Translation Capture</h2>
   <ul>
-    <li><openfilelink filename="xen.ip.check.maxhelp">xen.ip.check</openfilelink> - Ping IP-addresses</li>
-    <li><openfilelink filename="xen.vpn.connect.maxhelp">xen.vpn.connect</openfilelink> - Manage available VPN connections</li>
+    <li><openfilelink filename="the.cochlea~.maxhelp">the.cochlea~</openfilelink> - Frame-based storage of running MSP audio</li>
+    <li><openfilelink filename="the.mc.jit.amygdala~.maxhelp">the.mc.jit.amygdala~</openfilelink> - Poke signal data to a named matrix and store progressions for non-realtime rendering</li>
+    <li><openfilelink filename="the.cerebellum.maxhelp">the.cerebellum~</openfilelink> - Capture timing-sensitive data for offline video rendering</li>
+    <li><openfilelink filename="the.jit.mojo">the.jit.mojo</openfilelink> - Control a <o>jit.mo.func</o> object in non-realtime</li>
   </ul>
 
-  <h2>Process Monitoring</h2>
+  <h2>Timeline Approximation</h2>
   <ul>
-    <li><openfilelink filename="xen.mc.hijack~.maxhelp">xen.mc.hijack~</openfilelink> - Capture and save multichannel audio output to disk</li>
-    <li><openfilelink filename="xen.screenshot.maxhelp">xen.screenshot</openfilelink> - Capture screenshots at regular intervals</li>
+    <li><openfilelink filename="the.circadian.maxhelp">the.circadian</openfilelink> - Provide a running timeline from <o>the.jit.thalamus</o></li>
   </ul>
 
-    Expore the <b><link type="tutorial" module="Xenorama" name="00_xenoramatutorials">Xenorama Tutorials</link></b>
+
+  <h2>Context Audio Recording</h2>
+  <ul>
+    <li><openfilelink filename="the.mc.pac~.maxhelp">the.mc.pac~</openfilelink> - Record multi-channel MSP audio in line with a frame-based render process</li>
+  </ul>
+
+    <h2>Framecheck and Post-Pro Prep</h2>
+    <ul>
+      <li><openfilelink filename="the.jit.pinealis.maxhelp">the.jit.pinealis</openfilelink> - Perform a simple framecheck on offline rendered video files</li>
+      <li><openfilelink filename="the.jit.tinnitus~.maxhelp">the.jit.tinniuts~</openfilelink> - Perform a comprehensive frame check on an audio buffer~ accompanying a rendered video</li>
+    </ul>
+    Explore also the <b><link type="tutorial" module="Xenorama" name="00_xenoramatutorials">Xenorama Tutorials</link></b>
 
   <cr/>
 
   <seealsolist>
 		<!-- <seealso name="timing_events_topic" module="topics" type="vignette" />	-->
-    <seealso name="xen.vpn.connect" />
+    <seealso name="the.jit.thalamus" />
   </seealsolist>
 
 </vignette>

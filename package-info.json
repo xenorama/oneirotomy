@@ -1,0 +1,39 @@
+{
+	"author" : "Tim Georg Heinze",
+	"description" : "Toolkit Offline Rendering in Jitter",
+	"displayname" : "Oneirotomy",
+	"extends" : "",
+	"extensible" : 0,
+	"homepatcher" : "the.oneirotomy.maxpat",
+	"max_version_max" : "none",
+	"max_version_min" : "8.1.7",
+	"name" : "Oneirotomy Tutorials",
+	"os" : 	{
+		"macintosh" : 		{
+			"platform" : [ "ia32", "x64" ],
+			"min_version" : "10.14.x"
+		}
+,
+		"windows" : 		{
+			"platform" : [ "ia32", "x64" ],
+			"min_version" : "none"
+		}
+
+	}
+,
+	"package_extra" : 	{
+
+	}
+,
+	"tags" : [ "Jitter", "Render", "generative", "audiovisual", "hiQ", "Xenorama", "Tutorials" ],
+	"version" : "1.0.2",
+	"website" : "https://xenorama.com",
+	"filelist" : 	{
+		"patchers" : [ "the.oneirotomy.maxpat"],
+		"media" : [  ],
+		"docs" : [  ]
+	}
+,
+	"c74install" : 1,
+	"installdate" : 3683483921
+}
