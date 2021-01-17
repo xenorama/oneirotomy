@@ -1,0 +1,13 @@
+max oblast "oneirotomy objects" the.jit.thalamus;
+max oblast "oneirotomy objects" the.cerebellum;
+max oblast "oneirotomy objects" the.mc.jit.amygdala~;
+max oblast "oneirotomy objects" the.cochlea~;
+max oblast "oneirotomy objects" the.mc.cochlea~;
+max oblast "oneirotomy objects" the.mc.pac~;
+max oblast "oneirotomy objects" the.jit.pinealis;
+max oblast "oneirotomy objects" the.jit.pinealis;
+max oblast "oneirotomy objects" the.jit.pinealis;
+max oblast "oneirotomy objects" the.jit.retina;
+max oblast "oneirotomy objects" the.jit.mojo;
+max oblast "oneirotomy objects" the.jit.circadian;
+max oblast "oneirotomy objects" the.jit.tinnitus~;

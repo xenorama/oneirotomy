@@ -1,0 +1,14 @@
+max db.addvirtual alias jit.thalamus the.jit.thalamus;
+max db.addvirtual alias cerebellum the.cerebellum;
+max db.addvirtual alias mc.jit.amygdala~ the.mc.jit.amygdala~;
+max db.addvirtual alias cochlea~ the.cochlea~;
+max db.addvirtual alias mc.cochlea~ the.mc.cochlea~;
+max db.addvirtual alias mc.pac~ the.mc.pac~;
+max db.addvirtual alias jit.epiphysis the.jit.pinealis;
+max db.addvirtual alias the.jit.epiphysis the.jit.pinealis;
+max db.addvirtual alias jit.pinealis the.jit.pinealis;
+max db.addvirtual alias jit.retina the.jit.retina;
+max db.addvirtual alias jit.mojo the.jit.mojo;
+max db.addvirtual alias jit.circadian the.jit.circadian;
+max db.addvirtual alias jit.tinnitus~ the.jit.tinnitus~;
+
