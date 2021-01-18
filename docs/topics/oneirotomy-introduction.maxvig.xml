@@ -17,8 +17,8 @@
   <ul>
     <li><openfilelink filename="the.cochlea~.maxhelp">the.cochlea~</openfilelink> - Frame-based storage of running MSP audio</li>
     <li><openfilelink filename="the.mc.jit.amygdala~.maxhelp">the.mc.jit.amygdala~</openfilelink> - Poke signal data to a named matrix and store progressions for non-realtime rendering</li>
-    <li><openfilelink filename="the.cerebellum.maxhelp">the.cerebellum~</openfilelink> - Capture timing-sensitive data for offline video rendering</li>
-    <li><openfilelink filename="the.jit.mojo">the.jit.mojo</openfilelink> - Control a <o>jit.mo.func</o> object in non-realtime</li>
+    <li><openfilelink filename="the.cerebellum.maxhelp">the.cerebellum</openfilelink> - Capture timing-sensitive data for offline video rendering</li>
+    <li><openfilelink filename="the.jit.mojo.maxhelp">the.jit.mojo</openfilelink> - Control a <o>jit.mo.func</o> object in non-realtime</li>
   </ul>
 
   <h2>Timeline Approximation</h2>
@@ -35,7 +35,7 @@
     <h2>Framecheck and Post-Pro Prep</h2>
     <ul>
       <li><openfilelink filename="the.jit.pinealis.maxhelp">the.jit.pinealis</openfilelink> - Perform a simple framecheck on offline rendered video files</li>
-      <li><openfilelink filename="the.jit.tinnitus~.maxhelp">the.jit.tinniuts~</openfilelink> - Perform a comprehensive frame check on an audio buffer~ accompanying a rendered video</li>
+      <li><openfilelink filename="the.jit.tinnitus~.maxhelp">the.jit.tinnitus~</openfilelink> - Perform a comprehensive frame check on an audio buffer~ accompanying a rendered video</li>
     </ul>
     Explore also the <b><link type="tutorial" module="Xenorama" name="00_xenoramatutorials">Xenorama Tutorials</link></b>
 
