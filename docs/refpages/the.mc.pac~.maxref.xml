@@ -12,6 +12,16 @@
 		PAC stands for «Primary Auditory Cortex» and represents an object that allows recording of multi-channel MSP audio prior to rendering video frame-by-frame, managed by <o>the.jit.thalamus</o>. Useful when rendering hiQ video from audio-reactive patches, the result is the corresponding audio to the final video.
 	</description>
 
+	<discussion>
+		<o>the.jit.thalamus</o> providing a central context is required in the enviroment.
+		<br/>
+		<br/>
+	 	While there are many simple strategies available in Max to record audio to disk, <o>the.mc.pac~</o> differs inasmuch as it synchronises tightly to the bound context of <o>the.jit.thalamus</o> and records multi-channel MSP audio matching the video length and saves it to the same directory. It needs no manual toggle to record audio but receives this information internally. It is not necessary for the rendering process, if the source audio file is to remain unchanged, but comes into play when signal processing is performed to influence the final soundtrack in Max/MSP.
+		<br/>
+		<br/>
+		P.A.C. stands for the <b>primary auditory cortex</b>, which lies in the superior temporal gyrus of the temporal lobe and extends into the lateral sulcus and the transverse temporal gyri (also called Heschl's gyri). Final sound processing is then performed by the parietal and frontal lobes of the human cerebral cortex. Animal studies indicate that auditory fields of the cerebral cortex receive ascending input from the auditory thalamus and that they are interconnected on the same and on the opposite cerebral hemispheres.
+	</discussion>
+
 	<!--METADATA (REMOVE FOR SIMPLICITY) -->
 	<metadatalist>
 		<metadata name="author">Tim Heinze</metadata>

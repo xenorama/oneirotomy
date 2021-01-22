@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="_c74_vig.xsl" type="text/xsl"?>
+<vignette name="Oneirotomy: Development" package="Oneirotomy">
+  <metadatalist>
+    <metadata name="author">Tim Georg Heinze</metadata>
+    <metadata name="tag">Xenorama</metadata>
+  </metadatalist>
+
+  <h1>Oneirotomy: Development</h1>
+
+	<h2>Open source and free to edit</h2>
+  <p>
+    All the objects shipped with the package are <b>abstractions</b> and can thus be freely edited to your liking.
+    <br/>
+    The entire package is available on Xenorama's <a href="https://github.com/xenorama/oneirotomy">Github</a> to download.
+  </p>
+
+  <h2>Desired solutions</h2>
+  <p>
+    The package was produced and compiled starting out in December 2020 and there are still many functions which may not be supported yet, dysfunctional or not obvious on how to achieve them. It would be highly appreciated, if experienced bugs can be reported via the github-page, as well as, of course, suggestions for improvement.
+  </p>
+
+  Website: <a href="https://xenorama.com">www.xenorama.com</a>
+  <br/>
+  <br/>
+    Back to the <b><link type="vignette" module="Oneirotomy" name="oneirotomy_table_of_contents_topic">Package Topics</link></b>
+
+  <cr/>
+
+  <seealsolist>
+		<!-- <seealso name="timing_events_topic" module="topics" type="vignette" />	-->
+    <seealso name="the.jit.thalamus" />
+  </seealsolist>
+
+</vignette>

@@ -9,12 +9,19 @@
 
 	<description>
 		Written by Tim Heinze © 2020, www.xenorama.com. <br/>
-		Outputs frame-based or normalised timeline progression during realtime playback or offline rendering to support the approximation of a sequencer.
-		<br/>
-		<br/>
-		Connect this object to any parameter you wish to automate via mapping objects of choice, like <o>scale</o>, <o>functon</o>, <o>mc.evolve</o>, <o>table</o>, <o>funbuff</o>, etc.
-		<br/> If a fixed <m>length</m> is set in <o>the.jit.thalamus</o>, outputs frame count, normalised position (0.-1.) and boolean values for recording/rendering modes respectively, as well as the total frame count in the timeline.
+		Outputs frame-based or normalised timeline progression during realtime playback or offline rendering to support the approximation of a sequencer. Current operation modes of the bound context provided by <o>the.jit.thalamus</o> are output at high priority to prepare respective processes.
 	</description>
+
+	<discussion>
+		<o>the.jit.thalamus</o> providing a central context is required in the enviroment.
+		<br/>
+		<br/>
+		Connect this object to any parameter you wish to automate via mapping objects of choice, like <o>scale</o>, <o>functon</o>, <o>mc.evolve</o>, <o>table</o>, <o>funbuff</o>, etc., alsong the timeline of the final video.
+		<br/> If a fixed <m>length</m> is set in <o>the.jit.thalamus</o>, it outputs frame count, normalised position (0.-1.) and boolean values for recording/rendering modes respectively, as well as the total frame count in the timeline.
+		<br/>
+		<br/>
+		A <b>circadian clock</b>, or circadian oscillator, is a biochemical oscillator that cycles with a stable phase and is synchronized with solar time.
+	</discussion>
 
 	<!--METADATA (REMOVE FOR SIMPLICITY) -->
 	<metadatalist>

@@ -9,8 +9,26 @@
 
 	<description>
 		Written by Tim Heinze © 2020, www.xenorama.com.
-		<br/> Synchronised with a render context, performs and manages a linear offline rendering process frame-by-frame. When used in conjunction with other related objects, tight synchronisation of realtime MSP events can be rendered in high resolution and framerates, respectively.
+		<br/> Synchronised with a render context hosted by <o>jit.world</o>, performs and manages a linear offline rendering process frame-by-frame. When used in conjunction with other related objects, tight synchronisation of realtime MSP and other timing events can be rendered in high resolution and framerates, respectively.
 	</description>
+
+	<discussion>
+		This object lies at the core of every offline-rendering process in the <link type="vignette" module="Oneirotomy" name="oneirotomy-00_introduction">Oneirotomy-package</link>. It currently supports render contexts hosted by <o>jit.world</o> only, for reasons explained <link type="vignette" module="Oneirotomy" name="oneirotomy-03_known-limitations">here</link>. All three outlets of <o>jit.world</o> need to be connected to the rightmost inlet of <o>the.jit.thalamus</o> for the latter to receive
+		<ul>
+			<li>the matrices to render as video</li>
+			<li>render bangs, and</li>
+			<li>information about the current state of <o>jit.world</o></li>
+		</ul>
+		Its rightmost outlet connects to the inlet of <o>jit.world</o> to
+		<ul>
+				<li>send individual render bangs while <o>jit.world</o> is disabled</li>
+		</ul>
+		Double-clicking the object or sending an <m>open</m> message will pull up a floating window as GUI to monitor and toggle recording/rendering processes.
+		<br/>All desired rendering parameters can be set manually in the 'Settings'-tab (or by sending the <m>settings</m> message), all of which can be hard-coded to the object box or sent as Max messages temporarily.
+		<br/>
+		<br/>
+		The <b>thalamus</b> (from Greek θάλαμος, "chamber") is a large mass of gray matter located in the dorsal part of the diencephalon (a division of the forebrain). Nerve fibers project out of the thalamus to the cerebral cortex in all directions, allowing hub-like exchanges of information. It has several functions, such as relaying of sensory signals, including motor signals to the cerebral cortex and the regulation of consciousness, sleep, and alertness.
+	</discussion>
 
 	<!--METADATA (REMOVE FOR SIMPLICITY) -->
 	<metadatalist>
@@ -194,6 +212,14 @@
 	The default is 0 (no <o>jit.gl.tf</o> support), the <at>fsaa</at> setting is by default on and would otherwise be overriden by <at>tf_support</at>.
 	</description>
 </attribute>
+<attribute name="ae" get="1" set="1" type="bool" size="1">
+	<digest>
+		Play classic Adobe After Effects sounds after rendering
+	</digest>
+	<description>
+		When set to 1 (default!), will play back the classic Adobe After Effects sound upon rendering completion. However, if DSP was disabled prior to rendering, this setting will not toggle the digital signal processing.
+	</description>
+</attribute>
 	</attributelist>
 
 		<!--MESSAGES-->
@@ -261,6 +287,15 @@
 			</digest>
 			<description>
 				All attributes can be set and operations performed in the GUI.
+			</description>
+		</method>
+		<method name="settings">
+			<arglist />
+			<digest>
+				Open the settings-GUI
+			</digest>
+			<description>
+				Opens the specific window managing the render and recording settings, all of which can be hard-coded or sent as Max messages.
 			</description>
 		</method>
 		<method name="close">

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="_c74_vig.xsl" type="text/xsl"?>
+<vignette name="Oneirotomy Package Topics" package="oneirotomy">
+  <metadatalist>
+    <metadata name="author">Tim Heinze</metadata>
+    <metadata name="tag">Jitter</metadata>
+    <metadata name="tag">MSP</metadata>
+    <metadata name="tag">Xenorama</metadata>
+    <metadata name="tag">Render</metadata>
+  </metadatalist>
+
+<h1>
+Oneirotomy Package Topics
+</h1>
+
+<p>
+<ul>
+<li><link type="vignette" module="oneirotomy" name="oneirotomy-00_introduction">Purpose and explanation of this package</link></li>
+<li><link type="vignette" module="oneirotomy" name="oneirotomy-01_object-overview">Learn about available objects</link></li>
+<li><link type="vignette" module="oneirotomy" name="oneirotomy-02_implementation">Guidelines on the implementation without altering your Jitter/MSP patch or its queue</link></li>
+<li><link type="vignette" module="oneirotomy" name="oneirotomy-03_known-limitations">Among unforeseeable, individually complex strategies in the generative domain, there are known limitations in the current version</link></li>
+<li><link type="vignette" module="oneirotomy" name="oneirotomy-04_workarounds">How can certain limitations be bypassed or handled specifically</link></li>
+<li><link type="vignette" module="oneirotomy" name="oneirotomy-05_development">Do develop further, send feedback or suggestions about improvements</link></li>
+</ul>
+</p>
+
+  <seealsolist>
+    <seealso name="the.jit.thalamus"/>
+  </seealsolist>
+</vignette>

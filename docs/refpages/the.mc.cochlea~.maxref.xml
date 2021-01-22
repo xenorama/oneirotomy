@@ -9,10 +9,16 @@
 
 	<description>
 		Written by Tim Heinze © 2020, www.xenorama.com. <br/>
-		Synchronised to a parent render context of <o>the.jit.rec.fbf</o>, stores realtime mutichannel MSP audio into a temporary jitter matrix to read from during an offline render process.
+		Synchronised to a parent render context of <o>the.jit.thalamus</o>, stores realtime mutichannel MSP audio to read from during an offline render process.
 		<br/>
 		Replace any <o>mc.snapshot~</o> controlling video frames by this object.
 	</description>
+
+	<discussion>
+		Replace any <o>mc.snapshot~</o> controlling video frames by this object. As opposed to <o>mc.snapshot~</o>, it does not natively support a fixed 'interval' and the <at>active</at> flag pertains to the attribute used commonly among objects in the <link type="vignette" module="Oneirotomy" name="oneirotomy-00_introduction">Oneirotomy-package</link>. If a fixed rate was previously specified and is still desired, the resulting data from <o>mc.snapshot~</o> can be further routed through the queue and finally captured by <o>the.cerebellum</o> instead.
+		<br/>
+		The <b>cochlea</b> (derives from Ancient Greek κοχλίας (kokhlias) 'spiral, snail shell') is the part of the inner ear involved in hearing.
+	</discussion>
 
 	<!--METADATA (REMOVE FOR SIMPLICITY) -->
 	<metadatalist>

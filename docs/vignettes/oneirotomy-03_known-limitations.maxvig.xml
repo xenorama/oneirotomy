@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="_c74_vig.xsl" type="text/xsl"?>
+<vignette name="Oneirotomy: Know Limitations" package="Oneirotomy">
+  <metadatalist>
+    <metadata name="author">Tim Georg Heinze</metadata>
+    <metadata name="tag">Xenorama</metadata>
+  </metadatalist>
+
+  <h1>Oneirotomy: Known Limitations</h1>
+
+	<h2>Development</h2>
+  <p>
+    Max's main magic lies beyond the concept of a sequencer or timeline and aims at making anything possible with a simple bang. <br/>
+    The approximation of a fixed chains of events is hence not natively supported and users aiming at solid, replicable sequences may have to patch them using timing-objects and, of course, MSP audio. This package is per sé subject to user development and has been sparked into life in the context of Xenorama's collaboration with the Kammerakademie Potsdam in the project «REFLECT», recorded in January 2021. Sequences of orchestral and maschine-learned audio were translated into complex Jitter patches and needed to be rendered in full quality, losslessly. All areas of audio-based, generative visual design were built on the basis of what was needed at the time. For this reason, many techniques familiar to certain users may not be fully supported (yet) and development by curious users is highly welcomed.<br/>
+    The following paragraphs highlight a few known limitations to this package, as well as object references for certain areas where it may come into play.
+  </p>
+
+  <h2>Only <o>jit.world</o> contexts supported, no <o>jit.gl.render</o> (yet)</h2>
+  <p>
+  <o>the.jit.thalamus</o> has to be in touch with a <o>jit.world</o> to access all necessary information from it and impose the user's desired settings as well. This is currently not possible with <o>jit.gl.render</o> given that the former accesses information which is available in an optimized way in <o>jit.world</o>. In a future update, however, this should be possible via an additional attribute to <o>the.jit.thalamus</o>.
+  </p>
+
+  <h2>Audio to Video Translation using <o>jit.catch~</o></h2>
+  <p>
+    <o>jit.catch~</o> <i>transforms MSP signals into a stream of Jitter matrices</i>. While similar results may be achieved using <o>jit.poke~</o>—which can be replaced by <o>the.mc.jit.amygdala~</o> to support offline rendering in this package—, it functions and behaves quite differently. Unlike <o>jit.poke~</o> it captures a stream of MSP samples and upon receiving a <m>bang</m> will write those into a new Jitter matrix. To record such progressions in a fashion that can replace <o>jit.catch~</o> reliably, including its different <i>modes</i>, the entire stream needs to be captured, successively. When the length of the final video or audio-performance to create the video, is unknown, <o>jit.concat</o> will have to be used to accumulate the matrix data, infinitely. Sure enough, and depending on the complexity of audio being processed at the same time, we may experience dropouts and memory leaks in the process. Furthermore, when operating <i>@mode 0</i>. the dimensions of the matrix may vary and its variyng states must not overwrite larger matrices as well as need to be replicated during rendering without every leaving the matrix-domain, preferrably.
+    <br/>Similar approaches were taken initially to work with <o>jit.poke~</o> or <o>jit.mo.func</o>, but were later replaced by logic working with <o>jit.matrixset</o> for the former and a <i>speed control</i> method (using <o>the.jit.mojo</o>) for the latter. <o>jit.catch~</o>, however, is currently not nateivly supported, yet…
+  </p>
+
+    <h2>Timed GL-objects requiring <o>jit.world</o> to be enabled</h2>
+  <p>
+    The use of <o>jit.anim.drive</o> in video contexts, for example, yields quick and intuitive control, as well as aesthetic motion to GL-objects. In a context, where <o>jit.world</o> is disabled, these and related objects will not output any useful data. Their output needs to be manually reproduced, using Max messages at the desired framerate, for example.
+  </p>
+
+    Back to the <b><link type="vignette" module="Oneirotomy" name="oneirotomy_table_of_contents_topic">Package Topics</link></b>
+
+  <cr/>
+
+  <seealsolist>
+		<!-- <seealso name="timing_events_topic" module="topics" type="vignette" />	-->
+    <seealso name="the.jit.thalamus" />
+  </seealsolist>
+
+</vignette>

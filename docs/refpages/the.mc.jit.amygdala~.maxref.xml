@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
 
-<c74object name="the.jit.amygdala~" module="jitter" category="Jitter System">
+<c74object name="the.mc.jit.amygdala~" module="jitter" category="Jitter System">
 
 	<digest>
 		Poke signal data to a named matrix and store progressions for non-realtime rendering
@@ -9,8 +9,19 @@
 
 	<description>
 		Written by Tim Heinze © 2020, www.xenorama.com. <br/>
-		Capture signal data to a specified <o>jit.matrix</o> for offline reading and rendering, controlled by <o>the.jit.thalamus</o>. Designed to replace a <o>jit.poke~</o> with flexible <at>dimcount</at> (by default: max. 13) and variable target plane. It records temporary blocks of matrices which are deleted upon completion of the recording process and compiled into a <m>jxf</m>-file to be read by an internal <o>jit.matrixset</o>. This requires the implementation of <o>node.script</o>.
+		Capture signal data to a specified <o>jit.matrix</o> for offline reading and rendering, controlled by <o>the.jit.thalamus</o>. Designed to replace a <o>jit.poke~</o> with flexible <ar>dim_inputcount</ar> (by default: max. 13) and variable target plane. It records temporary blocks of matrices which are deleted upon completion of the recording process and compiled into a <m>jxf</m>-file to be read by an internal <o>jit.matrixset</o>. This requires the implementation of <o>node.script</o>.
 	</description>
+
+	<discussion>
+		<o>the.jit.thalamus</o> providing a central context is required in the enviroment.
+		<br/>
+		<br/>
+	 	<o>the.mc.jit.amygdala~</o> writes incoming signals to a target matrix, as does <o>jit.poke~</o>. During recording, however, it writes incoming signals to a temporary matrix, allocating every dimension to a separate plane, as well as potential target plane-changes and frame-progressions. These are collected continuously and stored in blocks of matrices, which in are written temporarily to disk and upon rendering completion will be compiled into a <o>jit.matrixset</o> while the temproary files are deleted (using <o>node.script</o> internally). During rendering, the collected values are decoded and written to the target matrix to output the correct data at every frame.
+		<br/>
+		<br/>
+		The <b>amygdala</b> (/əˈmɪɡdələ/; plural: amygdalae /əˈmɪɡdəli, -laɪ/ or amygdalas; also corpus amygdaloideum; Latin from Greek, ἀμυγδαλή, amygdalē, 'almond', 'tonsil') is one of two almond-shaped clusters of nuclei located deep and medially within the temporal lobes of the brain in complex vertebrates. Shown to perform a primary role in the processing of memory, decision-making and emotional responses, the amygdalae are considered part of the limbic system.
+	</discussion>
+
 
 	<!--METADATA (REMOVE FOR SIMPLICITY) -->
 	<metadatalist>

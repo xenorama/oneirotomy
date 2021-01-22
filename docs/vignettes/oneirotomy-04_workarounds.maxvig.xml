@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="_c74_vig.xsl" type="text/xsl"?>
+<vignette name="Oneirotomy: Workarounds" package="Oneirotomy">
+  <metadatalist>
+    <metadata name="author">Tim Georg Heinze</metadata>
+    <metadata name="tag">Xenorama</metadata>
+  </metadatalist>
+
+  <h1>Oneirotomy: Workarounds</h1>
+
+	<h2>Whimsical objects in the GL-world</h2>
+  <p>
+    Certain objects are designed to serve an immediate function when working in the GL-domain, and they do so amazingly! However, when attemping to work with them <i>offline</i>, they may not work as expected, if at all. The following paragraphs may help in implementing this package's objects in such a way that these objects' functionality can be leveraged nonetheless.
+  </p>
+
+  <h2><o>jit.anim.path</o></h2>
+  <p>
+    <o>jit.anim.path</o> only outputs its transformation data to target GL-objects when both a local <b>render context</b> is <i>enabled</i> and that very target object is directly attached to it. The data it outputs is a case for <o>the.cerebellum</o>, however, the latter needs to be implemented additionally and <i>@active 4</i> to record the data output by the <o>jit.anim.path</o> but not output in parallel, but to output during rendering instead of the latter, which will yield no data when the render engine is not enabled. Furthermore, <o>the.jit.thalamus</o> needs to be set to <i>@toggleworld 0</i> so that all world data is collected along with signals and timing data. <br/>
+    Consider also to set <o>the.cerebellum</o> to <i>solo 1</i> if complex signal processing is occuring during recording. This way, data can be collected separately.
+  </p>
+
+  <h2>Audio to Video Translation using <o>jit.catch~</o></h2>
+  <p>
+    <o>jit.catch~</o> <i>transforms MSP signals into a stream of Jitter matrices</i>. While similar results may be achieved using <o>jit.poke~</o>—which can be replaced by <o>the.mc.jit.amygdala~</o> to support offline rendering in this package—, it functions and behaves quite differently. Unlike <o>jit.poke~</o> it captures a stream of MSP samples and upon receiving a <m>bang</m> will write those into a new Jitter matrix. To record such progressions in a fashion that can replace <o>jit.catch~</o> reliably, including its different <i>modes</i>, the entire stream needs to be captured, successively. When the length of the final video or audio-performance to create the video, is unknown, <o>jit.concat</o> will have to be used to accumulate the matrix data, infinitely. Sure enough, and depending on the complexity of audio being processed at the same time, we may experience dropouts and memory leaks in the process. Furthermore, when operating <i>@mode 0</i>. the dimensions of the matrix may vary and its variyng states must not overwrite larger matrices as well as need to be replicated during rendering without every leaving the matrix-domain, preferrably.
+    <br/>Similar approaches were taken initially to work with <o>jit.poke~</o> or <o>jit.mo.func</o>, but were later replaced by logic working with <o>jit.matrixset</o> for the former and a <i>speed control</i> method (using <o>the.jit.mojo</o>) for the latter. <o>jit.catch~</o>, however, is currently not nateivly supported, yet…
+  </p>
+
+    <h2>Timed GL-objects requiring <o>jit.world</o> to be enabled</h2>
+  <p>
+    The use of <o>jit.anim.drive</o> in video contexts, for example, yields quick and intuitive control, as well as aesthetic motion to GL-objects. In a context, where <o>jit.world</o> is disabled, these and related objects will not output any useful data. Their output needs to be manually reproduced, using Max messages at the desired framerate, for example.
+  </p>
+
+    Back to the <b><link type="vignette" module="Oneirotomy" name="oneirotomy_table_of_contents_topic">Package Topics</link></b>
+
+  <cr/>
+
+  <seealsolist>
+		<!-- <seealso name="timing_events_topic" module="topics" type="vignette" />	-->
+    <seealso name="the.jit.thalamus" />
+  </seealsolist>
+
+</vignette>

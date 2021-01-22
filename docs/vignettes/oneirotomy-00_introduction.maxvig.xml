@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="_c74_vig.xsl" type="text/xsl"?>
+<vignette name="Oneirotomy: Introduction" package="Oneirotomy">
+  <metadatalist>
+    <metadata name="author">Tim Georg Heinze</metadata>
+    <metadata name="tag">Xenorama</metadata>
+  </metadatalist>
+
+  <h1>Oneirotomy: Introduction</h1>
+
+	<h2>General Information</h2>
+  <p>
+    <b>Oneirotomy</b> is a set of tools for non-realtime rendering of generative audiovisual content in Max/MSP/Jitter.
+    <br/>Designed as a means to turn an audio- or timing-based Jitter patch into a high-quality rendering engine to produce video data without framedrops or inprecision. Adding and/or replacing respective objects to an existing patch will not affect its logic, let alone the results — it merely divides the process of audio generation, playback or performance on the one hand and all video-related Jitter-processing on the other, into two separate modes where audio and timing events are recorded and stored before the Jitter rendering queue can access the accumulated data frame-by-frame during a non-realtime, offline rendering process.
+    <br/>Written by Tim Heinze © 2020, <a href="https://xenorama.com">www.xenorama.com</a>.
+  </p>
+
+  <h2>Nomenclature</h2>
+  <p>
+    <b>Oneirotomy</b> (/ɒnɪˈrɒt​ɔmi/; from Greek ὄνειρον, <i>/oneiron/</i>, «dream»; and <i>/tomé/</i>; «cut, slice») is a neologism to be translated as <b>dream slice</b>, where individual frames of realtime video can be sliced and reproduced in non-realtime.
+    <br/>All objects carry names of anatomic—or related—terms pertaining to their equivalent function in a supposed offline-rendering-chain and rebuilding-process of generative patches into fluid hiQ video or image sequences with settings of choice (the «dream»).
+  </p>
+
+  <h2>Background</h2>
+  <p>
+    We at Xenorama embarked on a collaborational project in January 2021, together with the <a href="https://kammerakademie-potsdam.de/">KAP (Kamemrakademie Potsdam)</a> called <b>REFLECT</b> to stage an encounter between organic, human, orchestral music and a medial entity. While the entity communicates through surround-sound and visual aesthetics with both the orchestral ensemble and the custom-built scenography, the question at heart is, can a machine grasp and assume the human essence of music and likewise, how mechanical can human music become. While most of the realtime video content was prepared and rendered in VVVV, the instruments were transformed and the entity's voice formed using Max/MSP and Ableton Live for sequencing. During parts where the entity acted alone, its fixed sound was superimposed on several layers of Jitter patches which were thus in need of a quality rendering engine to produce the high-quality video footage along the sound. Meanwhile, all the fixed video content for this project was rendered using tools from the Oenirotomy-package to full effect.
+  </p>
+
+  Back to the <b><link type="vignette" module="Oneirotomy" name="oneirotomy_table_of_contents_topic">Package Topics</link></b>
+
+  <cr/>
+
+  <seealsolist>
+		<!-- <seealso name="timing_events_topic" module="topics" type="vignette" />	-->
+    <seealso name="the.jit.thalamus" />
+  </seealsolist>
+
+</vignette>

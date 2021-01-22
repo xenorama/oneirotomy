@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
 
-<c74object name="the.cerebellum" module="jitter" category="Jitter System">
+<c74object name="the.jit.tinnitus~" module="jitter" category="Jitter System">
 
 	<digest>
 		Perform a comprehensive frame check on an audio buffer~ accompanying a rendered video
@@ -9,8 +9,9 @@
 
 	<description>
 		Written by Tim Heinze © 2020, www.xenorama.com. <br/>
-		Scan through an audio buffer~ or sample file in steps of video frames. The audio frames are captured, frozen and windowed as FFT-frames to compare a movie-file or image sequence, for instance with <o>the.jit.pinealis</o>.
-		To save time and memory, a coarse frame check can be applied when working with large files.
+		Scan through an audio buffer~ or sample file in steps of video frames. The audio frames are captured and frozen to compare audio to a movie-file or image sequence, for instance with <o>the.jit.pinealis</o>.
+		To save time and memory, a coarse frame check is being applied by default to natively support working with large files. The spectrogram of the entire audio file can be scanned, however, to support smooth windowing.<br/>
+		The number of FFT-samples is 2048.
 	</description>
 
 	<!--METADATA (REMOVE FOR SIMPLICITY) -->
@@ -86,7 +87,7 @@
 		Perform windowing to smoothen audio output (requires realtime scan of audiofile)
 	</digest>
 	<description>
-		By default, <o>the.jit.tinnitus~</o> will calculate every frame on input and hence does not apply a smooth windowing function between the frames. When <at>window</at> is set to <m>1</m> (default), the entire audio file is played back and analysed fully to support smooth windowing. Additionally, the rightmost outlet will output a spectral <m>jit_matrix</m> containing a preview of the entire audio spectogram. Upon recalling individual frames, a vertical pointer will highlight the currently audible frame. Note that only calculated frames will yield audio output when called upon and hence the length of the audiofile has to pass before the full spectrum is available. Use a <o>jit.pwindow</o> to monitor the status. Notifications are sent to the max window for start and finish of spectral analysis.
+		By default, <o>the.jit.tinnitus~</o> will calculate every frame on input and hence does not apply a smooth windowing function between the frames. When <at>window</at> is set to <m>1</m>, the entire audio file is played back and analysed fully to support smooth windowing. Additionally, the rightmost outlet will output a spectral <m>jit_matrix</m> containing a preview of the entire audio spectogram. Upon recalling individual frames, a vertical pointer will highlight the currently audible frame. Note that only calculated frames will yield audio output when called upon and hence the length of the audiofile has to pass before the full spectrum is available. Use a <o>jit.pwindow</o> to monitor the status. Notifications are sent to the max window for start and finish of spectral analysis.
 		<br/>
 		Deactivate this function when working with very long videofiles and audiofiles and if a coarse frame check suffices.
 	<br/>

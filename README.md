@@ -18,12 +18,14 @@ Provide a set of **abstractions** which support offline, frame-by-frame, hiQ ren
 #### Implementation:
 * donload the ZIP-file
 * add the resulting folder to Max's searchpath, i.e. the _packages_ folder
-* check the helpfiles and reference pages of all objects to get an overview, especially **the.jit.thalamus** lying at the core of the process
+* open Max, under the the _Extras_ menu, select the entry _the.oneirotomy_ which should appear
+* Read the documentation to get an overview
+* check the helpfiles and reference pages of all objects to get a detailed overview, especially **the.jit.thalamus** lying at the core of the process
 * check also the limitations of certain work-flows and objects, as not all functionality can be provided natively and/or instantaneously
 * generally, consider which parts of your patch translate from timing-sensitive or signal domain to video domain
 * add the objects in documented ways to any jit.world's rendering process in Max
-* specify all desired settings to **the.jit.thalamus** _prior_ to recording and subseuent rendering (i.e., chaning the _framerate_ is likely to purge all previously captured data or to distort the results)
-Note that since these objects are **abstractions**, they cannot link with an **attrui** nor can they respond to the **universal** object for example
+* specify all desired settings to **the.jit.thalamus** _prior_ to recording and subsequent rendering (i.e., changing the _framerate_ is likely to purge all previously captured data or to distort the results)
+Note that since these objects are **abstractions**, they cannot link with an **attrui** nor can they respond to the **universal** object, for example
 
 #### General Approach
 In **Oneirotomy**, the approach to render lossless hiQ video is to capture and record everything that is subject to precise timing and which operates at high priority in the scheduler before starting the step-by-step rendering process. The latter is performed _offline_ and will ignore all realtime data while rebuilding what has been recorded. Needless to say, the rendering times may extend heavily.
@@ -34,7 +36,7 @@ In **Oneirotomy**, the approach to render lossless hiQ video is to capture and r
 * some [gen~](https://docs.cycling74.com/max7/refpages/gen~) for **the.mc.pac~**
 
 ## Nomenclature
-**Oneirotomy** (/ɒnɪˈrɒlədʒi/; from Greek ὄνειρον, oneiron, «dream»; and /tomé/; «cut, slice») is a neologism to be translated as _dream slice_, where individual frames of realtime video can be sliced and reproduced in non-realtime.
+**Oneirotomy** (/ɒnɪˈrɒt​ɔmi/; from Greek ὄνειρον, oneiron, «dream»; and /tomé/; «cut, slice») is a neologism to be translated as _dream slice_, where individual frames of realtime video can be sliced and reproduced in non-realtime.
 All objects carry names of anatomic—or related—terms pertaining to their equivalent function in a supposed offline-rendering-chain and rebuilding-process of generative patches into fluid hiQ video or image sequences with settings of choice (the «dream»).
 
 ## the.prefix
@@ -90,7 +92,7 @@ Depending on whether a video _length_ was specified before recording audio, it e
 **the.jit.mojo** replaces the _speed_ attribute of any **jit.mo.func** object in the patch to control its _phase_ whenever jit.world is not running (like in non-realtime mode). It must therefore connect to any **jit.mo.func** object producing matrix data and will handle the rest.
 
 ## Feedback and development
-Please share your experience and ideas for development at any time. There will be plenty to discuss and optimize for sure, given that many territories of Max patching have hardly been touched upon in the course of developing this library. 
+Please share your experience and ideas for development at any time. There will be plenty to discuss and optimize for sure, given that many territories of Max patching have hardly been touched upon in the course of developing this library.
 We shall thank you very much in advance for any input or feedback.
 
 Tim Heinze

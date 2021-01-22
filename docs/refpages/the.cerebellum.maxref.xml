@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
 
-<c74object name="the.cerebellum" module="jitter" category="Jitter System">
+<c74object name="the.cerebellum" module="max" category="Data, Timing">
 
 	<digest>
-		Capture timing-sensitive data for offline video rendering.
+		Capture timing-sensitive data for offline video rendering
 	</digest>
 
 	<description>
 		Written by Tim Heinze © 2020, www.xenorama.com. <br/>
 		<o>the.cerebellum</o> captures any data which is both subject to precise timing and which is relevant inbetween frames as well.
 		<br/> At its core lies a single-track <o>mtr</o> which listens to incoming data of any size and type. In the course of offline rendering all previously recorded frames are normalised as timeline along which the data is being recalled, linearly, in blocks as long as one frame in samples.
-		<br/>
-		Place this object immedietely after any such timing objects which cannot operate offline, like <o>line</o>, <o>when</o>, <o>clocker</o>, <o>slide</o> etc.
 	</description>
+
+	<discussion>
+		<o>the.jit.thalamus</o> providing a central context is required in the enviroment.
+		<br/>
+		<br/>
+		Use <o>the.cerebellum</o> as a hub between continuous, timed data and the video domain quantized to the desired framerate. To maximize efficiency, it is best practise to place this object as far up in the queue as possible (i.e., immedietely after any such timing objects which cannot operate offline, like <o>line</o>, <o>when</o>, <o>clocker</o>, <o>slide</o> etc.) and as close to the video domain as necessary to use as few as possible of the objects.<br/>
+		Although it offers only one inlet, <o>the.cerebellum</o> can store lists. If, for example, various gl-parameters of a <o>jit.gl.gridshape</o> or <o>jit.gl.mesh</o> are controlled by as many timed objects, all of these can be packed into  a list and routed through <o>the.cerebellum</o> to be unzipped afterwards. This way, only one obejct is needed.
+		<br/>
+		<br/>
+		As part of the human brain, the <b>cerebellum</b> plays an important role in motor control. It may also be involved in some cognitive functions such as attention and language as well as emotional control such as regulating fear and pleasure responses, but its movement-related functions are the most solidly established. The human cerebellum does not initiate movement, but contributes to coordination, precision, and accurate timing: it receives input from sensory systems of the spinal cord and from other parts of the brain, and integrates these inputs to fine-tune motor activity.
+	</discussion>
 
 	<!--METADATA (REMOVE FOR SIMPLICITY) -->
 	<metadatalist>
 		<metadata name="author">Tim Heinze</metadata>
 		<metadata name="tag">Xenorama</metadata>
 		<metadata name="tag">Offline Video Rendering</metadata>
-		<metadata name="tag">Jitter System</metadata>
+		<metadata name="tag">Data, Timing</metadata>
 	</metadatalist>
 
 	<!--INLETS (REMOVE FOR SIMPLICITY) -->
@@ -170,14 +179,16 @@
 </method>
 	</methodlist>
 
+	<!--EXAMPLE-->
+	<examplelist>
+		<example img="the.cerebellum.png" caption="insert after timing-objects and before matrix/texture domain to record/render realtime data" />
+	</examplelist>
+
 	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
 	<seealsolist>
-		<seealso name="the.jit.thalamus~"/>
-		<seealso name="the.jit.amygdala~"/>
-		<seealso name="the.mc.jit.mandelbulb~"/>
-		<seealso name="the.cerebellum"/>
+		<seealso name="the.jit.thalamus"/>
+		<seealso name="the.cochlea~"/>
 		<seealso name="the.mc.pac~"/>
-		<seealso name="the.jit.retina"/>
 	</seealsolist>
 
 </c74object>
