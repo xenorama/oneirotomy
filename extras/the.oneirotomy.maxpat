@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 711.0, 283.0, 694.0, 451.0 ],
+		"rect" : [ 711.0, 283.0, 695.0, 489.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -40,6 +40,55 @@
 		"assistshowspatchername" : 0,
 		"title" : "oneirotomy",
 		"boxes" : [ 			{
+				"box" : 				{
+					"handoff" : "",
+					"hltcolor" : [ 0.474509803921569, 0.694117647058824, 1.0, 0.0 ],
+					"id" : "obj-7",
+					"maxclass" : "ubutton",
+					"numinlets" : 1,
+					"numoutlets" : 4,
+					"outlettype" : [ "bang", "bang", "", "int" ],
+					"parameter_enable" : 0,
+					"patching_rect" : [ 705.0, 320.0, 69.0, 34.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 180.25, 423.0, 90.0, 28.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontname" : "Lato",
+					"fontsize" : 18.0,
+					"id" : "obj-4",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 672.0, 262.0, 174.0, 28.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 182.25, 423.0, 174.0, 28.0 ],
+					"text" : "Xenorama",
+					"textcolor" : [ 0.376470588235294, 0.76078431372549, 0.643137254901961, 1.0 ],
+					"underline" : 1
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontname" : "Lato",
+					"fontsize" : 18.0,
+					"id" : "obj-2",
+					"linecount" : 2,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 672.0, 212.595046270461353, 174.0, 50.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 267.0, 423.0, 248.0, 28.0 ],
+					"text" : "— studio for audiovisual media"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"id" : "obj-1",
 					"maxclass" : "newobj",
@@ -131,7 +180,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 452.0, 333.0, 42.0, 42.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 72.089966000000004, 60.5, 42.0, 42.0 ],
+					"presentation_rect" : [ 72.089966000000004, 49.5, 42.0, 42.0 ],
 					"varname" : "toggle_gui"
 				}
 
@@ -150,7 +199,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 452.0, 333.0, 42.0, 42.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 70.25, 60.5, 45.67989, 45.462688 ],
+					"presentation_rect" : [ 70.25, 49.5, 45.67989, 45.462688 ],
 					"proportion" : 0.39,
 					"shape" : 1
 				}
@@ -170,7 +219,7 @@
 					"patching_rect" : [ 452.0, 333.0, 42.0, 42.0 ],
 					"pic" : "xen-logo_inv_beige.png",
 					"presentation" : 1,
-					"presentation_rect" : [ 70.25, 60.5, 46.0, 46.0 ],
+					"presentation_rect" : [ 70.25, 49.5, 46.0, 46.0 ],
 					"varname" : "xen_symbol"
 				}
 
@@ -185,7 +234,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 109.0, 16.0, 505.5, 93.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 125.25, 29.0, 505.5, 93.0 ],
+					"presentation_rect" : [ 125.25, 18.0, 505.5, 93.0 ],
 					"text" : "the.oneirotomy"
 				}
 
@@ -254,7 +303,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 109.0, 272.599999999999966, 486.0, 21.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 70.25, 285.599999999999966, 486.0, 21.0 ],
+					"presentation_rect" : [ 70.25, 274.599999999999966, 486.0, 21.0 ],
 					"text" : "THE are somewhat the initials of Tim Heinze, © 2020, www.xenorama.com",
 					"textcolor" : [ 0.501961, 0.501961, 0.501961, 1.0 ]
 				}
@@ -271,7 +320,7 @@
 					"patching_rect" : [ 109.0, 177.599999999999966, 505.5, 93.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 6,
-					"presentation_rect" : [ 70.25, 190.599999999999966, 552.5, 93.0 ],
+					"presentation_rect" : [ 70.25, 179.599999999999966, 552.5, 93.0 ],
 					"text" : "Oneirotomy (/ɒnɪˈrɒlədʒi/; from Greek ὄνειρον, oneiron, «dream»; and /tomé/; «cut, slice») is a neologism to be translated as «dream slice», where individual frames of realtime video can be sliced and reproduced loslessly in non-realtime.\nAll objects carry names of anatomic—or related—terms pertaining to their equivalent function in a supposed offline-rendering-chain and rebuilding-process of generative patches into fluid hiQ video or image sequences with settings of choice (the «dream»)."
 				}
 
@@ -288,7 +337,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 109.0, 342.0, 255.0, 42.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 180.25, 364.0, 340.0, 45.0 ],
+					"presentation_rect" : [ 180.25, 353.0, 340.0, 45.0 ],
 					"text" : "Oneirotomy Documentation"
 				}
 
@@ -303,7 +352,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 109.0, 307.0, 174.0, 28.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 263.25, 330.0, 174.0, 28.0 ],
+					"presentation_rect" : [ 263.25, 319.0, 174.0, 28.0 ],
 					"text" : "Click to get started"
 				}
 
@@ -336,7 +385,7 @@
 					"patching_rect" : [ 109.0, 113.5, 380.0, 50.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 2,
-					"presentation_rect" : [ 70.25, 126.5, 380.0, 50.0 ],
+					"presentation_rect" : [ 70.25, 115.5, 380.0, 50.0 ],
 					"text" : "Tool for non-realtime rendering of generative audiovisual content in Max/MSP/Jitter."
 				}
 
@@ -401,6 +450,14 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-3", 0 ],
+					"midpoints" : [ 731.166666666666629, 382.0, 461.5, 382.0 ],
+					"source" : [ "obj-7", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-10", 0 ],
 					"source" : [ "obj-8", 0 ]
 				}
@@ -409,8 +466,8 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "xen-logo_inv_beige.png",
-				"bootpath" : "~/Documents/Max 8/Packages/xeno_externals",
-				"patcherrelativepath" : "../../xeno_externals",
+				"bootpath" : "~/Documents/Max 8/Packages/the.oneirotomy/media/images",
+				"patcherrelativepath" : "../media/images",
 				"type" : "PNG",
 				"implicit" : 1
 			}
