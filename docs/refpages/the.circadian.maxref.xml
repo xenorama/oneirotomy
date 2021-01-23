@@ -146,11 +146,8 @@
 	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
 	<seealsolist>
 		<seealso name="the.jit.thalamus~"/>
-		<seealso name="the.jit.amygdala~"/>
-		<seealso name="the.mc.jit.mandelbulb~"/>
-		<seealso name="the.circadian"/>
+		<seealso name="the.mc.jit.amygdala~"/>
 		<seealso name="the.mc.pac~"/>
-		<seealso name="the.jit.retina"/>
 	</seealsolist>
 
 </c74object>
