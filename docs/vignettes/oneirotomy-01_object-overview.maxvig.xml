@@ -12,8 +12,15 @@
   <ul>
     <li><o>the.jit.thalamus</o> - Manage offline rendering of realtime audiovisual content</li>
   </ul>
+  <p>
+    The <a href="https://en.wikipedia.org/wiki/Thalamus">Thalamus</a> <i>has multiple functions, generally believed to act as a relay station, or hub, relaying information between different subcortical areas and the cerebral cortex</i>. In the context of <b>Oneirotomy</b>, it is the first object to add to your existing Jitter patch. <br/>
+    It hosts a GUI to manage all rendering settings and is to be connected to an existing <o>jit.world</o> as described in its <openfilelink filename="the.jit.thalamus.maxhelp">helpfile</openfilelink>.
+  </p>
 
   <h2>Domain Translation Capture</h2>
+  <p>
+    To render Jitter patches based on audio or timed data, the nodes translating the aforementioned types into the video domain are key in the process. Those parts of the patch need to be <i>hijacked</i>, i.e. 'captured' to later recall the frame-based states as opposed to sampling rate or transport, for example, when rendering without DSP or timing. The following objects serve this function in different ways and areas:
+  </p>
   <ul>
     <li><o>the.cochlea~</o> - Frame-based storage of running MSP audio</li>
     <li><o>the.mc.jit.amygdala~</o> - Poke signal data to a named matrix and store progressions for non-realtime rendering</li>
@@ -22,22 +29,33 @@
   </ul>
 
   <h2>Timeline Approximation</h2>
+  <p>
+    Rendering 'realtime' video offline assumes some sort of a timeline. While this subject can be explored in depth and its development is subject to  a multitude of upgrades, a raw, frame-based approximation of a timeline can be used to animate certain parameters in the rendering process:
+  </p>
   <ul>
     <li><o>the.circadian</o> - Provide a running timeline from <o>the.jit.thalamus</o></li>
   </ul>
 
 
   <h2>Context Audio Recording</h2>
+  <p>
+    When audio files or sound performances are fundamental or part of a Jitter patch, any signal or multichannel-signal can be recorded along the timeline:
+  </p>
   <ul>
     <li><o>the.mc.pac~</o> - Record multi-channel MSP audio in line with a frame-based render process</li>
   </ul>
 
     <h2>Framecheck and Post-Pro Prep</h2>
+    <p>
+      The rendered video and audio files can be checked in parallel before submitting them to further queues in other software:
+    </p>
     <ul>
       <li><o>the.jit.pinealis</o> - Perform a simple framecheck on offline rendered video files</li>
       <li><o>the.jit.tinnitus~</o> - Perform a comprehensive frame check on an audio buffer~ accompanying a rendered video</li>
     </ul>
-    Back to the <b><link type="vignette" module="Oneirotomy" name="oneirotomy_table_of_contents_topic">Package Topics</link></b>
+    <br/>
+    Previous: <b><link type="vignette" module="Oneirotomy" name="oneirotomy-00_introduction">Introduction</link></b><br/><br/>
+    Next: <b><link type="vignette" module="Oneirotomy" name="oneirotomy-02_implementation">Implementation</link></b>
 
   <cr/>
 

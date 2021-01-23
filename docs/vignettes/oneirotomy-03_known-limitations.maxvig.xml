@@ -17,13 +17,13 @@
 
   <h2>Only <o>jit.world</o> contexts supported, no <o>jit.gl.render</o> (yet)</h2>
   <p>
-  <o>the.jit.thalamus</o> has to be in touch with a <o>jit.world</o> to access all necessary information from it and impose the user's desired settings as well. This is currently not possible with <o>jit.gl.render</o> given that the former accesses information which is available in an optimized way in <o>jit.world</o>. In a future update, however, this should be possible via an additional attribute to <o>the.jit.thalamus</o>.
+  <o>the.jit.thalamus</o> has to be in touch with a <o>jit.world</o> to access all necessary information from it and impose the user's desired settings as well. This is currently not possible with <o>jit.gl.render</o> given that the former accesses information which is available in an optimized way in <o>jit.world</o>. In a future update, however, this could be possible via an additional attribute to <o>the.jit.thalamus</o> or advice for additional patching to support it.
   </p>
 
   <h2>Audio to Video Translation using <o>jit.catch~</o></h2>
   <p>
-    <o>jit.catch~</o> <i>transforms MSP signals into a stream of Jitter matrices</i>. While similar results may be achieved using <o>jit.poke~</o>—which can be replaced by <o>the.mc.jit.amygdala~</o> to support offline rendering in this package—, it functions and behaves quite differently. Unlike <o>jit.poke~</o> it captures a stream of MSP samples and upon receiving a <m>bang</m> will write those into a new Jitter matrix. To record such progressions in a fashion that can replace <o>jit.catch~</o> reliably, including its different <i>modes</i>, the entire stream needs to be captured, successively. When the length of the final video or audio-performance to create the video, is unknown, <o>jit.concat</o> will have to be used to accumulate the matrix data, infinitely. Sure enough, and depending on the complexity of audio being processed at the same time, we may experience dropouts and memory leaks in the process. Furthermore, when operating <i>@mode 0</i>. the dimensions of the matrix may vary and its variyng states must not overwrite larger matrices as well as need to be replicated during rendering without every leaving the matrix-domain, preferrably.
-    <br/>Similar approaches were taken initially to work with <o>jit.poke~</o> or <o>jit.mo.func</o>, but were later replaced by logic working with <o>jit.matrixset</o> for the former and a <i>speed control</i> method (using <o>the.jit.mojo</o>) for the latter. <o>jit.catch~</o>, however, is currently not nateivly supported, yet…
+    <o>jit.catch~</o> <i>transforms MSP signals into a stream of Jitter matrices</i>. While similar results may be achieved using <o>jit.poke~</o>—which can be replaced by <o>the.mc.jit.amygdala~</o> to support offline rendering in this package—, it functions and behaves quite differently. Unlike <o>jit.poke~</o> it captures a stream of MSP samples and upon receiving a <m>bang</m> will write those into a new Jitter matrix. To record such progressions in a fashion that can replace <o>jit.catch~</o> reliably, including its different <i>modes</i>, the entire stream needs to be captured, successively. When the length of the final video or audio-performance to create the video, is unknown, <o>jit.concat</o> will have to be used to accumulate the matrix data, infinitely. Sure enough, and depending on the complexity of audio being processed at the same time, we may experience dropouts and memory leaks in the process. Furthermore, when operating <i>@mode 0</i>. the dimensions of the matrix may vary and its variyng states must not overwrite larger matrices as well as need to be replicated during rendering without ever leaving the matrix-domain, preferrably.
+    <br/>Similar approaches were taken initially to work with <o>jit.poke~</o> or <o>jit.mo.func</o>, but were later replaced by logic working with <o>jit.matrixset</o> for the former and a <i>speed control</i> method (using <o>the.jit.mojo</o>) for the latter. <o>jit.catch~</o>, however, is currently not nateivly supported, yet… Suggestions and ideas welcome.
   </p>
 
     <h2>Timed GL-objects requiring <o>jit.world</o> to be enabled</h2>
@@ -31,7 +31,13 @@
     The use of <o>jit.anim.drive</o> in video contexts, for example, yields quick and intuitive control, as well as aesthetic motion to GL-objects. In a context, where <o>jit.world</o> is disabled, these and related objects will not output any useful data. Their output needs to be manually reproduced, using Max messages at the desired framerate, for example.
   </p>
 
-    Back to the <b><link type="vignette" module="Oneirotomy" name="oneirotomy_table_of_contents_topic">Package Topics</link></b>
+  <p>
+    See the next chapter to perhaps learn about some workaround-techniques…
+  </p>
+  <br/>
+  Previous: <b><link type="vignette" module="Oneirotomy" name="oneirotomy-02_implementation">Implementation</link></b>
+  <br/><br/>
+  Next: <b><link type="vignette" module="Oneirotomy" name="oneirotomy-04_workarounds">Workarounds</link></b>
 
   <cr/>
 

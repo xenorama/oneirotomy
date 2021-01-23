@@ -19,11 +19,17 @@
   <p>
     The package was produced and compiled starting out in December 2020 and there are still many functions which may not be supported yet, dysfunctional or not obvious on how to achieve them. It would be highly appreciated, if experienced bugs can be reported via the github-page, as well as, of course, suggestions for improvement.
   </p>
+  <br/>
+    The best call is: Render <i>Image Sequences</i> and every rendered frame is safe.
+    <br/>
+  <br/>
 
   Website: <a href="https://xenorama.com">www.xenorama.com</a>
   <br/>
   <br/>
-    Back to the <b><link type="vignette" module="Oneirotomy" name="oneirotomy_table_of_contents_topic">Package Topics</link></b>
+
+    Previous: <b><link type="vignette" module="Oneirotomy" name="oneirotomy-04_workarounds">Workarounds</link></b>
+
 
   <cr/>
 

@@ -6,7 +6,7 @@
     <metadata name="tag">Xenorama</metadata>
   </metadatalist>
 
-  <h1>Oneirotomy Implementation: Relevant Objects to replace or capture</h1>
+  <h1>Oneirotomy Implementation: Relevant Objects to replace, capture or implement</h1>
 
   <h2>Timing-sensitive objects</h2>
   <p>
@@ -28,7 +28,7 @@
 
   <h2>Domain Translation Capture</h2>
   <p>
-    To capture audio and transform it into video-relevant data, there are a couple of Max/MSP/Jitter objects natively available. These work in different ways. To capture their results requires different techniques, some of which have not proven efficient yet (as with <o>jit.catch~</o>) and therefore cannot be supported at the moment without further ado. Some objects can simply be replaced by others from the package, but do require specific arguments (see the helpfiles or reference-pages for details). Should the arguments be bogus, a notification will be sent to the Max console.
+    To capture audio and transform it into video-relevant data, there are a couple of Max/MSP/Jitter objects natively available. These work in different ways. Capturing their results requires different techniques, some of which have not proven efficient yet (as with <o>jit.catch~</o>) and therefore cannot be supported at the moment without further ado. Some objects can simply be replaced by others from the package, but do require specific arguments (see the helpfiles or reference-pages for details). Should the arguments be bogus, a notification will be sent to the Max console.
   </p>
 
   <ul>
@@ -40,12 +40,12 @@
 
   <h3>Reverse Translation</h3>
   <p>
-    Objects accessing matrix-data (<o>jit.peek~</o>) or those using general Max messages to modulate or produce audio (<o>click~</o>) can be safely ignored in this context. The reason is that even if they translate data to signals in realtime, these will not have an effect on the video rendering queue unless they are again translated to usable data for the latter. In such cases, the likes of <o>the.cochlea~</o>, <o>the.cerebellum</o> or <o>the.mc.jit.amygdala~</o> will finally suffice.
+    Objects accessing matrix-data (<o>jit.peek~</o>) or those using general Max messages to modulate or produce audio (<o>click~</o>) can be safely ignored in this context. The reason is that even if they translate data to signals in realtime, these will not have an effect on the video rendering queue unless they are again translated to usable data for the latter. In such cases, the likes of <o>the.cochlea~</o>, <o>the.cerebellum</o> or <o>the.mc.jit.amygdala~</o> will finally suffice. However, if the underlying matrix data is again dependent on the <o>jit.world</o> render context to run, then the <at>toggleworld</at> attribute of <o>the.jit.thalamus</o> must be disabled to keep video rendering activated during audio recording.
   </p>
 
   <h2>Timeline Approximation</h2>
   <p>
-    Once a fixed timeline is established by recording a performance or when the final length is known (i.e. based on an existing/pre-recorded audio file), <o>the.circadian</o> can be used to progress through the frames (at the specified <i>fps</i>-attribute of <o>the.jit.thalamus</o> <b>before</b> recording!) one by one in the course of the rendering process, or to use a normalised curve between 0. and 1. to modulate parameters along the way. It also outputs the total number of frames once as well as the current mode of operation (recording/rendering) before these actually begin. This can help setting up certain parameters/values/settings based on whether you are recording audio or rendering video.
+    Once a fixed timeline is established by recording a performance or when the final length is known (i.e. based on an existing/pre-recorded audio file), <o>the.circadian</o> can be used to progress through the frames (at the <i>fps</i>-attribute of <o>the.jit.thalamus</o> specified <b>before</b> recording!) one by one in the course of the rendering process, or to use a normalised curve between 0. and 1. to modulate parameters along the way. It also outputs the total number of frames once as well as the current mode of operation (recording/rendering) before these actually begin. This can help setting up certain parameters/values/settings based on whether you are recording audio or rendering video.
   </p>
 
   <h2>Context Audio Recording</h2>
@@ -57,8 +57,10 @@
   <p>
     The final video can be instantly checked and monitored frame-by-frame using <o>the.jit.pinealis</o> in conjunction with <o>the.jit.tinnitus~</o>. These two objects are not dependent on binding to a context and can also be used to monitor any video and audio in parallel, regardless, of what has been recorded.
   </p>
-
-  Back to the <b><link type="vignette" module="Oneirotomy" name="oneirotomy_table_of_contents_topic">Package Topics</link></b>
+  <br/>
+  Previous: <b><link type="vignette" module="Oneirotomy" name="oneirotomy-01_object-overview">Object Overview</link></b>
+  <br/><br/>
+  Next: <b><link type="vignette" module="Oneirotomy" name="oneirotomy-03_known-limitations">Known Limitations</link></b>
 
   <cr/>
 
