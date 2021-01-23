@@ -51,9 +51,11 @@ The creation of this library was inspired by [Julien Bayle's Post on the Cycling
 * the.cerebellum • record timing data
 * the.cochlea~ • record signals, mc-version available
 * the.jit.mojo • manage jit.mo.func in non-realtime
-* the.jit.pinealis • perform framecheck
+* the.jit.pinealis • perform framecheck (video, image sequence)
+* the.jit.tinnitus~ • perform framecheck (audio)
 * the.mc.jit.amygdala~ • replace a jit.poke~ object for non-realtime rebuilding
 * the.mc.pac~ • record audio for video renderings
+* the.circadian • output timeline information
 * a handful of sub-abstractions, to be disregarded during normal use, perhaps interesting when developing further
 
 ## Limitations
