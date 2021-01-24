@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <?xml-stylesheet href="_c74_vig.xsl" type="text/xsl"?>
-<vignette name="Oneirotomy Package Topics" package="oneirotomy">
+<vignette name="Oneirotomy Package Topics" package="Oneirotomy">
   <metadatalist>
     <metadata name="author">Tim Heinze</metadata>
     <metadata name="tag">Jitter</metadata>

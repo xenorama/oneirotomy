@@ -188,7 +188,13 @@
 	<seealsolist>
 		<seealso name="the.jit.thalamus"/>
 		<seealso name="the.cochlea~"/>
+		<seealso name="the.mc.jit.amygdala~"/>
 		<seealso name="the.mc.pac~"/>
+		<seealso name="the.jit.mojo"/>
+		<seealso name="the.jit.pinealis"/>
+		<seealso name="the.jit.tinnitus~"/>
+		<seealso name="the.circadian"/>
+		<seealso name="the.mc.jit.mnemonic~"/>
 	</seealsolist>
 
 </c74object>

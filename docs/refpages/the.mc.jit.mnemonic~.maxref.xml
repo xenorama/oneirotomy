@@ -243,10 +243,15 @@
 
 	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
 	<seealsolist>
-		<seealso name="the.jit.thalamus~"/>
+		<seealso name="the.jit.thalamus"/>
+		<seealso name="the.chochlea~"/>
+		<seealso name="the.cerebellum"/>
 		<seealso name="the.mc.jit.amygdala~"/>
 		<seealso name="the.mc.pac~"/>
-		<seealso name="the.cerebellum"/>
+		<seealso name="the.jit.pinealis"/>
+		<seealso name="the.jit.tinnitus~"/>
+		<seealso name="the.jit.mojo"/>
+		<seealso name="the.circadian"/>
 	</seealsolist>
 
 </c74object>

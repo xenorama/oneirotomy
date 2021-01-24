@@ -420,16 +420,17 @@ The message <m>getstate</m> will post relevant status information about every ob
 
 	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
 	<seealsolist>
-		<seealso name="the.jit.cochlea~"/>
-		<seealso name="the.jit.retina"/>
-		<seealso name="the.jit.amygdala~"/>
-		<seealso name="the.jit.amygdala"/>
+		<seealso name="the.cochlea~"/>
 		<seealso name="the.mc.jit.amygdala~"/>
-		<seealso name="the.mc.jit.amygdala"/>
 		<seealso name="the.cerebellum"/>
 		<seealso name="the.mc.pac~"/>
 		<seealso name="the.jit.mojo"/>
 		<seealso name="the.jit.pinealis"/>
+		<seealso name="the.jit.tinnitus~"/>
+		<seealso name="the.circadian"/>
+		<seealso name="the.mc.jit.mnemonic~"/>
+		<seealso module="Oneirotomy" name="oneirotomy_table_of_contents_topic" type="vignette" />
+		<seealso module="Oneirotomy" name="oneirotomy-01_object-overview" type="vignette" />
 	</seealsolist>
 
 </c74object>

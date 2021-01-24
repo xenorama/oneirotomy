@@ -124,14 +124,16 @@ The message <m>getstate</m> will post relevant status information about this obj
 	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
 	<seealsolist>
 		<seealso name="the.jit.thalamus"/>
-		<seealso name="the.jit.cochlea~"/>
-		<seealso name="the.jit.amygdala~"/>
-		<seealso name="the.mc.jit.mandelbulb~"/>
-		<seealso name="the.cerebellum"/>
-		<seealso name="the.jit.retina"/>
 		<seealso name="jit.mo.func"/>
 		<seealso name="jit.mo.join"/>
-		<seealso name="the.jit.retina"/>
+		<seealso name="the.chochlea~"/>
+		<seealso name="the.cerebellum"/>
+		<seealso name="the.mc.jit.amygdala~"/>
+		<seealso name="the.mc.pac~"/>
+		<seealso name="the.jit.pinealis"/>
+		<seealso name="the.jit.tinnitus~"/>
+		<seealso name="the.circadian"/>
+		<seealso name="the.mc.jit.mnemonic~"/>
 	</seealsolist>
 
 </c74object>

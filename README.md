@@ -51,10 +51,12 @@ The creation of this library was inspired by [Julien Bayle's Post on the Cycling
 * the.cerebellum • record timing data
 * the.cochlea~ • record signals, mc-version available
 * the.jit.mojo • manage jit.mo.func in non-realtime
-* the.jit.pinealis • perform framecheck
+* the.jit.pinealis • perform framecheck (video)
+* the.jit.pinealis • perform framecheck (audio)
 * the.mc.jit.amygdala~ • replace a jit.poke~ object for non-realtime rebuilding
 * the.mc.pac~ • record audio for video renderings
 * a handful of sub-abstractions, to be disregarded during normal use, perhaps interesting when developing further
+* the.mc.jit.mnemonic~ may be used to replace _jit.catch~_ objects for now, albeit, no thorough testing has been applied
 
 ## Limitations
 In the course of non-realtime rendering, all timed movements have to be captured beforehand to be iterated through during the rendering process which is to happen offline, at a later stage. While signals, data and matrices can be mapped to individual frames in the process, the use of some objects and algorithms is not as straight forward — especially those receiving their motion information from a running jit.world, which is disabled during rendering individual frame and triggered manually. This pertains mostly to the jit.mo.func objects which need their _phase_ to be controlled by **the.jit.mojo** object. The use of _jit.anim.drive_ cannot be supported just yet and requires a manual substitution using max messages at the moment.
