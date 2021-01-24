@@ -15,14 +15,21 @@ Oneirotomy Package Topics
 
 <p>
 <ul>
-<li><link type="vignette" module="oneirotomy" name="oneirotomy-00_introduction">Purpose and explanation of this package</link></li>
-<li><link type="vignette" module="oneirotomy" name="oneirotomy-01_object-overview">Learn about available objects</link></li>
-<li><link type="vignette" module="oneirotomy" name="oneirotomy-02_implementation">Guidelines on the implementation without altering your Jitter/MSP patch or its queue</link></li>
-<li><link type="vignette" module="oneirotomy" name="oneirotomy-03_known-limitations">Among unforeseeable, individually complex strategies in the generative domain, there are known limitations in the current version</link></li>
-<li><link type="vignette" module="oneirotomy" name="oneirotomy-04_workarounds">How can certain limitations be bypassed or handled specifically</link></li>
-<li><link type="vignette" module="oneirotomy" name="oneirotomy-05_development">Do develop further, send feedback or suggestions about improvements</link></li>
+<li><link type="vignette" module="oneirotomy" name="oneirotomy-00_introduction">Introduction: Purpose and explanation of this package</link></li>
+<li><link type="vignette" module="oneirotomy" name="oneirotomy-01_object-overview">Object Overview: Learn about available objects</link></li>
+<li><link type="vignette" module="oneirotomy" name="oneirotomy-02_implementation">Implementation: Guidelines on the implementation without altering your Jitter/MSP patch or its queue</link></li>
+<li><link type="vignette" module="oneirotomy" name="oneirotomy-03_known-limitations">Known Limitations: Among unforeseeable, individually complex strategies in the generative domain, there are known limitations in the current version</link></li>
+<li><link type="vignette" module="oneirotomy" name="oneirotomy-04_workarounds">Workarounds: How can certain limitations be bypassed or handled specifically</link></li>
+<li><link type="vignette" module="oneirotomy" name="oneirotomy-05_development">Development: Do develop further, send feedback or suggestions about improvements</link></li>
 </ul>
 </p>
+
+  <illustration><img   id="_x0000_i1004" src="images/xen_waves.png"/></illustration>
+
+  <caption>
+		<i>Xenorama — Studio for audiovisual media</i>
+	</caption>
+
 
   <seealsolist>
     <seealso name="the.jit.thalamus"/>
