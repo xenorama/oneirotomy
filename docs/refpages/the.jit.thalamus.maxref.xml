@@ -355,6 +355,19 @@
 				<br/>This method is not yet supported and may require fundamental recoding as well as documenting.
 			</description>
 		</method>
+				<method name="frame">
+			<arglist>
+				<arg name="position" optional="0" type="int" />
+			</arglist>
+			<digest>
+				Jump to specific frame (not yet supported)
+			</digest>
+			<description>
+				Output the corresponding frame at the nspecified position while not rendering by <o>jit.world</o> for all children objects.
+				<br/>Note that any accumulative data cannot be reproduced correctly when previewing non-linearly.
+				<br/>This method is not yet supported and may require fundamental recoding as well as documenting.
+			</description>
+		</method>
 		<method name="solo">
 			<arglist>
 				<arg name="object-exportname" optional="0" type="symbol" />
