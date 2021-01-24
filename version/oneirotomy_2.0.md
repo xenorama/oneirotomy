@@ -23,9 +23,6 @@
 
 ### to do
 
-* clean up **the.jit.thalamus** and strip initialisation routines (still quite messy)
-* _jit.anim.drive_ support (new object or tutorialpage with detailed helpfile necessary)
-* print error messages in all abstractions for unsupported arguments/attributes
 * add _preview_ functionality to **the.jit.thalamus** (not yet supported)
 * add tutorial refpage as walkthrough for different scenarios and implementation
 

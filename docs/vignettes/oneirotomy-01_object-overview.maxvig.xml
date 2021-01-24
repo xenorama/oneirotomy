@@ -17,6 +17,17 @@
     It hosts a GUI to manage all rendering settings and is to be connected to an existing <o>jit.world</o> as described in its <openfilelink filename="the.jit.thalamus.maxhelp">helpfile</openfilelink>.
   </p>
 
+    <techdetail>
+  	Video rendering settings must be specified <i>before</i> any audio or data recording takes place to quantize the captured data to the desired framerate. Changing the @fps-attribute to <o>the.jit.thalamus</o> after recording will yield unpredictable, i.e. incorrect results which are likely to disappoint and mismatch the audio. The recording length can be set to 'free' to support performance-oriented video. <br/>
+    The default fps is 30 frames/second.
+  </techdetail>
+
+    <illustration><img   id="_x0000_i1002" src="images/the.jit.thalamus_example.png"/></illustration>
+
+  <caption>
+		<i>connections between <o>jit.world</o> and <o>the.jit.thalamus</o></i>
+	</caption>
+
   <h2>Domain Translation Capture</h2>
   <p>
     To render Jitter patches based on audio or timed data, the nodes translating the aforementioned types into the video domain are key in the process. Those parts of the patch need to be <i>hijacked</i>, i.e. 'captured' to later recall the frame-based states as opposed to sampling rate or transport, for example, when rendering without DSP or timing. The following objects serve this function in different ways and areas:
@@ -27,6 +38,14 @@
     <li><o>the.cerebellum</o> - Capture timing-sensitive data for offline video rendering</li>
     <li><o>the.jit.mojo</o> - Control a <o>jit.mo.func</o> object in non-realtime</li>
   </ul>
+  <illustration><img   id="_x0000_i1004" src="images/domain.translation_examples.png"/></illustration>
+
+  <caption>
+		<i>Some objects can be safely replaced, timed objects require additions to the patch</i>
+	</caption>
+
+
+
 
   <h2>Timeline Approximation</h2>
   <p>
@@ -36,6 +55,11 @@
     <li><o>the.circadian</o> - Provide a running timeline from <o>the.jit.thalamus</o></li>
   </ul>
 
+  <illustration><img   id="_x0000_i1004" src="images/the.circadian_example.png"/></illustration>
+
+  <caption>
+		<i>Use available timeline-information to control parameters along the sequence</i>
+	</caption>
 
   <h2>Context Audio Recording</h2>
   <p>

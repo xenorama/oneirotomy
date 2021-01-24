@@ -23,7 +23,11 @@
   <h2>Audio to Video Translation using <o>jit.catch~</o></h2>
   <p>
     <o>jit.catch~</o> <i>transforms MSP signals into a stream of Jitter matrices</i>. While similar results may be achieved using <o>jit.poke~</o>—which can be replaced by <o>the.mc.jit.amygdala~</o> to support offline rendering in this package—, it functions and behaves quite differently. Unlike <o>jit.poke~</o> it captures a stream of MSP samples and upon receiving a <m>bang</m> will write those into a new Jitter matrix. To record such progressions in a fashion that can replace <o>jit.catch~</o> reliably, including its different <i>modes</i>, the entire stream needs to be captured, successively. When the length of the final video or audio-performance to create the video, is unknown, <o>jit.concat</o> will have to be used to accumulate the matrix data, infinitely. Sure enough, and depending on the complexity of audio being processed at the same time, we may experience dropouts and memory leaks in the process. Furthermore, when operating <i>@mode 0</i>. the dimensions of the matrix may vary and its variyng states must not overwrite larger matrices as well as need to be replicated during rendering without ever leaving the matrix-domain, preferrably.
-    <br/>Similar approaches were taken initially to work with <o>jit.poke~</o> or <o>jit.mo.func</o>, but were later replaced by logic working with <o>jit.matrixset</o> for the former and a <i>speed control</i> method (using <o>the.jit.mojo</o>) for the latter. <o>jit.catch~</o>, however, is currently not nateivly supported, yet… Suggestions and ideas welcome.
+    <br/>Similar approaches were taken initially to work with <o>jit.poke~</o> or <o>jit.mo.func</o>, but were later replaced by logic working with <o>jit.matrixset</o> for the former and a <i>speed control</i> method (using <o>the.jit.mojo</o>) for the latter. <o>jit.catch~</o>, however, is currently not nateivly supported, yet… 
+    <br/>
+    <br/>
+    An abstraction called <o>the.mc.jit.mnemonic~</o> can meanwhile be used to replace a <o>jit.catch~</o> object. It has not ben thoroughly tested yet and operation <at>mode</at> 0 is currently not supported. A second argument for the number of audio channels is required, even in single-channel mode (1 in that case). Reference and helpfiles do exist, however, not in much detail.
+    <br/>Feedback and suggestions welcome.
   </p>
 
     <h2>Timed GL-objects requiring <o>jit.world</o> to be enabled</h2>
@@ -31,6 +35,10 @@
     The use of <o>jit.anim.drive</o> in video contexts, for example, yields quick and intuitive control, as well as aesthetic motion to GL-objects. In a context, where <o>jit.world</o> is disabled, these and related objects will not output any useful data. Their output needs to be manually reproduced, using Max messages at the desired framerate, for example.
   </p>
 
+    <h2>Os</h2>
+  <p>
+    This package was built and used in <b>macOs Mojave 10.14</b> and <b>Max 8.1.7 64-Bit</b>
+  </p>
   <p>
     See the next chapter to perhaps learn about some workaround-techniques…
   </p>

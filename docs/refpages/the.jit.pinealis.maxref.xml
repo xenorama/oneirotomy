@@ -56,11 +56,12 @@
 				When scrubbing through framewise, this sets the handler for frames exceeding the moviefile's length.
 				<br/> There are four different modes available:
 				<br/>
-				<br/><at>fold </at>: mirror playback at beginning and end (default)
+				<br/><at>fold </at>: mirror playback at beginning and end
 				<br/><at>wrap </at>: restart at the beginning when reaching the end
-				<br/><at>clip </at>: first first or last frame, respectively
+				<br/><at>clip </at>: first first or last frame, respectively (default)
 				<br/><at>none </at>: remain at latest valid frame
 				<br/><at>palindrome </at>: same as <m>fold</m>
+				<br/><at>mirror </at>: same as <m>fold</m>
 				<br/><at>clamp </at>: same as <m>clip</m>
 				<br/><at>ignore </at>: same as <m>none</m>
 			</description>
