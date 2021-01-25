@@ -273,7 +273,7 @@
 				Toggle operation modes
 			</digest>
 			<description>
-				0 = stop any current process, same as <m>stop</m>
+				0 = halt any through output by children objects to support individual <m>frame</m> query. This mode is toggled automatically when a <m>frame</m> message with an integer specifying a frame is received.
 				<br/>1 = stop any current process and enable <o>jit.world</o>, mostly identical to <m>0</m>
 				<br/>2 = start recording audio and timed data, same as <m>record</m>
 				<br/>3 = start rendering frame-by-frame, same as <m>render</m>
@@ -360,12 +360,13 @@
 				<arg name="position" optional="0" type="int" />
 			</arglist>
 			<digest>
-				Jump to specific frame (not yet supported)
+				Jump to specific frame
 			</digest>
 			<description>
-				Output the corresponding frame at the nspecified position while not rendering by <o>jit.world</o> for all children objects.
-				<br/>Note that any accumulative data cannot be reproduced correctly when previewing non-linearly.
-				<br/>This method is not yet supported and may require fundamental recoding as well as documenting.
+				Output the corresponding frame at the specified position while not rendering by <o>jit.world</o> for all children objects.
+				<br/>This will put <o>the.jit.thalamus</o> into playback mode '0', to re-enable output by children objects, send a '1' to the leftmost inlet (see the <m>int</m> listing).
+				<br/>Note that any accumulative data cannot be reproduced correctly when previewing non-linearly. The state of any <m>jit_matrix</m> populated by <o>the.mc.jit.amygdala~</o> or <o>the.mc.jit.mnemonic~</o> will not be overwritten before recalling individual frames and will only be cleared prior to rendering when these objects' <at>autoclear</at> flag is set to '1'.
+				<br/>This method has not yet been thoroughly tested and is sivbject to user feedback.
 			</description>
 		</method>
 		<method name="solo">
