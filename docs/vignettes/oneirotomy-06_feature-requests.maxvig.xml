@@ -15,6 +15,8 @@
     <li>Adapt <at>framedelay</at> to presence of <o>the.cerebellum</o></li>
     <li>Support for frame-based timeline adjustment (milestones, cuelist), focus on <o>the.circadian</o></li>
     <li>Extract frames from Ableton Live Set based on designated markers (Beta M4L version existing)</li>
+    <li>No corrupt frames at beginning of sequence</li>
+    <li>Reliable frame output from <o>the.circadian</o> without having to speculate or observe too meticulously</li>
     <li>Render specified frames only, possibly with <at>punch-in</at> and <at>punch-out</at> methods. May require to start at an early frame to accumulate necessary data or simply ignore earlier frames but render them nonetheless to replicate content correctly</li>
   </ul>
   <br/>

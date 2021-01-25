@@ -40,6 +40,11 @@
     In theory, a <m>jump</m> or <m>frame</m> method could and surely will be implemented. As it stands, this may be confusing and/or may yield unwanted results at the given frame which demand extrapolation from the viewer. Given that the foundation to the video is likely to be <i>generative</i>, i.e. based on evolving data and audio, the frame progression would have to take place linearly, one after the other for mutations to take shape in the desired way. Jumping frames will recall data at arbitrary points in the timeline and all the developments inbetween are obviously skipped. One will need to be aware of that. To check whether certain mutations take place at the same time or in short progression etc., this feature will surely be implemented soon. A <m>frame jump</m> method will require DSP to be toggled off or bypassed in the given nodes additionally, <o>jit.world</o> will have to be disabled as well and another method will require to return to playback or other modes. 
   </p>
 
+      <h2>Allow a few bogus frames at begining of sequence</h2>
+  <p>
+    It has occasionally been observed, that up to 5 frames at the beginning of the sequence were not part of the desired video, were either black or values were not yet applied. This will be dealt with in the course of its development, for now, however, it is best practise to allow a few corrupt frames at the beginning. Furthermore, <o>the.circadian</o> outputs the current frame, starting out at 0, but these frames may have to be shifted slightly (using <o>+</o> or <o>-</o> operators) to match the exact timing. <br/> Most very likely, the first frame will be black or unusable!
+  </p>
+
     <h2>Os</h2>
   <p>
     This package was built and used in <b>macOs Mojave 10.14</b> and <b>Max 8.1.7 64-Bit</b>
