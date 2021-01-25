@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="_c74_vig.xsl" type="text/xsl"?>
+<vignette name="Oneirotomy: Feature Requests" package="Oneirotomy">
+  <metadatalist>
+    <metadata name="author">Tim Georg Heinze</metadata>
+    <metadata name="tag">Xenorama</metadata>
+  </metadatalist>
+
+  <h1>Oneirotomy: Feature Requests</h1>
+
+	<ul>
+    <li>Global frame jump</li>
+    <li>Guides on solid integration of <i>Transform Feedback</i> using a <o>jit.gl.tf</o></li>
+    <li>Reduce loading times and minimise cross-talking during initialisation</li>
+    <li>Adapt <at>framedelay</at> to presence of <o>the.cerebellum</o></li>
+    <li>Support for frame-based timeline adjustment (milestones, cuelist), focus on <o>the.circadian</o></li>
+    <li>Extract frames from Ableton Live Set based on designated markers (Beta M4L version existing)</li>
+    <li>Render specified frames only, possibly with <at>punch-in</at> and <at>punch-out</at> methods. May require to start at an early frame to accumulate necessary data or simply ignore earlier frames but render them nonetheless to replicate content correctly</li>
+  </ul>
+  <br/>
+
+    Previous: <b><link type="vignette" module="Oneirotomy" name="oneirotomy-05_development">Development</link></b>
+
+
+  <cr/>
+
+  <seealsolist>
+		<!-- <seealso name="timing_events_topic" module="topics" type="vignette" />	-->
+    <seealso name="the.jit.thalamus" />
+  </seealsolist>
+
+</vignette>
