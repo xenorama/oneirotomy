@@ -14,6 +14,11 @@
 		The number of FFT-samples is 2048.
 	</description>
 
+	<discussion>
+		The playback of individual frames without subsequent silence or glitched looping is achieved by performing an FFT on the frame-based input signal or the entire buffer~—depending on the <at>window</at> setting—and writing the amplitude and phase data to a <m>jit_matrix</m>. Changing underlying framerates will affect how the frames are being recalled and which are recalled when and how. Changing the Sampling-Rate will result in a more complex or more coarse FFT having to be recalculated (bear in mind when working with large files, which should not necessarily be done when applying smooth windowing anyway). <br/>
+		While this is useful to, for instance, perform frame checks before rendering the recorded material (see <o>the.mc.pac~</o> and <o>the.circadian</o> for more info), the internal technique in use can also be part of FFT-based sound design. The underlying method is based on invaluable research done by <i>Jean-François Charles</i> and can be read-up on and understood in his excellent <a href="https://www.mitpressjournals.org/doi/pdf/10.1162/comj.2008.32.3.87">Spectral Tutorials</a>.
+	</discussion>
+
 	<!--METADATA (REMOVE FOR SIMPLICITY) -->
 	<metadatalist>
 		<metadata name="author">Tim Heinze</metadata>
@@ -104,6 +109,26 @@
 			The default channel is 1.
 		</description>
 	</attribute>
+	<attribute name="boundmode" get="1" set="1" type="symbol" size="1">
+			<digest>
+				Specify the frame incrementation mode
+			</digest>
+			<description>
+				When scrubbing through framewise, this sets the handler for frames exceeding the audiofile's length.
+				<br/> There are three different modes available, other ones are different names for the first three:
+				<br/>
+				<br/><at>fold </at>: mirror playback at beginning and end
+				<br/><at>wrap </at>: restart at the beginning when reaching the end
+				<br/><at>clip </at>: first first or last frame, respectively (default)
+				<br/><at>palindrome </at>: same as <m>fold</m>
+				<br/><at>mirror </at>: same as <m>fold</m>
+				<br/><at>clamp </at>: same as <m>clip</m>
+				<br/><at>modulo </at>: same as <m>wrap</m>
+				<br/>
+				<br/>
+				The default boundmode is 'clip' (freeze first or last frame, respectively)
+			</description>
+		</attribute>
 	<attribute name="fps" get="1" set="1" type="float" size="1">
 		<digest>
 			Set the frames per second to match video
