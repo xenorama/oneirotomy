@@ -37,8 +37,20 @@
 
     <h2>Frame Jumps</h2>
   <p>
-    In theory, a <m>jump</m> or <m>frame</m> method could and surely will be implemented. As it stands, this may be confusing and/or may yield unwanted results at the given frame which demand extrapolation from the viewer. Given that the foundation to the video is likely to be <i>generative</i>, i.e. based on evolving data and audio, the frame progression would have to take place linearly, one after the other for mutations to take shape in the desired way. Jumping frames will recall data at arbitrary points in the timeline and all the developments inbetween are obviously skipped. One will need to be aware of that. To check whether certain mutations take place at the same time or in short progression etc., this feature will surely be implemented soon. A <m>frame jump</m> method will require DSP to be toggled off or bypassed in the given nodes additionally, <o>jit.world</o> will have to be disabled as well and another method will require to return to playback or other modes. 
+    A <m>frame</m> method has been implemented. As it stands, this may be confusing and/or may yield unwanted results at the given frame which demand extrapolation from the viewer. Given that the foundation to the video is likely to be <i>generative</i>, i.e. based on evolving, accumulating data and audio, the frame progression would have to take place linearly, one after the other for mutations to take shape in the desired way. Jumping frames will recall data at arbitrary points in the timeline and all the developments inbetween are obviously skipped, while previous frames are not purged from the rendering. One will need to be aware of that. To check whether certain mutations take place at the same time or in short progression etc., this feature will be of merit. The operation mode of <o>the.jit.thalamus</o> is set back to '0' and will have to be retrieved to '1' manually for realtime playback.
   </p>
+
+  <h2>Different rendering dimensions may yield different, or even missing results</h2>
+  <p>
+    Using the <at>dim</at> of <o>the.jit.thalamus</o>, the output dimensions of the rendered video can be scaled to taste. This is useful when working at lower dimensions but rendering in hiQ. However, one must bear in mind that changing these for the final rendering will cause gl-objects to behave differently. If the aspect ratio is not identical to the realtime scaling, transformations may turn out differently. Likewise, drawing at higher resolution may require proportional adjustments in certain parameters, i.e. resolutions of matrices may have to be adjusted in parallel, resolutions of a <o>jit.gl.mesh</o> may have to be adjusted, etc. <br/>
+    <o>the.circadian</o> will output a '1' from its fourth outlet <i>before</i> rendering commences and hence can be used to adjust settings accordingly.
+  </p>
+
+  <illustration><img   id="_x0000_i1006" src="images/change-attrs-during-rendering.png"/></illustration>
+
+  <caption>
+		<i>The fourth outlet of <o>the.circadian</o> can be used to adjust params depending on whether we are rendering, or not. Here, the <at>point_size</at> of a <o>jit.gl.mesh</o> is increased when rendering at higher dimensions</i>
+	</caption>
 
       <h2>Allow a few bogus frames at begining of sequence</h2>
   <p>
