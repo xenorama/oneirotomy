@@ -117,13 +117,14 @@
 				</attribute>
 				<attribute name="fsaa" get="1" set="1" type="int" size="1">
 					<digest>
-						Enable full scene anti-aliasing
+						Enable full scene anti-aliasing (deprecated)
 					</digest>
 					<description>
-						Enable full scene anti-aliasing during offline rendering (default = 1).
+						Enable full scene anti-aliasing during offline rendering (default = 1). (This feature is deprecated)
 						<br/>
 						<br/>
 						This setting is temporary to the render process and will not override user settings of <o>jit.world</o>.
+						<br/>Deprecation Note: Since this setting requires subsequent enabling of any <o>jit.gl.tf</o> or new upload of any temporarily stored <o>jit.gl.texture</o>, this setting will no longer be supported and will have to be maintained by <o>jit.world</o> throughout its entire operation.
 					</description>
 					<attributelist>
 						<attribute name="label" get="1" set="1" type="symbol" size="1" value="FSAA" />
@@ -204,12 +205,13 @@
 </attribute>
 <attribute name="tf_support" get="1" set="1" type="bool" size="1">
 	<digest>
-		Support Transform Feedback using <o>jit.gl.tf</o>
+		Support Transform Feedback using <o>jit.gl.tf</o> (no longer necessary)
 	</digest>
 	<description>
 		Support a render process including Transform Feedback on a <o>jit.gl.mesh</o> using <o>jit.gl.tf</o>. Essentially, it deactivates the <at>fsaa</at> toggling prior to rendering, which otherwise requires a manual reactivation of the <o>jit.gl.tf</o>.
 	<br/>
 	The default is 0 (no <o>jit.gl.tf</o> support), the <at>fsaa</at> setting is by default on and would otherwise be overriden by <at>tf_support</at>.
+	<br/>Note: Since the <at>fsaa</at> is deprecated and has to be set to <o>jit.world</o> manually by the user, this feature is longer necessary and any <o>jit.gl.tf</o> present in the rendering queue will be natively supported, i.e. it will not have to be re-enabled for rendering.
 	</description>
 </attribute>
 <attribute name="ae" get="1" set="1" type="bool" size="1">

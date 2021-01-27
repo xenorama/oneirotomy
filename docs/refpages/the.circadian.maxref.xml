@@ -57,6 +57,15 @@
 			Specify a unique name to identify the object. <o>the.circadian</o> does not export any data or support import.
 		</description>
 	</attribute>
+		<attribute name="prerec" get="1" set="1" type="bool" size="1">
+		<digest>
+			Priority output from outlet 3 (recording mode)
+		</digest>
+		<description>
+			Set priority output from outlet 3 (recording mode). When set to '1' (default), will output a '1' before the first frame is being recorded — this can be useful to initialise large amounts of parmeters prior to recording. <br/>
+			When set to '0' (off) will send a '1' immediately before the first frame is output from the leftmost outlet — this can be useful to initialise running clocks or the <o>transport</o> object to begin recording immediately after initialisation.
+		</description>
+	</attribute>
 	<attribute name="active" get="1" set="1" type="int" size="1">
 		<digest>
 			Set the active flag
