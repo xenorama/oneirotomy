@@ -1,0 +1,21 @@
+{
+	"autoreveal" : 1,
+	"verbose" : 0,
+	"preview_video" : 1,
+	"toggledsp" : 1,
+	"autoopen" : 0,
+	"container" : "mov",
+	"filename" : "snouzy",
+	"recmode" : 1,
+	"toggleworld" : 1,
+	"ae" : 1,
+	"samps" : 44100,
+	"frames" : 30.0,
+	"ms" : 1000.0,
+	"fps" : 30.0,
+	"dim" : [ 1280, 960 ],
+	"framedelay" : 1.0,
+	"codec" : "h264",
+	"dir" : "Macintosh HD:/Users/Oni/Documents/Max 8/Packages/the.oneirotomy/extras/the.oneirotomy/jitter-examples/audio/",
+	"name" : "snouzy"
+}
