@@ -9,14 +9,18 @@
 
 	<description>
 		Written by Tim Heinze © 2020, www.xenorama.com. <br/>
-		Write signal data to matrices to later recall them for offline rendering. Replace any <o>jit.catch~</o> object in the patcher by this object. Functiuonality can not yet be guaranteed when working with open end recordings or long audiofiles. See the <i>discussion</i> for more info.
+		Write signal data to blocks of matrices to later recall them for offline rendering. Replace any <o>jit.catch~</o> or <o>mc.jit.catch~</o> object in the patcher by this object. Satisfactory results cannot be guaranteed when working with open end recordings, long audiofiles or variyng output intervals. See the <i>discussion</i> for more info.
 	</description>
 
 	<discussion>
 		<o>the.jit.thalamus</o> providing a central context is required in the enviroment.
 		<br/>
 		<br/>
-	 	Disclaimer: <o>the.mc.jit.mnemonic~</o> is not yet officially supported and to be seen as <i>work-in-progress</i>-solution to support existing <o>jit.catch~</o> objects in the Jitter environment. Limitations are that the object's native mode (0) cannot be supported due to its varying matrix-dimensions, which in return cannot be captured along the way, yet. At the core lies an <o>mc.jit.catch~</o> supporting multichannel-signal input as well as a <o>jit.concat</o> to record the resulting matrices for later offline recall. This object is subject to further developments, likewise not cleaned up and the helpfile is improvised. Any suggestions welcome.
+	 	Disclaimer: <o>the.mc.jit.mnemonic~</o> is to be seen as a <i>work-in-progress</i>-solution to support existing <o>jit.catch~</o> objects in the Jitter environment. Limitations are that the results may not match the intended/expected matrices to 100% accuracy, changes to <at>mode</at> and <at>framesize</at> cannot be applied during recording/performance and triggering output of the internal <o>jit.catch~</o> is likely to only work when applied <b>at low priority</b> (i.e. using a <o>qmetro</o>).<br/>
+		The basic functionality of this object is built around a <o>jit.concat</o> capturing the resulting matrices in blocks, storing them temporarily to disk to recompile them into a large <i>jxf</i>-format file to be read by a <o>jit.matrixset</o>. A separate dictionary assigns the blocks to their different sizes. The final set of matrices has to have the largest dimension recorded in the process to avoid data loss and wrong interpolation. Upon rebuilding the entire stream, each block is read from in sizes of matrices recorded per frame. <br/>
+		In <i>mode 1</i> the dimension of the resulting matrix varies according to the current <at>framesize</at> and—unfortunately—the interval at which the internal <o>jit.catch~</o> it being triggered. Hence, when working with low framesize and longer output intervals (these have to be deferred to the low priority thread to avoid Max crashing!), dim[1] can increase heavily to host all data previosuly buffered. This in return may cause the internal <o>jit.concat</o> to fail in recording the output matrix properly.<br/>
+		The unintuitive <at>concapture</at> attribute specifies how many matrices (of whichever size according to <at>mode</at>) will be concatenated into a temproary file, i.e. the lower the value <at>concapture</at> is set to, the more files are being created. While this will increase the efficiency overall, it may yield the odd frame loss during recording—in this case, a higher value may be more efficient. The default value is 66 matrices.
+		This object is subject to further developments, likewise not cleaned up and the helpfile is improvised. Any suggestions welcome. 
 	</discussion>
 
 
@@ -47,7 +51,7 @@
 				Number of audio-channels
 			</digest>
 			<description>
-				Number of expected audio channels in the multichannel-signal, likely to represent individual planes of the resulting matrix.
+				Number of expected audio channels in the multichannel-signal, likely to represent individual planes of the resulting matrix. Set this argument to '1' when working with single channel audio.
 			</description>
 		</objarg>
 	</objarglist>
@@ -129,7 +133,7 @@
 				Capture and output mode
 			</digest>
 			<description>
-				Ass opposed to <o>jit.catch~</o>, only three different modes are possible: in mode 0 (not supported), all data since the last output would be output in a one-dimensional matrix, however, this would yield varying matrix-dimensions and can currently not be supported! In mode 1 the amount of buffered data that fits into a multiple of the <at>framesize</at> is output in two dimensions; data not output will be saved for the next time. In these first two modes, every sample collected should be output once and only once. In mode 2 a <at>framesize</at> of the most recent data is output. Mode 3 causes <o>jit.catch~</o> to behave like an oscilloscope, triggering on channel <at>trigchan</at> when the signal crosses <at>triglevel</at> in the direction <at>trigdir</at>. If the threshold has not been passed for the duration of the entire internal data buffer (100 ms), jit.catch~ reverts temporarily to mode 2 behavior and outputs the most recent data until the threshold is crossed again.
+				Four different modes are possible: in mode 0, all data since the last output would be output in a one-dimensional matrix. In mode 1 the amount of buffered data that fits into a multiple of the <at>framesize</at> is output in two dimensions; data not output will be saved for the next time. In these first two modes, every sample collected should be output once and only once. In mode 2 a <at>framesize</at> of the most recent data is output. Mode 3 causes <o>jit.catch~</o> to behave like an oscilloscope, triggering on channel <at>trigchan</at> when the signal crosses <at>triglevel</at> in the direction <at>trigdir</at>. If the threshold has not been passed for the duration of the entire internal data buffer (100 ms), jit.catch~ reverts temporarily to mode 2 behavior and outputs the most recent data until the threshold is crossed again.
 			</description>
 			<attributelist>
 				<attribute name="basic" get="1" set="1" type="int" size="1" value="1" />
@@ -159,6 +163,14 @@
 			</digest>
 			<description>
 				The signal level at which to trigger a redraw in mode 3 (default=0.0)
+			</description>
+		</attribute>
+		<attribute name="concapture" get="1" set="1" type="int" size="1">
+			<digest>
+				Specify how many matrices one block is comprised of
+			</digest>
+			<description>
+				Specify how many matrices one block is comprised of. The default is 66 (matrices) and when this number is reached, a temporary Jitter binary file is created to later form one block in the entire chain of blocks which are being rebuilt using a <o>jit.matrixset</o>. Lower values craete more files and can thus cause the odd frame loss while being more efficient overall. Higher values are prone to lost frames but create less files and hubs between them. When not comfortable with changing this attribute, do leave it at 66. When the results are full of frame drops, do consider increasing or decreasing this value before recording.<br/>See the <m>discussion</m> for more info.
 			</description>
 		</attribute>
 	</attributelist>

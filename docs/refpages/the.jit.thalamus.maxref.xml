@@ -410,6 +410,15 @@ Query information about current objects in the context
 The message <m>getstate</m> will post relevant status information about every object in the current context to the Max Console and open the latter for viewing. Sending this message to individual objects will do so for the respective ones only. Send this message to monitor which objects will record or render and whether a meaningful name has been allocated to them.
 </description>
 </method>
+	<method name="queue">
+	<arglist />
+	<digest>
+		Open GUI to set children's active flags
+	</digest>
+	<description>
+	The message <m>queue</m> will open a table containing all instances of the current context with their current active flag. These can be changed to taste and temporarily stored in a preset.
+	</description>
+	</method>	
 		<method name="exportattrs">
 			<arglist />
 			<digest>
