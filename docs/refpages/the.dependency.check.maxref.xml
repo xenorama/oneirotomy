@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="the.dependency.check" module="jitter" category="Jitter System">
+
+	<digest>
+		Report whether all necessary dependencies are met.
+	</digest>
+
+	<description>
+		Written by Tim Heinze © 2020, www.xenorama.com. <br/>
+		Report whether all necessary dependencies are met.
+		<br/>
+		Will check for given externals (mxo for macOS, architecture-based .mxe for Windows) or custom abstractions, and report a boolean value from its outlet.
+	</description>
+
+	<!--METADATA (REMOVE FOR SIMPLICITY) -->
+	<metadatalist>
+		<metadata name="author">Tim Heinze</metadata>
+		<metadata name="tag">Xenorama</metadata>
+		<metadata name="tag">Offline Video Rendering</metadata>
+		<metadata name="tag">Jitter System</metadata>
+	</metadatalist>
+
+	<!--INLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--OUTLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--ARGUMENTS-->
+
+	<!--ATTRIBUTES (REMOVE FOR SIMPLICITY) -->
+		<attributelist>
+		<attribute name="externals" get="1" set="1" type="symbol" size="256">
+			<digest>
+				List of externals to look for.
+			</digest>
+			<description>
+				List of externals to look for. If any given external is not found by Max, a '0' is reported from the outlet, otherwise '1'.<br/>
+				The output value also depends on the <at>abstractions</at> list.
+			</description>
+		</attribute>
+				<attribute name="abstractions" get="1" set="1" type="symbol" size="256">
+			<digest>
+				List of custom abstractions to look for.
+			</digest>
+			<description>
+				List of custom abstractions to look for. If any given abstraction is not found by Max, a '0' is reported from the outlet, otherwise '1'.<br/>
+				The output value also depends on the <at>externals</at> list.
+			</description>
+		</attribute>
+		<attribute name="automatic" get="1" set="1" type="int" size="1">
+			<digest>
+				Automatically check on object load.
+			</digest>
+			<description>
+				Automatically check on object load (default: 1). When set to '0', the bject is idle until a 'bang' is received at its inlet. <br/>
+				This may be useful when the check must not be performed until other parts of the parent patch are initialised or otherwise called upon.
+			</description>
+		</attribute>
+	</attributelist>
+
+	<!--MESSAGES-->
+	<methodlist>
+		<method name="bang">
+			<digest>
+				Check dependencies.
+			</digest>
+			<description>
+				If a 'bang' is received at the inlet, all externals are saught within the searchpaths. Either a '1' (all dependencies met) or a '0' (one or more missing) will be reported from the outlet and in the latter case an error notification will be sent to the Max console.
+			</description>
+		</method>
+	</methodlist>
+
+	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
+
+</c74object>

@@ -1,0 +1,5 @@
+{
+	"matrixcount" : 11,
+	"type" : "float32",
+	"dim" : [ 320, 50 ]
+}

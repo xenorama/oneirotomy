@@ -1,0 +1,10 @@
+{
+	"matrixcount" : 7,
+	"dim" : [ 300, 1470 ],
+	"type" : "float32",
+	"planecount" : 4,
+	"matrix_name" : 	{
+		"0" : "spectrum"
+	}
+
+}

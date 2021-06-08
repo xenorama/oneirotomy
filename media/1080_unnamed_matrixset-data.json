@@ -1,0 +1,12 @@
+{
+	"matrixcount" : 3,
+	"dim" : [ 300, 1470 ],
+	"type" : "float32",
+	"planecount" : 4,
+	"matrix_name" : 	{
+		"0" : "poker",
+		"195" : "targo",
+		"629" : "poker"
+	}
+
+}

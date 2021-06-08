@@ -43,6 +43,11 @@ A metronome will start playing and in the <o>jit.pwindow</o> we can see a faint 
 <br/>Change the <at>tempo</at> attribute of <o>transport</o>, the visual sequencer will follow suit.
 </p>
 
+<p>
+Next, enable the <i>grid</i>, which translatse the audible signal into a stream of jitter matrices using <o>jit.catch~</o>. >out will see slightly varying white bars across the sequencer, reflecting the captured sound of the metronome.
+<br/>
+</p>
+
 <seealsolist>
   <seealso name="the.jit.thalamus"/>
 </seealsolist>

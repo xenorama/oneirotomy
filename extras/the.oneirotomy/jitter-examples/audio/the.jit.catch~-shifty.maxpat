@@ -4,13 +4,13 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 7,
+			"revision" : 8,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 419.0, 79.0, 865.0, 760.0 ],
+		"rect" : [ 891.0, 148.0, 865.0, 760.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -96,7 +96,8 @@
 					"numoutlets" : 5,
 					"outlettype" : [ "", "", "", "bang", "" ],
 					"patching_rect" : [ 226.0, 666.0, 249.0, 22.0 ],
-					"text" : "the.jit.thalamus shifty @importattrs shifty.json"
+					"text" : "the.jit.thalamus shifty @importattrs shifty.json",
+					"varname" : "the.jit.thalamus"
 				}
 
 			}
@@ -141,20 +142,8 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 98.5, 559.0, 61.0, 22.0 ],
+					"patching_rect" : [ 92.0, 574.0, 61.0, 22.0 ],
 					"text" : "s #0_start"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-44",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 3,
-					"outlettype" : [ "", "", "" ],
-					"patching_rect" : [ 98.5, 527.0, 82.0, 22.0 ],
-					"text" : "getattr enable"
 				}
 
 			}
@@ -294,7 +283,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 7,
+							"revision" : 8,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -632,7 +621,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 7,
+							"revision" : 8,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1126,7 +1115,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 310.0, 90.0, 201.0, 33.0 ],
+					"patching_rect" : [ 310.0, 90.0, 205.0, 33.0 ],
 					"text" : "Using Jitter audio --> matrix features to generate psychedelic visuals."
 				}
 
@@ -1482,21 +1471,16 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-40", 0 ],
+					"order" : 1,
 					"source" : [ "obj-43", 0 ]
 				}
 
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-40", 0 ],
-					"source" : [ "obj-44", 1 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-45", 0 ],
-					"source" : [ "obj-44", 0 ]
+					"order" : 0,
+					"source" : [ "obj-43", 0 ]
 				}
 
 			}
@@ -1616,6 +1600,13 @@
 				"implicit" : 1
 			}
 , 			{
+				"name" : "the.thalamus.synapsis.maxpat",
+				"bootpath" : "~/Documents/Max 8/Packages/the.oneirotomy/patchers/the.sub.abstractions",
+				"patcherrelativepath" : "../../../../patchers/the.sub.abstractions",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
 				"name" : "the.jit.thalamus.habenula.maxpat",
 				"bootpath" : "~/Documents/Max 8/Packages/the.oneirotomy/patchers/the.sub.abstractions",
 				"patcherrelativepath" : "../../../../patchers/the.sub.abstractions",
@@ -1630,10 +1621,23 @@
 				"implicit" : 1
 			}
 , 			{
-				"name" : "the.thalamus.synapsis.maxpat",
+				"name" : "the.conformpath.user.maxpat",
 				"bootpath" : "~/Documents/Max 8/Packages/the.oneirotomy/patchers/the.sub.abstractions",
 				"patcherrelativepath" : "../../../../patchers/the.sub.abstractions",
 				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "the.thalamus.state.maxpat",
+				"bootpath" : "~/Documents/Max 8/Packages/the.oneirotomy/patchers/the.sub.abstractions",
+				"patcherrelativepath" : "../../../../patchers/the.sub.abstractions",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "n4m.max-fs.js",
+				"bootpath" : "C74:/packages/Node For Max/examples/filesystem",
+				"type" : "TEXT",
 				"implicit" : 1
 			}
 , 			{
@@ -1658,8 +1662,8 @@
 			}
 , 			{
 				"name" : "the.helpdetails.js",
-				"bootpath" : "~/Documents/Max 8/Projects/21-01_RFL_REFLECT/RFL_01_WINTERNACHT/RFL_01_INTRO_GLITCHES/code",
-				"patcherrelativepath" : "../../../../../../Projects/21-01_RFL_REFLECT/RFL_01_WINTERNACHT/RFL_01_INTRO_GLITCHES/code",
+				"bootpath" : "~/Documents/Max 8/Xenorama/XEN_Ablage",
+				"patcherrelativepath" : "../../../../../../Xenorama/XEN_Ablage",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
@@ -1683,24 +1687,6 @@
 				"patcherrelativepath" : "../../../../patchers/the.sub.abstractions",
 				"type" : "JSON",
 				"implicit" : 1
-			}
-, 			{
-				"name" : "n4m.max-fs.js",
-				"bootpath" : "~/Documents/Max 8/Projects/21-01_RFL_REFLECT/RFL_01_WINTERNACHT/RFL_01_INTRO_GRIDROTA/code",
-				"patcherrelativepath" : "../../../../../../Projects/21-01_RFL_REFLECT/RFL_01_WINTERNACHT/RFL_01_INTRO_GRIDROTA/code",
-				"type" : "TEXT",
-				"implicit" : 1
-			}
-, 			{
-				"name" : "the.conformpath.user.maxpat",
-				"bootpath" : "~/Documents/Max 8/Packages/the.oneirotomy/patchers/the.sub.abstractions",
-				"patcherrelativepath" : "../../../../patchers/the.sub.abstractions",
-				"type" : "JSON",
-				"implicit" : 1
-			}
-, 			{
-				"name" : "jit.*.mxo",
-				"type" : "iLaX"
 			}
  ],
 		"autosave" : 0,

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="the.timeline" module="jitter" category="Jitter System">
+
+	<digest>
+		Provide a running timeline from <o>the.jit.renderer~</o>
+	</digest>
+
+	<description>
+		Written by Tim Heinze © 2020, www.xenorama.com. <br/>
+		Outputs frame-based incrementation and normalised or breakpoint-based multichannel-timeline progressions during realtime recording and offline rendering to support the approximation of a sequencer. Current operation modes of the bound context provided by <o>the.jit.renderer~</o> are output at high priority to prepare respective processes.
+	</description>
+
+	<discussion>
+		<o>the.jit.renderer~</o> providing a central context is required in the enviroment.
+		<br/>
+		<br/>
+		Connect this object to any parameter you wish to automate via mapping objects of choice, like <o>scale</o>, <o>functon</o>, <o>mc.evolve</o>, <o>table</o>, <o>funbuff</o>, etc., or use the internal <o>mc.function</o> for multichannel-animation along the timeline of the final video.
+		<br/> If a fixed <m>length</m> is set in <o>the.jit.renderer~</o>, it outputs frame count, normalised position (0.-1.) and boolean values for recording/rendering modes respectively, as well as the total frame count in the timeline.
+	</discussion>
+
+	<!--METADATA (REMOVE FOR SIMPLICITY) -->
+	<metadatalist>
+		<metadata name="author">Tim Heinze</metadata>
+		<metadata name="tag">Xenorama</metadata>
+		<metadata name="tag">Offline Video Rendering</metadata>
+		<metadata name="tag">Jitter System</metadata>
+	</metadatalist>
+
+	<!--INLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--OUTLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--ARGUMENTS-->
+	<objarglist>
+		<objarg name="render-context" optional="0" type="symbol" size="1">
+			<digest>
+				Specify a named render context to bind to.
+			</digest>
+			<description>
+				For convenience, this can be identical to one's world render context name but is to be considered independent. <o>the.jit.renderer~</o> with a unique context name is required running in parallel for all members of the offline render family to sync and respond to.
+			</description>
+		</objarg>
+	</objarglist>
+
+	<!--ATTRIBUTES (REMOVE FOR SIMPLICITY) -->
+	<attributelist>
+	<attribute name="name" get="1" set="1" type="symbol" size="1">
+		<digest>
+			Specify a unique name as identifier
+		</digest>
+		<description>
+			Specify a unique name to identify the object. <o>the.timeline</o> does not export any data or support import.
+		</description>
+	</attribute>
+		<attribute name="prerec" get="1" set="1" type="bool" size="1">
+		<digest>
+			Priority output from outlet 3 (recording mode)
+		</digest>
+		<description>
+			Set priority output from outlet 3 (recording mode). When set to '1' (default), will output a '1' before the first frame is being recorded — this can be useful to initialise large amounts of parmeters prior to recording. <br/>
+			When set to '0' (off) will send a '1' immediately before the first frame is output from the leftmost outlet — this can be useful to initialise running clocks or the <o>transport</o> object to begin recording immediately after initialisation.
+		</description>
+	</attribute>
+	<attribute name="active" get="1" set="1" type="int" size="1">
+		<digest>
+			Set the active flag
+		</digest>
+		<description>
+			Set the active flag. There are 4 active states available suitable for different purposes:
+			<br/>
+			<br/>0 = bypass this object and mute output
+			<br/>1 = operate normally (default); output timeline information
+		</description>
+	</attribute>
+</attributelist>
+
+	<!--MESSAGES-->
+
+	<methodlist>
+		<method name="bang">
+			<arglist />
+			<digest>
+				Output current values
+			</digest>
+			<description>
+				Sending a <m>bang</m> to the left inlet of <o>the.timeline</o>, will send all current timeline information out the respective outlets anew.
+			</description>
+		</method>
+				<method name="edit">
+			<arglist />
+			<digest>
+				Open the animation GUI
+			</digest>
+			<description>
+				Open the animation GUI by sending <m>edit</m> to the left inlet of <o>the.timeline</o>. The emerging window contains an <o>mc.function</o>, quantized to the frame-grid, with a maximum of 9 animation lanes. If a soundfile has been recorded along with realtime data, the resulting waveform is displayed beneath the function graphs to allow for intuitive breakpoint management. Note that this feature requires a unique <at>name</at> to be set. Furthermore, custom timeline data will be autmatically written to disk along with an <m>exportattrs</m> message to <o>the.jit.renderer~</o> only and will not be saved separately.<br/>
+				<br/>
+				When performing more than one animation lane, the third outlet of <o>the.timeline</o> serves as a voice allocation output and thus calls for the use of <o>mc.route</o> to forward the individual progressions to dedicated target objects.
+			</description>
+		</method>
+		<method name="settings">
+			<arglist/>
+			<digest>
+				Open the settings panel
+			</digest>
+			<description>
+				Open the settings panel of <o>the.jit.renderer~</o>
+			</description>
+		</method>
+		<method name="renderer">
+			<arglist/>
+			<digest>
+				Open the the main panel
+			</digest>
+			<description>
+				Open the main panel of <o>the.jit.renderer~</o>
+			</description>
+		</method>
+		<method name="queue">
+	<arglist />
+	<digest>
+		Open the core Queue Manager GUI
+	</digest>
+	<description>
+		The message <m>queue</m> will open the core Queue Manager GUI in <o>the.jit.renderer~</o> to specify which instance is recording or rendering in the next step.
+	</description>
+</method>
+		<method name="frame">
+			<arglist>
+				<arg name="index" optional="1" type="symbol" />
+			</arglist>
+			<digest>
+				Sync and output frame position
+			</digest>
+			<description>
+				If a fixed length has been set or a recording has prevously taken place, the message <m>frame</m> with an integer index will output the corresponding frame and the normalised position from the leftmost outlet of all other <o>the.timeline</o> objects in the context.
+			</description>
+		</method>
+		<method name="position">
+			<arglist/>
+			<digest>
+				Sync and output normalised position (0. - 1.)
+			</digest>
+			<description>
+				If a fixed length has been set or a recording has prevously taken place, the message <m>position</m> with a normalised float value between 0. and 1. will output the corresponding frame of the normalised position from the leftmost of all other <o>the.timeline</o> objects in the context.
+			</description>
+		</method>
+		<method name="unsolo">
+	<arglist />
+	<digest>
+		Remove all solo states in sibling objects
+	</digest>
+	<description>
+		The message <m>unsolo</m> does not remove the <m>solo</m> state of this object alone—as would the message <m>solo 0</m>—but does so for all other objects in the context as well.
+	</description>
+</method>
+	</methodlist>
+
+	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
+	<seealsolist>
+		<seealso name="the.jit.renderer~"/>
+		<seealso name="the.cerebellum"/>
+		<seealso name="the.cochlea~"/>
+		<seealso name="the.mc.jit.amygdala~"/>
+		<seealso name="the.mc.pac~"/>
+		<seealso name="the.jit.mojo"/>
+		<seealso name="the.jit.pinealis"/>
+		<seealso name="the.jit.tinnitus~"/>
+		<seealso name="the.mc.jit.mnemonic~"/>
+	</seealsolist>
+
+</c74object>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<?xml-stylesheet href="./_c74_tut.xsl" type="text/xsl"?>
+
+<chapter name="Oneirotomy Tutorials: Table of Contents" package="Oneirotomy">
+
+<h1>
+Oneirotomy Tutorials - Table of Contents
+</h1>
+
+<illustration><img   id="_x0000_i400" src="images/fftmesh.png"/></illustration>
+
+	<caption>
+		<i>realtime FFT using <o>jit.gl.multiple</o></i>
+	</caption>
+
+<h2>Tutorials on Implementation and Handling</h2>
+
+<ul>
+<li><link type="tutorial" module="Oneirotomy" name="001_fist-things-first">First Things First</link> — What is an unattended Installation?</li>
+<li><link type="tutorial" module="Oneirotomy" name="002_overview">Overview</link> — Understand different types of Media Installations and their requirements</li>
+<li><link type="tutorial" module="Oneirotomy" name="003_standalone-executables">Standalone Executables</link> — Learn about the advantagse of and differences for runtime executables</li>
+<li><link type="tutorial" module="Oneirotomy" name="004_convert-your-patch">Converting your Patch</link> — Detach your Patch from the Max Environment</li>
+<li><link type="tutorial" module="Oneirotomy" name="005_remote-maintenance">Remote Maintenance</link> — Stay connected to your VPN, even with unstable network connection</li>
+<li><link type="tutorial" module="Oneirotomy" name="006_scheduling">Schedule Patch activity</link> — Specify precise date and daytime for the patch to run</li>
+<li><link type="tutorial" module="Oneirotomy" name="007_command-line">The command line</link> — Work with the <o>shell</o> external to use the command line within Max</li>
+<li><link type="tutorial" module="Oneirotomy" name="008_dynamic-presets">Pattrstorage vs. Dictionaries</link> — Methods to dynamically store, recall, read and write preset data using the <o>pattr</o>-system or <o>dict</o></li>
+<li><link type="tutorial" module="Oneirotomy" name="008_ableton">Working with Ableton and M4L</link> — Things to remember when using Max with <b>Ableton Live</b></li>
+<li><link type="tutorial" module="Oneirotomy" name="009_manage-ressources">Manage Ressources</link> — Strip the GUI and operate with tabbed Patchers</li>
+<li><link type="tutorial" module="Oneirotomy" name="010_plotting-events">Plot CPU</link> — Visualize and write continuous CPU-usage data</li>
+<li><link type="tutorial" module="Oneirotomy" name="011_screenshots">Periodic Screenshots</link> — Schedule periodic Screenshots of the entire display or a specified area</li>
+<li><link type="tutorial" module="Oneirotomy" name="011_license">Run a Max Patch without License</link> — Lockdown a patch to make it uneditable</li>
+<li><link type="tutorial" module="Oneirotomy" name="012_checklist">Checklist before your departure</link> — Everything to ensure that your installation will run</li>
+</ul>
+
+<h2>Vignettes</h2>
+
+<ul>
+<li><link type="vignette" module="Oneirotomy" name="xenorama_topic">About Oneirotomy</link> — The view of the unknown.</li>
+<li><link type="vignette" module="Oneirotomy" name="xenorama_os">Operating System</link> — Cross-platform Compatibility.</li>
+<li><link type="vignette" module="Oneirotomy" name="xenorama_obj-overview">Oneirotomy Object Functional Overview</link> — List all Package Objects by functionality.</li>
+</ul>
+
+
+</chapter>
