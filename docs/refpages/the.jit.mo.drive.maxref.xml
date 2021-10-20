@@ -9,14 +9,14 @@
 
 	<description>
 		Written by Tim Heinze © 2020, www.xenorama.com. <br/>
-		Objects from the jit.mo-family operate in predictable and expected manner when a <o>jit.world</o> is currently enabled. <o>the.jit.mojo</o> can be attached to a <o>jit.mo.func</o> to progress through its phase during offline rendering. Any <at>speed</at> automation must be applied to the <o>jit.mojo</o> instead while the <o>jit.mo.func</o> will be automatically set to a <at>speed</at> of 0.
+		Objects from the jit.mo-family operate in predictable and expected manner when a <o>jit.world</o> is currently enabled. <o>the.jit.mo.drive</o> can be attached to a <o>jit.mo.func</o> to progress through its phase during offline rendering. Any <at>speed</at> automation must be applied to the <o>jit.mo.drive</o> instead while the <o>jit.mo.func</o> will be automatically set to a <at>speed</at> of 0.
 	</description>
 
 	<discussion>
 		<o>the.jit.renderer~</o> providing a central context is required in the enviroment.
 		<br/>
 		<br/>
-		When attempting to render video frame-by-frame, the <o>jit.mo.func</o> objects will not output their matrices along the virtual, decellarated clock, but follow their own, internal timing. Given that <o>jit.world</o> is disabled during offline rendering, this behaviour is not compatible. To ensure precise timing of these objects, <o>the.jit.mojo</o> will control their <at>speed</at> parameter when connected to their leftmost inlet instead. This way, the speed of movement can be immitated exactly, and automated as well, via <o>the.circadian</o>, for example.
+		When attempting to render video frame-by-frame, the <o>jit.mo.func</o> objects will not output their matrices along the virtual, decellarated clock, but follow their own, internal timing. Given that <o>jit.world</o> is disabled during offline rendering, this behaviour is not compatible. To ensure precise timing of these objects, <o>the.jit.mo.drive</o> will control their <at>speed</at> parameter when connected to their leftmost inlet instead. This way, the speed of movement can be immitated exactly, and automated as well, via <o>the.circadian</o>, for example.
 	</discussion>
 
 	<!--METADATA (REMOVE FOR SIMPLICITY) -->
@@ -50,7 +50,7 @@
 				Control the speed of an attached <o>jit.mo.func</o>.
 			</digest>
 			<description>
-				Any <at>speed</at> automation must be applied to the <o>jit.mojo.</o> instead while the <o>jit.mo.func</o> must be set to a <at>speed</at> of 0 at all times to avoid inevitable timing conflicts.
+				Any <at>speed</at> automation must be applied to the <o>jit.mo.drive</o> instead while the <o>jit.mo.func</o> must be set to a <at>speed</at> of 0 at all times to avoid inevitable timing conflicts.
 				<br/> The speed is set in Hz, analogous to the same <o>jit.mo.func</o> attribute.
 			</description>
 		</attribute>
@@ -85,7 +85,7 @@
 				Control the speed of an attached <o>jit.mo.func</o>.
 			</digest>
 			<description>
-				Any <at>speed</at> automation must be applied to the <o>jit.mojo.</o> instead while the <o>jit.mo.func</o> must be set to a <at>speed</at> of 0 at all times to avoid inevitable timing conflicts.
+				Any <at>speed</at> automation must be applied to the <o>jit.mo.drive.</o> instead while the <o>jit.mo.func</o> must be set to a <at>speed</at> of 0 at all times to avoid inevitable timing conflicts.
 				<br/> The speed is set in Hz, analogous to the same <o>jit.mo.func</o> attribute.
 			</description>
 		</method>

@@ -221,6 +221,24 @@
 		When set to 1 (default!), will play back the classic Adobe After Effects sound upon rendering completion. However, if DSP was disabled prior to rendering, this setting will not toggle the digital signal processing.
 	</description>
 </attribute>
+<attribute name="cntrlr" get="1" set="1" type="bool" size="1">
+	<digest>
+		Use LIVID CNTRL:R to control GUI and rendering operations
+	</digest>
+	<description>
+		Use LIVID CNTRL:R to control GUI and rendering operations. This device is no longer officially supported by LIVID and its online documentation is neither accessible any longer. However, if a CNTRL:R is available this falg can be set to use it on the first Bank (which ever channel it is mapped to) in specific ways. Note that the button and CC mappings are expected to match the default layout.
+	<br/>
+		The default is 0 (ignore controller).
+	</description>
+</attribute>
+<attribute name="ae" get="1" set="1" type="bool" size="1">
+	<digest>
+		Play classic Adobe After Effects sounds after rendering
+	</digest>
+	<description>
+		When set to 1 (default!), will play back the classic Adobe After Effects sound upon rendering completion. However, if DSP was disabled prior to rendering, this setting will not toggle the digital signal processing.
+	</description>
+</attribute>
 	</attributelist>
 
 		<!--MESSAGES-->
@@ -255,6 +273,16 @@
 			<description>
 				This will stop recording audio (without subsequent export) or rendering video. Any previously written video data will be compiled.
 				<br/> Same as sending a <m>0</m> integer to first inlet.
+			</description>
+		</method>
+		<method name="pause">
+			<arglist />
+			<digest>
+				Pause/continue any running render process
+			</digest>
+			<description>
+				Pause/continue any running render process. Until the message <m>pause</m> is sent again or the render process is stopped entirely, it will be frozen and any necessary modifications or other work within Max can be executed since <o>jit.world</o> is currently idle and awaiting its next drawing command from <o>the.jit.renderer~</o>.<br/>
+				Note that the running clock for elapsed time in the process information window will be reset whenever the rendering process is paused.
 			</description>
 		</method>
 		<method name="int">
@@ -449,6 +477,15 @@ The message <m>getstate</m> will post relevant status information about every ob
 				Will attempt to read a JSON-file containing render settings from the directory specified by <at>dir</at>, or will prompt the user to choose a file.
 				<br/>
 				Current settings can be exported with <m>exportattrs</m>
+			</description>
+		</method>
+		<method name="mtr">
+			<arglist />
+			<digest>
+				Send messages to all <o>the.mtr</o> objects
+			</digest>
+			<description>
+			Send any message to all <o>the.mtr</o> objects within the bound render-context.
 			</description>
 		</method>
 	</methodlist>

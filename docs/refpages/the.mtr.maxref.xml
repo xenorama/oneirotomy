@@ -19,9 +19,6 @@
 		<br/>
 		Use <o>the.mtr</o> as a hub between continuous, timed data and the video domain quantized to the desired framerate. To maximize efficiency, it is best practise to place this object as far up in the queue as possible (i.e., immedietely after any such timing objects which cannot operate offline, like <o>line</o>, <o>when</o>, <o>clocker</o>, <o>slide</o> etc.) and as close to the video domain as necessary to use as few as possible of the objects.<br/>
 		Although it offers only one inlet, <o>the.mtr</o> can store lists. If, for example, various gl-parameters of a <o>jit.gl.gridshape</o> or <o>jit.gl.mesh</o> are controlled by as many timed objects, all of these can be packed into  a list and routed through <o>the.mtr</o> to be unzipped afterwards. This way, only one obejct is needed.
-		<br/>
-		<br/>
-		As part of the human brain, the <b>mtr</b> plays an important role in motor control. It may also be involved in some cognitive functions such as attention and language as well as emotional control such as regulating fear and pleasure responses, but its movement-related functions are the most solidly established. The human mtr does not initiate movement, but contributes to coordination, precision, and accurate timing: it receives input from sensory systems of the spinal cord and from other parts of the brain, and integrates these inputs to fine-tune motor activity.
 	</discussion>
 
 	<!--METADATA (REMOVE FOR SIMPLICITY) -->
