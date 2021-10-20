@@ -20,11 +20,11 @@ Provide a set of **abstractions** which support offline, frame-by-frame, hiQ ren
 * add the resulting folder to Max's searchpath, i.e. the _packages_ folder
 * open Max, under the the _Extras_ menu, select the entry _the.oneirotomy_ which should appear
 * Read the documentation to get an overview
-* check the helpfiles and reference pages of all objects to get a detailed overview, especially **the.jit.thalamus** lying at the core of the process
+* check the helpfiles and reference pages of all objects to get a detailed overview, especially **the.jit.renderer~** lying at the core of the process
 * check also the limitations of certain work-flows and objects, as not all functionality can be provided natively and/or instantaneously
-* generally, consider which parts of your patch translate from timing-sensitive or signal domain to video domain
+* generally, consider which parts of your patch translate from timing-sensitive or signal domain to video domain — these can be very subtle nodes which prove curcial. Note also that when using vizzie objects or other people's abstractions, such objects can be easily contained and will need to be worked around or replaced by provided objects of this package. Some such commonly used objects are those of the jit.mo-family
 * add the objects in documented ways to any jit.world's rendering process in Max
-* specify all desired settings to **the.jit.thalamus** _prior_ to recording and subsequent rendering (i.e., changing the _framerate_ is likely to purge all previously captured data or to distort the results)
+* specify all desired settings to **the.jit.renderer~** _prior_ to recording and subsequent rendering (i.e., changing the _framerate_ is likely to purge all previously captured data or to distort the results)
 Note that since these objects are **abstractions**, they cannot link with an **attrui** nor can they respond to the **universal** object, for example
 
 #### General Approach
@@ -33,7 +33,7 @@ In **Oneirotomy**, the approach to render lossless hiQ video is to capture and r
 #### Edit & Development:
 * advanced knowledge of Max/MSP/Jitter
 * [dictionaries](https://docs.cycling74.com/max7/refpages/dict)
-* some [gen~](https://docs.cycling74.com/max7/refpages/gen~) for **the.mc.pac~**
+* some [gen~](https://docs.cycling74.com/max7/refpages/gen~) for **the.mc.sfbuffer~**
 
 ## Nomenclature
 **Oneirotomy** (/ɒnɪˈrɒt​ɔmi/; from Greek ὄνειρον, oneiron, «dream»; and /tomé/; «cut, slice») is a neologism to be translated as _dream slice_, where individual frames of realtime video can be sliced and reproduced in non-realtime.
@@ -47,17 +47,17 @@ Used to avoid conflicts between other people's abstractions and externals.
 The creation of this library was inspired by [Julien Bayle's Post on the Cycling '74 Forum](https://cycling74.com/forums/offline-rendering-frame-per-frame-and-hiq-video-production-with-max) and the current need of mine to make visual content produced with Jitter available to a complex hiQ video for a multi-layered performance. The debate about techniques to capture and render generative video content reliably and in any quality shall hopefully profit from it likewise.
 
 ## Contents
-* the.jit.thalamus • core handling of offline rendering and recording
-* the.cerebellum • record timing data
-* the.cochlea~ • record signals, mc-version available
-* the.jit.mojo • manage jit.mo.func in non-realtime
-* the.jit.pinealis • perform framecheck (video, image sequence)
-* the.jit.tinnitus~ • perform framecheck (audio)
-* the.mc.jit.amygdala~ • replace a jit.poke~ object for non-realtime rebuilding
-* the.mc.pac~ • record audio for video renderings
-* the.circadian • output timeline information
+* the.jit.renderer~ • core handling of offline rendering and recording
+* the.mtr • record timing data
+* the.snapshot~ • record signals, mc-version available (mc-version included)
+* the.jit.mo.drive • manage jit.mo.func in non-realtime
+* the.jit.framecheck • perform framecheck (video, image sequence)
+* the.jit.framecheck~ • perform framecheck (audio)
+* the.jit.poke~ • replace a jit.poke~ object for non-realtime rebuilding
+* the.mc.sfbuffer~ • record audio for video renderings (now included in the.jit.renderer~ with adoutput~ mc-support)
+* the.timeline • output timeline information and mc-curves
 * a handful of sub-abstractions, to be disregarded during normal use, perhaps interesting when developing further
-* the.mc.jit.mnemonic~ may be used to replace _jit.catch~_ objects for now, albeit, no thorough testing has been applied
+* the.mc.jit.catch~ may be used to replace _jit.catch~_ objects for now, albeit, no thorough testing has been applied covering all possible scenarios
 
 ## Limitations
 In the course of non-realtime rendering, all timed movements have to be captured beforehand to be iterated through during the rendering process which is to happen offline, at a later stage. While signals, data and matrices can be mapped to individual frames in the process, the use of some objects and algorithms is not as straight forward — especially those receiving their motion information from a running jit.world, which is disabled during rendering individual frame and triggered manually. This pertains mostly to the jit.mo.func objects which need their _phase_ to be controlled by **the.jit.mojo** object. The use of _jit.anim.drive_ cannot be supported just yet and requires a manual substitution using max messages at the moment.
@@ -73,12 +73,12 @@ There are many objects in Max which translate data from one domain to the other,
 * _number~_ (using rightmost outlet to gain data)
 
 ### Capture varying states of matrices populated by signal data
-**the.mc.jit.amygdala~** has a regular **jit.poke** at its core which handles the matrix population during normal performance mode. During recording, multiple instances of **jit.poke~** write values and dimension-inputs to blocks of matrices which are stored temporarily to disk. These are both deleted using **node.script** and compiled into a _jxf_ file upon completion of signal recording, which then is read by a **jit.matrixset** to query the ever-changing state of values/dimension-inputs coords for every frame during rendering.
-* _jit.poke~_ becomes **the.mc.jit.amygdala~**
+**the.jit.poke~** has a regular **jit.poke** at its core which handles the matrix population during normal performance mode. During recording, multiple instances of **jit.poke~** write values and dimension-inputs to blocks of matrices which are stored temporarily to disk. These are both deleted using **node.script** and compiled into a _jxf_ file upon completion of signal recording, which then is read by a **jit.matrixset** to query the ever-changing state of values/dimension-inputs coords for every frame during rendering.
+* _jit.poke~_ becomes **the.jit.poke~**
 Note: The _normalize_ method is not yet supported by the.mc.jit.amygdala~ but changing the plane index is supported.
 
 ### Capture timing-sensitive data (i.e. from a _transport_ object)
-**the.cerebellum** has a single-track **mtr** object at its core and tracks data it receives for every frame during recording and can be inserted _after_ any of the following (or similar) objects, as close to the video domain as possible:
+**the.mtr** has a single-track **mtr** object at its core and tracks data it receives for every frame during recording and can be inserted _after_ any of the following (or similar) objects, as close to the video domain as possible:
 * _when_
 * _timer_
 * _clocker_
@@ -89,7 +89,7 @@ Note: The _normalize_ method is not yet supported by the.mc.jit.amygdala~ but ch
 
 ### Record audio content to accompany final video
 Depending on whether a video _length_ was specified before recording audio, it either pokes incoming multichannel signals to a **buffer~** or writes directly to disk using **mc.sfrecord~**
-* i.e. _sfrecord~_ --> **the.mc.pac~**
+* i.e. _sfrecord~_ --> **the.mc.sfbuffer~**
 
 ### Control progression of **jit.mo.func** objects during offline rendering
 **the.jit.mojo** replaces the _speed_ attribute of any **jit.mo.func** object in the patch to control its _phase_ whenever jit.world is not running (like in non-realtime mode). It must therefore connect to any **jit.mo.func** object producing matrix data and will handle the rest.
