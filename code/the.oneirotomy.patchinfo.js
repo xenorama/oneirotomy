@@ -1,8 +1,6 @@
 inlets=1;
 outlets=1;
 
-max.clearmaxwindow();
-
 this.box.message("border", 0);
 this.box.message("ignoreclick", 0);
 mgraphics.init();
