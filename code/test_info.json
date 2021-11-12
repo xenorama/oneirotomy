@@ -1,0 +1,5 @@
+{
+	"fps" : 36.0,
+	"frames" : 5000.0,
+	"container" : [ "img_seq", "(jpeg)" ]
+}
