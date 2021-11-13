@@ -177,7 +177,7 @@ function tagBoxes(){
 						set_source_rgba(frame_color);
 						ellipse(area);
 					stroke();
-					if (isOverTag(xpos,this.box.rect[3]-this.box.rect[1]-9,11)) info = tags[t];
+					if (isOverTag(xpos+5,this.box.rect[3]-this.box.rect[1]-9,11)) info = tags[t];
 					xpos += 11;
 				}
 			}
