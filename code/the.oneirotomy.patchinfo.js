@@ -1,6 +1,14 @@
 inlets=1;
 outlets=1;
 
+max.clearmaxwindow();
+
+var defaultfont = 0;
+declareattribute("defaultfont","get_defaultfont","set_defaultfont",1);
+function set_defaultfont(vrbse) { defaultfont = vrbse; }; set_defaultfont.local = 1;
+function get_defaultfont() { return defaultfont };
+
+
 this.box.message("border", 0);
 this.box.message("ignoreclick", 0);
 mgraphics.init();
@@ -37,6 +45,8 @@ tag_colors.replace("cv",[0.2,0.5,0.6,1]);
 var tag_list = tag_colors.getkeys();
 var tags_pos = this.box.rect[3]-this.box.rect[1]; // bottm left
 var tag_layout = 1;
+var font = (defaultfont == 0) ? this.patcher.getattr("fontname") : "Lato"
+var fontsize = (defaultfont == 0) ? this.patcher.getattr("fontsize") : "13"
 // var wrap_width = this.box.rect[2]-this.box.rect[0];
 // var tags_pos = this.box.rect[2]-this.box.rect[0];
 
@@ -61,13 +71,15 @@ function init()
 }
 
 
-
 var xenlogo = new MGraphicsSVG("xen_500.svg");
 var xenlogo2 = new MGraphicsSVG("xenorama_500.svg");
 
 init();
 
 function paint() {
+	var patchfont = this.patcher.getattr("fontname");
+	font = (defaultfont == 0 && patchfont != "Arial") ? patchfont : "Lato";
+	fontsize = (defaultfont == 0 && patchfont != "Arial") ? this.patcher.getattr("fontsize") : "13";
 	name = (jsarguments[1]) ? name : ((this.patcher.getattr("filename")) ? this.patcher.getattr("filename").replace(/\.[^/.]+$/, "") : "<unnamed>");
 	textcolor = this.patcher.getattr("textcolor");
 	titlecolor = (this.patcher.getattr("filename") || jsarguments[1] || linkIdle == 1) ? textcolor : [0.7,0.5,0.,1.];
@@ -101,13 +113,13 @@ function paint() {
 						// 	line_to(this.box.rect[2],54);
 			stroke();
   	move_to(55, 40);
-  		select_font_face("Lato");
+  		select_font_face(font);
 		set_source_rgba(titlecolor);
      		set_font_size(48);
       	(linkIdle == 0) ? show_text(name) : show_text(output);
 		move_to(4, 70);
 		set_source_rgba(textcolor);
-		set_font_size(13);
+		set_font_size(fontsize);
 		if (shortDesc) digest = shortDesc;
 		else {
 			var getDigest = this.patcher.getattr("digest");
@@ -125,8 +137,8 @@ function paint() {
 			var getDesc = this.patcher.getattr("description");
 			desc = (getDesc) ? getDesc : desc;
 			move_to(4,90);
-			select_font_face("Lato");
-			set_font_size(13);
+			select_font_face(font);
+			set_font_size(fontsize);
 			// wordwrap(desc);
 			(linkIdle == 0) ? wordwrap(desc) : wordwrap("How to form a space poetically by means of modern media?");
 		}
@@ -177,7 +189,7 @@ function tagBoxes(){
 						set_source_rgba(frame_color);
 						ellipse(area);
 					stroke();
-					if (isOverTag(xpos+5,this.box.rect[3]-this.box.rect[1]-9,11)) info = tags[t];
+					if (isOverTag(xpos,this.box.rect[3]-this.box.rect[1]-9,11)) info = tags[t];
 					xpos += 11;
 				}
 			}

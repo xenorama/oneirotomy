@@ -7,12 +7,21 @@ mgraphics.init();
 mgraphics.relative_coords = 0;
 mgraphics.autofill = 0;
 
+var defaultfont = 0;
+declareattribute("defaultfont","get_defaultfont","set_defaultfont",1);
+function set_defaultfont(vrbse) { defaultfont = vrbse; }; set_defaultfont.local = 1;
+function get_defaultfont() { return defaultfont };
+
 var textcolor = this.patcher.getattr("accentcolor");
 var mousePos = [-1,-1];
 var scale_coeff = jsarguments[1] || 25; // scale_coeff
 var isClick = 0;
 var textcolor = [];
 var this_path = this.patcher.getattr("filepath");
+
+var patchfont = this.patcher.getattr("fontname");
+var fontname = (defaultfont == 0 && patchfont != "Arial") ? patchfont : "Lato";
+var fontsize = (defaultfont == 0 && patchfont != "Arial") ? this.patcher.getattr("fontsize") : "13";
 
 var linx = {
 	logos: [
@@ -21,12 +30,12 @@ var linx = {
 		new MGraphicsSVG("vimeo_500.svg"),
 		new MGraphicsSVG("youtube_500.svg"),
 		new MGraphicsSVG("instagram_500.svg"),
-		// new MGraphicsSVG("soundcloud_500.svg"),
+		new MGraphicsSVG("soundcloud_500.svg"),
 		new MGraphicsSVG("fb_500.svg"),
-		// new MGraphicsSVG("gr_500.svg"),
-		// new MGraphicsSVG("browser_500.svg"),
-		// new MGraphicsSVG("pastebin_500.svg"),
-		// new MGraphicsSVG("patreon_500.svg"),
+		new MGraphicsSVG("gr_500.svg"),
+		new MGraphicsSVG("browser_500.svg"),
+		new MGraphicsSVG("pastebin_500.svg"),
+		new MGraphicsSVG("patreon_500.svg"),
 	],
 	colors: [
 		[0.4,0.6,0.5,1.],
@@ -34,12 +43,12 @@ var linx = {
 		[0.2,0.7,1.,1.],
 		[0.74,0.01,0.01,1.],
 		[0.9,0.3,0.7,1.],
-		// [0.9,0.2,0.0,1.],
+		[0.9,0.2,0.0,1.],
 		[0.2,0.4,0.9,1.],
-		// [0.7,0.2,0.,1.],
-		// gettextcolor(),
-		// getpatchlinecolor(),
-		// [0.97,0.4,0.32,1.],
+		[0.7,0.2,0.,1.],
+		gettextcolor(),
+		getpatchlinecolor(),
+		[0.97,0.4,0.32,1.],
 	],
 	browse: [
 		"www.xenorama.com",
@@ -47,12 +56,12 @@ var linx = {
 		"www.vimeo.com/xenorama",
 		"https://www.youtube.com/channel/UCme1_Q96NJ3AvCt7hsIKEiw",
 		"https://www.instagram.com/xenorama.studio",
-		// "https://soundcloud.com/the-solar-nexus",
+		"https://soundcloud.com/the-solar-nexus",
 		"www.facebook.com/xenorama.collective",
-		// "https://xenorama.gumroad.com/",
-		// (this_path) ? "file://"+this.patcher.getattr("filepath").replace(/\/[^//]+$/, "")+"/" : undefined,
-		// "https://pastebin.com/u/onishogun",
-		// "https://www.patreon.com/xenorama",
+		"https://xenorama.gumroad.com/",
+		(this_path) ? "file://"+this.patcher.getattr("filepath").replace(/\/[^//]+$/, "")+"/" : undefined,
+		"https://pastebin.com/u/onishogun",
+		"https://www.patreon.com/xenorama",
 	],
 	descriptions: [
 		"xenorama",
@@ -60,12 +69,12 @@ var linx = {
 		"vimeo",
 		"youtube",
 		"instagram",
-		// "soundcloud",
+		"soundcloud",
 		"facebook",
-		// "gumroad",
+		"gumroad",
 		"open directory",
-		// "pastebin",
-		// "patreon",
+		"pastebin",
+		"patreon",
 	]
 }
 
@@ -94,7 +103,7 @@ function paint(){
 				ypos += shift;
 				if (is_over == true) {
 					move_to(shift,scale_coeff/2+4)
-					select_font_face("Lato");
+					select_font_face(fontname);
 					set_source_rgba(this.patcher.getattr("textcolor"));
 					set_font_size(13);
 					(linx.browse[w]) ? show_text(linx.descriptions[w]) : show_text("<unsaved>");
