@@ -2,11 +2,18 @@
 ————————————————————————————
 TODO
 
-* Snapshot functionality (complex, due to the.obj.init methods — some of which are desired, others reset gemoetry/transformation)
-* adrecord() --> external adoutput~ (mc)
 * adaptation of other abstractions
-* gen implementation for audio~
-* frame recall --> normalised output (slider)
+* migrate everything to the.jit.renderer~
+* update all documentation covering new features
+* update helpfiles
+* the.oneirotomy.setup: replace legacy jit.gl.render/jit.window setups --> depepnds highly on individual setup
+* the.oneirotomy.setup: post upgrade info to console
+* the.oneirotomy.setup: add 'local' flag to operate in current patch only
+* avoid 'bad outlet index' error thrown to console upon instantiation (the.jit.js.renderer~)
+* tutorial patches
+* update reference / vignettes
+* include screenshots of current objects
+* test, test, test (BETA)
 
 */
 
