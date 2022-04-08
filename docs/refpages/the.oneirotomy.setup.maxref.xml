@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="the.oneirotomy.setup" module="jitter" category="Jitter System">
+
+	<digest>
+		Upgrade a patch to be compatible with offline rendering using <o>the.jit.renderer~</o>
+		</digest>
+
+	<description>
+		Written by Tim Heinze © 2022, www.xenorama.com.
+		<br/>Highlight, replace or augment designated Jitter or MSP-objects to record in realtime and render high resolution Jitter content offline.
+	</description>
+
+	<discussion>
+	</discussion>
+
+	<!--METADATA (REMOVE FOR SIMPLICITY) -->
+	<metadatalist>
+		<metadata name="author">Tim Heinze</metadata>
+		<metadata name="tag">Xenorama</metadata>
+		<metadata name="tag">Offline Video Rendering</metadata>
+		<metadata name="tag">Jitter System</metadata>
+	</metadatalist>
+
+	<!--INLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--OUTLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--ARGUMENTS-->
+	<objarglist>
+		<objarg name="render-context" optional="0" type="symbol" size="1">
+			<digest>
+				Specify a named render context for all children objects to sync to
+			</digest>
+			<description>
+				Specify a named render context for all children objects to sync to. If a valid context is already present in the patch, make sure the given context name is identical.
+			</description>
+		</objarg>
+	</objarglist>
+
+	<!--ATTRIBUTES (REMOVE FOR SIMPLICITY) -->
+	<!-- <attributelist>
+	</attributelist> -->
+
+		<!--MESSAGES-->
+
+	<methodlist>
+		<method name="upgrade">
+			<arglist />
+			<digest>
+				Upgrade all designated objects and configurations
+			</digest>
+			<description>
+				Upgrade all designated objects and configurations
+			</description>
+		</method>
+		<method name="highlight">
+			<arglist />
+			<digest>
+				Highlight all potentially relevant objects' boxes
+			</digest>
+			<description>
+				Highlight all potentially relevant objects' boxes.
+			</description>
+		</method>
+		<method name="renderer">
+			<arglist />
+			<digest>
+				Instantiate <o>the.jit.renderer~</o> and <o>jit.world</o> with given context name
+			</digest>
+			<description>
+				Instantiate <o>the.jit.renderer~</o> and <o>jit.world</o> with given context name. If a jit.world context by this name is already present, an instance of jit.world will not be created. Note, that any <o>jit.window</o> with this context name must be renamed or removed first, for otherwise an error is thrown. The renaming occurs automatically with the <m>upgrade</m> method.
+			</description>
+		</method>
+	</methodlist>
+
+	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
+	<seealsolist>
+		<seealso name="the.jit.renderer~"/>
+		<seealso module="Oneirotomy" name="oneirotomy_table_of_contents_topic" type="vignette" />
+		<seealso module="Oneirotomy" name="oneirotomy-01_object-overview" type="vignette" />
+	</seealsolist>
+
+</c74object>

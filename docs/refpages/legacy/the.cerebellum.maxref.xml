@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="the.cerebellum" module="max" category="Data, Timing">
+
+	<digest>
+		Capture timing-sensitive data for offline video rendering
+	</digest>
+
+	<description>
+		Written by Tim Heinze © 2020, www.xenorama.com. <br/>
+		<o>the.cerebellum</o> captures any data which is both subject to precise timing and which is relevant inbetween frames as well.
+		<br/> At its core lies a single-track <o>mtr</o> which listens to incoming data of any size and type. In the course of offline rendering all previously recorded frames are normalised as timeline along which the data is being recalled, linearly, in blocks as long as one frame in samples.
+	</description>
+
+	<discussion>
+		<o>the.jit.thalamus</o> providing a central context is required in the enviroment.
+		<br/>
+		<br/>
+		Use <o>the.cerebellum</o> as a hub between continuous, timed data and the video domain quantized to the desired framerate. To maximize efficiency, it is best practise to place this object as far up in the queue as possible (i.e., immedietely after any such timing objects which cannot operate offline, like <o>line</o>, <o>when</o>, <o>clocker</o>, <o>slide</o> etc.) and as close to the video domain as necessary to use as few as possible of the objects.<br/>
+		Although it offers only one inlet, <o>the.cerebellum</o> can store lists. If, for example, various gl-parameters of a <o>jit.gl.gridshape</o> or <o>jit.gl.mesh</o> are controlled by as many timed objects, all of these can be packed into  a list and routed through <o>the.cerebellum</o> to be unzipped afterwards. This way, only one obejct is needed.
+		<br/>
+		<br/>
+		As part of the human brain, the <b>cerebellum</b> plays an important role in motor control. It may also be involved in some cognitive functions such as attention and language as well as emotional control such as regulating fear and pleasure responses, but its movement-related functions are the most solidly established. The human cerebellum does not initiate movement, but contributes to coordination, precision, and accurate timing: it receives input from sensory systems of the spinal cord and from other parts of the brain, and integrates these inputs to fine-tune motor activity.
+	</discussion>
+
+	<!--METADATA (REMOVE FOR SIMPLICITY) -->
+	<metadatalist>
+		<metadata name="author">Tim Heinze</metadata>
+		<metadata name="tag">Xenorama</metadata>
+		<metadata name="tag">Offline Video Rendering</metadata>
+		<metadata name="tag">Data, Timing</metadata>
+	</metadatalist>
+
+	<!--INLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--OUTLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--ARGUMENTS-->
+	<objarglist>
+		<objarg name="render-context" optional="0" type="symbol" size="1">
+			<digest>
+				Specify a named render context to bind to.
+			</digest>
+			<description>
+				For convenience, this can be identical to one's world render context name but is to be considered independent. <o>the.jit.thalamus</o> with a unique context name is required running in parallel for all members of the offline render family to sync and respond to.
+			</description>
+		</objarg>
+	</objarglist>
+
+	<!--ATTRIBUTES (REMOVE FOR SIMPLICITY) -->
+	<attributelist>
+	<attribute name="exportname" get="1" set="1" type="symbol" size="1">
+		<digest>
+			Specify a unique name to write to
+		</digest>
+		<description>
+			Specify a unique name to export to after completion of the capturing process, managed by <o>the.jit.thalamus</o>. The resulting filetype is <m>JSON</m> and can be re-exported/imported using the <m>export</m> and <m>import</m> messages, respectively.
+		Same as <at>name</at>
+		</description>
+	</attribute>
+	<attribute name="name" get="1" set="1" type="symbol" size="1">
+		<digest>
+			Specify a unique name to write to
+		</digest>
+		<description>
+			Specify a unique name to export to after completion of the capturing process, managed by <o>the.jit.thalamus</o>. The resulting filetype is <m>JSON</m> and can be re-exported/imported using the <m>export</m> and <m>import</m> messages, respectively.
+			<br/>Same as <at>exportname</at>
+		</description>
+	</attribute>
+	<attribute name="active" get="1" set="1" type="int" size="1">
+		<digest>
+			Set the active flag
+		</digest>
+		<description>
+			Set the active flag. There are 4 active states available suitable for different purposes:
+			<br/>
+			<br/>0 = ignore this object and pass everything through without recording or recalling
+			<br/>1 = operate normally (default); playback, record and output during rendering
+			<br/>2 = playback and output previously recorded data normally but do not record any new data
+			<br/>3 = playback and record normally but do not output data during rendering
+			<br/>4 = record and output during rendering but never pass incoming data
+			<br/>5 = mute all activity
+			<br/>
+			<br/>Note that while recording is disabled, the automatic export upon recording completion (if an <at>exportname</at> is specified) is also disabled and previous files will not be overwritten.
+			<br/>Furthermore, the <at>active</at> flag is overriden by the <m>solo</m> state of the object
+		</description>
+	</attribute>
+</attributelist>
+
+	<!--MESSAGES-->
+
+	<methodlist>
+		<method name="bang">
+			<arglist />
+			<digest>
+				Send dictionary data out right outlet
+			</digest>
+			<description>
+				Sending a <m>bang</m> to the left inlet of <o>mtr</o>, results in a dictionary being sent out the right outlet with information about the current state of the object. Both global and track specific informtion is included in the dictionary. An entry that begins with &quot;global_&quot; is the global setting for the specified attribute. If the same attribute has a track specific setting, that value will be listed under the track information.
+			</description>
+		</method>
+		<method name="anything">
+			<arglist>
+				<arg name="input" optional="0" type="list" />
+			</arglist>
+			<digest>
+				Store the message on the timeline
+			</digest>
+			<description>
+				The internal <o>mtr</o> object can store any type of data it receives—other than matrices or signals—including complex lists.
+				Although <o>mtr</o> can record individual bytes of MIDI messages received from <o>midiin</o>, it stores each byte with a separate delta time, and does not format the MIDI messages the way <o>seq</o> does. If you want to record complete MIDI messages and edit them later, <o>seq</o> is better suited for the task. On the other hand, <o>mtr</o> is perfectly suited for recording sequences of numbers, lists, or symbols from virtually any object in Max: specialized MIDI objects such as <o>notein</o> or <o>pgmin</o>, user interface objects such as <link name="number" type="refpage">number box</link>, <o>slider</o>, and <o>dial</o>, or any other object.
+			</description>
+		</method>
+		<method name="preview">
+			<arglist>
+				<arg name="position" optional="0" type="float" />
+			</arglist>
+			<digest>
+				Normalised position (0. - 1.)
+			</digest>
+			<description>
+				Output the corresponding fft frame at the normalised position while not rendering by <o>jit.world</o>.
+			</description>
+		</method>
+		<method name="export">
+			<arglist>
+				<arg name="filename" optional="1" type="symbol" />
+			</arglist>
+			<digest>
+				Export as dictionary JSON file
+			</digest>
+			<description>
+				If an <at>exportname</at> has previously been specified, the JSON-file will be written to the <m>dir</m> as specified by <o>the.jit.thalamus</o>.
+				<br/> If an optional argument is provided (symbol), a JSON-file with this name will be written to disk.
+			</description>
+		</method>
+		<method name="import">
+			<arglist>
+				<arg name="index" optional="1" type="symbol" />
+			</arglist>
+			<digest>
+				Import dictionary JSON file
+			</digest>
+			<description>
+				If an <at>exportname</at> has previously been specified, the JSON-file will be read from the <m>dir</m> as specified by <o>the.jit.thalamus</o>.
+				<br/> If an optional argument is provided (symbol), it will be attempted to read a JSON-file with this name from disk.
+			</description>
+		</method>
+		<method name="solo">
+	<arglist />
+	<digest>
+		Toggle solo mode for operation
+	</digest>
+	<description>
+		According to the numeric argument, will toggle the object's recording/rendering behaviour in relation to other objects in the context
+		<br/>0 = use current <at>active</at> flag if no other object is running <m>@solo 1</m> or <m>@solo 2</m>, otherwise will set the object to <m>active 0</m> (bypass)
+		<br/>1 = toggle <at>active</at> operation mode to <m>1</m> (operate) along with other objects <m>@solo 1</m>, but not if any object is running <m>@solo 2</m>, in which case it will be muted
+		<br/>2 = unique operation, operate only this object. This will set all other objects' <at>active</at> flag to <m>5</m> (mute)
+	</description>
+</method>
+		<method name="unsolo">
+	<arglist />
+	<digest>
+		Remove all solo states in sibling objects
+	</digest>
+	<description>
+		The message <m>unsolo</m> does not remove the <m>solo</m> state of this object alone—as would the message <m>solo 0</m>—but does so for all other objects in the context as well.
+	</description>
+</method>
+		<method name="getstate">
+	<arglist />
+	<digest>
+		Query information about this object's current state
+	</digest>
+	<description>
+		The message <m>getstate</m> will post relevant status information about this object to the Max Console and open the latter for viewing. Sending this message to <o>the.jit.thalamus</o> will do so for all objects in the current context. Send this message to monitor whether objects will record or render and whether a meaningful name has been allocated to them.
+	</description>
+</method>
+	</methodlist>
+
+	<!--EXAMPLE-->
+	<examplelist>
+		<example img="the.cerebellum.png" caption="insert after timing-objects and before matrix/texture domain to record/render realtime data" />
+	</examplelist>
+
+	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
+	<seealsolist>
+		<seealso name="the.jit.thalamus"/>
+		<seealso name="the.cochlea~"/>
+		<seealso name="the.mc.jit.amygdala~"/>
+		<seealso name="the.mc.pac~"/>
+		<seealso name="the.jit.mojo"/>
+		<seealso name="the.jit.pinealis"/>
+		<seealso name="the.jit.tinnitus~"/>
+		<seealso name="the.circadian"/>
+		<seealso name="the.mc.jit.mnemonic~"/>
+	</seealsolist>
+
+</c74object>

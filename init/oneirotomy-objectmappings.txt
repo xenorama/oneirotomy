@@ -1,0 +1,17 @@
+max objectfile jit.thalamus the.jit.thalamus;
+max objectfile cerebellum the.cerebellum;
+max objectfile mc.jit.amygdala~ the.mc.jit.amygdala~;
+max objectfile cochlea~ the.cochlea~;
+max objectfile mc.cochlea~ the.mc.cochlea~;
+max objectfile mc.pac~ the.mc.pac~;
+max objectfile jit.epiphysis the.jit.pinealis;
+max objectfile the.jit.epiphysis the.jit.pinealis;
+max objectfile jit.pinealis the.jit.pinealis;
+max objectfile jit.retina the.jit.retina;
+max objectfile jit.mojo the.jit.mojo;
+max objectfile circadian the.circadian;
+max objectfile jit.tinnitus~ the.jit.tinnitus~;
+max objectfile the.data the.mc.data;
+
+// max objectfile the.data the.data;
+// max definesubstitution the.data the.mc.data;

@@ -8,6 +8,7 @@ outlets = 2;
 
 // format context settings syntax
 var ctx_listener = jsarguments[1]+"_settings";
+// var ctx_listener = jsarguments[1]+"_settings";
 // sync to render settings dictionary
 var ctx = new Dict(ctx_listener);
 
@@ -68,6 +69,7 @@ var ctx_changed = new ParameterListener(ctx_listener, update);
 function update(data){
   // should no argument be provided, this code outputs a simple 'bang' whenever the settings change anywhere
   if (settings.length !== 0) {
+    // post(settings)
     var val = ctx.get(settings);
     if (val !== settings_latest) {
       if (settings.length == 1) outlet(0,val);
