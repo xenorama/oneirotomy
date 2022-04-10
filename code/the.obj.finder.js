@@ -1,11 +1,17 @@
+autowatch = 1;
+outlets = 2;
 max.clearmaxwindow();
 
 include("the.obj.lock.js");
 include("the.delay.js");
+// include("the.render.world.js");
+
 var ctx = jsarguments[1] || "ctx";
 var old_ctx = undefined;
 var perform_upgrade = 0;
 var perform_highlight = 0;
+
+var found_objs = new Dict(ctx+"_legacy.objects")
 
 // var oneirotomy = {
 var replace = {
@@ -20,15 +26,51 @@ var stripdotildes = new RegExp('[\.\~]','g');
 var setup = {
   glrender: {
     object: undefined,
-    inlets: [],
-    outlets: [],
-    attrs: []
+    inputs: [],
+    outputs: [],
+    attrs: [],
+    // world: ["enable", "erase_color", "fsaa", "high_res", "ortho", "position", "quat", "rotate", "rotatexyz", "scale", "sync"]
+    world: {
+      enable: 0,
+      erase_color: [0.20000000298023224,0.20000000298023224,0.20000000298023224,1.],
+
+      fsaa: 0,
+      high_res: 0,
+      ortho: 0,
+      position: [0,0,0],
+      quat: [0,0,0,1],
+      rotate: [0,0,0,1],
+      rotatexyz: [0,0,0],
+      scale: [1,1,1],
+      sync: 0
+    },
+    camera: {
+      far_clip: 100,
+      near_clip: 0.10000000149011612,
+      lens_angle: 45,
+      camera: [0,0,2],
+      lookat: [0,0,-1] // has to be explicitdly set to [0,0,0] in jit.gl.camera for otherwise translation is wrong
+      // locklook: 1,
+    },
+    window: {
+      border: 1,
+      floating: 0,
+      fsaa: 0,
+      fsmenubar: 1,
+      fullscreen: 0,
+      rect: [100,100,740,580],
+      shared: 1,
+      size: [640,480],
+      sync: 1,
+      visible: 1
+    }
   },
   window: {
     object: undefined,
-    inlets: [],
-    outlets: [],
-    attrs: []
+    inputs: [],
+    outputs: [],
+    attrs: [],
+    visible: 1
   }
 }
 
@@ -65,22 +107,23 @@ var obj_list = {
 }
 
 if (!patch) var patch = this.patcher.parentpatcher;
-// function bang() {post(this.patcher.box.rect)}
 
 function upgrade(){
   perform_upgrade = 1;
   perform_highlight = 1;
+  found_objs.clear();
   patch.applydeep(highlight_objs);
-  // delay(renderer,1000);
   outlet(0,"upgrade","performed")
+  outlet(1,"dictionary",found_objs.name)
 }
 
 function highlight(){
   perform_upgrade = 0;
   perform_highlight = 1;
+  found_objs.clear();
   patch.applydeep(highlight_objs);
-  // delay(create_renderer,1000);
   outlet(0,"highliting","performed")
+  outlet(1,"dictionary",found_objs.name)
 }
 
 function renderer(){
@@ -91,13 +134,53 @@ function renderer(){
 
 function world(){
   var attrlist = setup.glrender.attrs;
+  patch = this.patcher.parentpatcher;
   if (attrlist.length) {
-    for(a=0;a<attrlist.length;a++)
-    post(attrlist[a],'\n')
+    var rect = setup.glrender.object.getattr("patching_rect");
+    var jattrlist = compare_world_attrs(setup.glrender.attrs,setup.glrender.object);
+    post(jattrlist.toString(),'\n')
+    var wattrlist = compare_win_attrs(setup.window.attrs,setup.window.object);
+    jattrlist = jattrlist.concat(wattrlist);
+    var jworld = patch.newdefault(rect[0],rect[1],"jit.world",ctx,jattrlist)
+    if (setup.glrender.inputs.length !== 0){
+      for(c=0;c<setup.glrender.inputs.length;c++){
+        patch.disconnect(setup.glrender.inputs[c].srcobject,setup.glrender.inputs[c].srcoutlet,setup.glrender.object,setup.glrender.inputs[c].dstinlet)
+        patch.connect(setup.glrender.inputs[c].srcobject,setup.glrender.inputs[c].srcoutlet,jworld,0);
+        }
+      }
+    if (setup.glrender.outputs.length !== 0){
+      for(c=0;c<setup.glrender.outputs.length;c++){
+        patch.disconnect(setup.glrender.object,setup.glrender.outputs[c].srcoutlet,setup.glrender.outputs[c].dstobject,setup.glrender.outputs[c].dstinlet)
+        patch.connect(jworld,1,setup.glrender.outputs[c].dstobject,setup.glrender.outputs[c].dstinlet);
+        }
+      }
+    with(jworld){
+      setboxattr("color",[0.549,0.804,0.961,1.])
+      setboxattr("bgcolor",[0.2,0.2,0.2,1.])
+      setboxattr("textcolor",[0.922,0.294,0.208,1.])
+    }
+    var cattrlist = compare_cam_attrs(setup.glrender.attrs,setup.glrender.object);
+    if (cattrlist.length && cattrlist.toString() !== "@lookat,0,0,0") {
+      var cam = patch.newdefault(rect[0]-120,rect[1],"jit.gl.camera",ctx,cattrlist)
+      with(cam){
+        setboxattr("color",[0.792157,0.592157,0.043137,1.])
+        setboxattr("bgcolor",[0.109804,0.007843,0.188235,1.])
+        setboxattr("textcolor",[0.560784,0.823529,0.662745,1.])
+      }
+    }
+
+  }
+  patch.remove(setup.glrender.object)
+  if (setup.window.object !== undefined){
+    patch.remove(setup.window.object);
   }
   else error("no jit.gl.render object previously detected, cannot create jit.world")
+  outlet(0,"replaced jit.gl.render/jit.window by jit.world/jit.gl.camera");
 }
 
+
+
+// HIGHLIGHT & REPLACE
 highlight_objs.local = 1;
 function highlight_objs(o){
   var type = undefined;
@@ -114,7 +197,6 @@ function highlight_objs(o){
       attrlist = Object.keys(obj_list[type])
 
       if (perform_highlight) {
-        // var stripname = o.maxclass.replace(/[\.\~]/g,"");
         var stripname = o.maxclass.replace(stripdotildes,"");
         if (Object.keys(tolerate).indexOf(stripname) == -1 || o.getattr(tolerate[stripname]) == ctx) {
           for (a=1;a<attrlist.length;a++){
@@ -123,8 +205,12 @@ function highlight_objs(o){
         }
       }
 
-      if (perform_upgrade) {
+      if (type !== "mtr"){
+        if (found_objs.getkeys() === null || found_objs.getkeys().indexOf(o.maxclass) == -1) found_objs.replace(o.maxclass,(o.getattr("name") || "<unnamed>"))
+        else found_objs.append(o.maxclass,(o.getattr("name") || "<unnamed>"))
+      }
 
+      if (perform_upgrade) {
       if (type == "anim"){
         if (mtr) path.remove(mtr);
         patch = o.patcher;
@@ -151,7 +237,7 @@ function highlight_objs(o){
             }
           }
         }
-      if (type == "mo"){
+      else if (type == "mo"){
         if (mo) path.remove(mtr);
         patch = o.patcher;
         var mo = patch.newdefault(o.rect[0],o.rect[1]-50,"the.jit.mo.drive",ctx,"@speed",o.getattr("speed"));
@@ -166,7 +252,7 @@ function highlight_objs(o){
             mo.setboxattr(attrlist[a],obj_list[type][attrlist[a]]);
           }
         }
-      if (type == "replace"){
+      else if (type == "replace"){
         if (theobj) path.remove(theobj);
         patch = o.patcher;
         var cx_objs = o.patchcords.outputs;
@@ -204,16 +290,15 @@ function highlight_objs(o){
           }
           patch.remove(o);
         }
-      if (type == "renderer"){
-        // if (theobj) path.remove(theobj);
+      else if (type == "renderer"){
         patch = o.patcher;
-        // ctx = o.getattr("drawto");
-        // post("CTX",ctx,'\n')
         if (o.maxclass == "jit.gl.render" && o.getattr("drawto") == ctx) {
           var prv_objs = o.patchcords.inputs;
-          setup.glrender = o;
-          setup.glrender.inlets = prv_objs
-          setup.glrender.outlets = o.patchcords.outlets
+          // var cx_objs = o.patchcords.outputs;
+          // var num_cx_objs = cx_objs.length
+          setup.glrender.object = o;
+          setup.glrender.inputs = prv_objs
+          setup.glrender.outputs = o.patchcords.outputs
           setup.glrender.attrs = o.getattrnames()
           o.setattr("drawto","<bogus>");
           o.setattr("enable",0);
@@ -223,12 +308,11 @@ function highlight_objs(o){
           }
         else if (o.maxclass == "jit.window" && o.getattr("name") == ctx) {
           var prv_objs = o.patchcords.inputs;
-          setup.window = o;
-          setup.window.inlets = prv_objs
-          setup.window.outlets = o.patchcords.outlets
+          setup.window.object = o;
+          setup.window.inputs = prv_objs
+          setup.window.outputs = o.patchcords.outputs
           setup.window.attrs = o.getattrnames()
-            // patch.remove(o)
-            // o.setattr("name","u"+Math.floor(Math.random()*1000000000))
+          setup.window.visible = o.getattr("visible")
           o.setboxattr(attrlist[a],obj_list[type][attrlist[a]]);
           o.setattr("name","<bogus>")
           o.setattr("visible",0)
@@ -287,4 +371,59 @@ function inherit_attrs(nm,obj,prv){
   }
 
   return (objbox_attrs.length) ? objbox_attrs : "";
+}
+
+compare_world_attrs.local = 1;
+function compare_world_attrs(src_attrs,obj){
+  var world_attrs = setup.glrender.world;
+  var commons = Object.keys(world_attrs);
+  var jworld_attrs = []
+  for (d=0;d<src_attrs.length;d++){
+    if (commons.indexOf(src_attrs[d]) !== -1 && (obj.getattr(src_attrs[d]).toString() !== world_attrs[src_attrs[d]].toString())){
+      jworld_attrs.push("@"+src_attrs[d])
+      jworld_attrs = jworld_attrs.concat(obj.getattr(src_attrs[d]));
+      // post(src_attrs[d],world_attrs[src_attrs[d]],">",obj.getattr(src_attrs[d]),'\n')
+    }
+  }
+  return jworld_attrs;
+}
+
+compare_cam_attrs.local = 1;
+function compare_cam_attrs(src_attrs,obj){
+  var camera_attrs = setup.glrender.camera;
+  var commons = Object.keys(camera_attrs);
+  var cworld_attrs = []
+  for (d=0;d<src_attrs.length;d++){
+    if (commons.indexOf(src_attrs[d]) !== -1 && (obj.getattr(src_attrs[d]).toString() !== camera_attrs[src_attrs[d]].toString())){
+      var at = src_attrs[d];
+      if (at == "camera") at = "position"
+        cworld_attrs.push("@"+at)
+        cworld_attrs = cworld_attrs.concat(obj.getattr(src_attrs[d]));
+    }
+  }
+  return cworld_attrs;
+}
+
+compare_win_attrs.local = 1;
+function compare_win_attrs(src_attrs,obj){
+  var win_attrs = setup.glrender.window;
+  var commons = Object.keys(win_attrs);
+  post(commons,'\n')
+  var wworld_attrs = []
+  for (d=0;d<commons;d++){
+    post(obj.getattr(commons[d]).toString(),win_attrs[commons[d]].toString(),'\n')
+  }
+  for (d=0;d<src_attrs.length;d++){
+    if (commons.indexOf(src_attrs[d]) !== -1 && (obj.getattr(src_attrs[d]).toString() !== win_attrs[src_attrs[d]].toString())){
+      var at = src_attrs[d];
+      if (at == "visible") {
+        if (setup.window.visible!==1) wworld_attrs.push("@visible",setup.window.visible)
+      }
+      else {
+        wworld_attrs.push("@"+at)
+        wworld_attrs = wworld_attrs.concat(obj.getattr(src_attrs[d]));
+      }
+    }
+  }
+  return wworld_attrs;
 }

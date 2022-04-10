@@ -46,15 +46,6 @@
 		<!--MESSAGES-->
 
 	<methodlist>
-		<method name="upgrade">
-			<arglist />
-			<digest>
-				Upgrade all designated objects and configurations
-			</digest>
-			<description>
-				Upgrade all designated objects and configurations
-			</description>
-		</method>
 		<method name="highlight">
 			<arglist />
 			<digest>
@@ -64,6 +55,24 @@
 				Highlight all potentially relevant objects' boxes.
 			</description>
 		</method>
+		<method name="upgrade">
+			<arglist />
+			<digest>
+				Upgrade all designated objects and configurations
+			</digest>
+			<description>
+				Upgrade all designated objects and configurations
+			</description>
+		</method>
+		<method name="world">
+			<arglist />
+			<digest>
+				Upgrade any legacy <o>jit.gl.render</o> setup
+			</digest>
+			<description>
+				Upgrade any legacy <o>jit.gl.render</o> setup. Should <o>jit.gl.render</o> and <o>jit.window</o> by the context-name be found, these will be replaced by <o>jit.world</o> and <o>jit.gl.camera</o>. The latter is instantiated when respective options are currently set in the <o>jit.gl.render</o> object. The re-routing of the pipeline and frame-based data/bang flow has to be upgraded accordingly by the user.
+			</description>
+		</method>
 		<method name="renderer">
 			<arglist />
 			<digest>
@@ -71,6 +80,15 @@
 			</digest>
 			<description>
 				Instantiate <o>the.jit.renderer~</o> and <o>jit.world</o> with given context name. If a jit.world context by this name is already present, an instance of jit.world will not be created. Note, that any <o>jit.window</o> with this context name must be renamed or removed first, for otherwise an error is thrown. The renaming occurs automatically with the <m>upgrade</m> method.
+			</description>
+		</method>
+		<method name="transform">
+			<arglist />
+			<digest>
+				Perform an entire patch upgrade with all possible replacements
+			</digest>
+			<description>
+				Perform an entire patch upgrade with all possible replacements. This essentially chains the methods <m>upgrade</m>, <m>world</m> and <m>renderer</m>, respectively.
 			</description>
 		</method>
 	</methodlist>
