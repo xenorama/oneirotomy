@@ -6,12 +6,32 @@ include("the.obj.lock.js");
 include("the.delay.js");
 // include("the.render.world.js");
 
-var ctx = jsarguments[1] || "ctx";
+var ctx = jsarguments[1] || "ctx-missing";
 var old_ctx = undefined;
 var perform_upgrade = 0;
 var perform_highlight = 0;
 
 var found_objs = new Dict(ctx+"_legacy.objects")
+
+// VERBOSE: POST INFO TO MAX WINDOW
+var verbose = 0;
+  declareattribute("verbose","get_verbose","set_verbose",0);
+  function set_verbose(a) {
+    verbose = a;
+  }; set_verbose.local = 1;
+  function get_verbose() { return verbose };
+
+print.local = 1;
+function print(){
+  var info = arrayfromargs(arguments);
+  post("the.oneirotomy.setup ("+ctx+"):",info,'\n')
+}
+
+throw_error.local = 1;
+function throw_error(){
+  var info = arrayfromargs(arguments);
+  error("the.oneirotomy.setup ("+ctx+"):",info,'\n');
+}
 
 // var oneirotomy = {
 var replace = {
@@ -87,7 +107,7 @@ var obj_list = {
     textcolor: [1.000,0.596,0.059,1]
   },
   anim: {
-    objects: ["jit.anim.drive","jit.anim.node","jit.anim.path"],
+    objects: ["jit.anim.drive","jit.anim.node","jit.anim.path","jit.gl.handle"],
     textcolor: [1,0.6,0.1,1]
   },
   mo: {
@@ -99,12 +119,25 @@ var obj_list = {
     color: [1,0,0,1]
   },
   renderer: {
-    objects: ["jit.gl.render","jit.world","jit.window"],
+    objects: ["jit.gl.render","jit.window"],
     bgcolor: [0.607843,0.490196,0.419608,1.],
     color: [0.667,0.396,0.059,1.000],
     textcolor: [1,1,1,1]
   }
 }
+
+var bogus_color = {
+  bgcolor: [0.607843,0.490196,0.419608,1.],
+  color: [0.667,0.396,0.059,1.000],
+  textcolor: [1,1,1,1]
+}
+var valid_color = {
+  bgcolor: [0.224,0.161,0.118,1.000],
+  color: [0.631,0.820,0.875,1.000],
+  textcolor: [0.937,0.765,0.302,1.000]
+}
+
+
 
 if (!patch) var patch = this.patcher.parentpatcher;
 
@@ -128,7 +161,7 @@ function highlight(){
 
 function renderer(){
   var rect = this.patcher.box.rect;
-  patch.newdefault(rect[2]+190,rect[1],"the.jit.js.renderer~",ctx);
+  patch.newdefault(rect[0],rect[1]-75,"the.jit.renderer~",ctx);
   outlet(0,"the.jit.renderer~","created");
 }
 
@@ -265,7 +298,7 @@ function highlight_objs(o){
         if (num_cx_objs !== 0){
           for(c=0;c<num_cx_objs;c++){
             patch.disconnect(o,0,cx_objs[c].dstobject,cx_objs[c].dstinlet)
-            patch.connect(theobj,0,cx_objs[c].dstobject,cx_objs[c].dstinlet);
+            patch.connect(theobj,cx_objs[c].srcoutlet,cx_objs[c].dstobject,cx_objs[c].dstinlet);
             }
           }
         if (num_prv_objs !== 0){
@@ -277,7 +310,12 @@ function highlight_objs(o){
           for(c=0;c<num_prv_objs;c++){
             if (o.maxclass == "jit.catch~"){
               patch.disconnect(prv_objs[c].srcobject,prv_objs[c].srcoutlet,theobj,prv_objs[c].dstinlet)
-              patch.connect(prv_objs[c].srcobject,prv_objs[c].srcoutlet,pack,prv_objs[c].dstinlet);
+              if ((/.+~$/).test(prv_objs[c].srcobject.maxclass)){
+                patch.connect(prv_objs[c].srcobject,prv_objs[c].srcoutlet,pack,prv_objs[c].dstinlet);
+              }
+              else {
+                patch.connect(prv_objs[c].srcobject,prv_objs[c].srcoutlet,theobj,prv_objs[c].dstinlet);
+              }
             }
             else {
               patch.disconnect(prv_objs[c].srcobject,prv_objs[c].srcoutlet,theobj,prv_objs[c].dstinlet)
@@ -408,11 +446,11 @@ compare_win_attrs.local = 1;
 function compare_win_attrs(src_attrs,obj){
   var win_attrs = setup.glrender.window;
   var commons = Object.keys(win_attrs);
-  post(commons,'\n')
+  // post(commons,'\n')
   var wworld_attrs = []
-  for (d=0;d<commons;d++){
-    post(obj.getattr(commons[d]).toString(),win_attrs[commons[d]].toString(),'\n')
-  }
+  // for (d=0;d<commons;d++){
+  //   post(obj.getattr(commons[d]).toString(),win_attrs[commons[d]].toString(),'\n')
+  // }
   for (d=0;d<src_attrs.length;d++){
     if (commons.indexOf(src_attrs[d]) !== -1 && (obj.getattr(src_attrs[d]).toString() !== win_attrs[src_attrs[d]].toString())){
       var at = src_attrs[d];
@@ -426,4 +464,23 @@ function compare_win_attrs(src_attrs,obj){
     }
   }
   return wworld_attrs;
+}
+
+
+function loadbang(){
+  var thisbox = this.patcher.box;
+  if (ctx == "ctx-missing") {
+    throw_error("no target context provided as argument, disabling.")
+    var boxcolors = Object.keys(bogus_color);
+    for (k in boxcolors){
+      thisbox.setboxattr(boxcolors[k],bogus_color[boxcolors[k]]);
+    }
+  }
+  else {
+    var boxcolors = Object.keys(valid_color);
+    for (k in boxcolors){
+      thisbox.setboxattr(boxcolors[k],valid_color[boxcolors[k]]);
+    }
+
+  }
 }

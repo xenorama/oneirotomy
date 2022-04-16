@@ -1,4 +1,5 @@
 autowatch = 1;
+outlets = 4;
 // max.clearmaxwindow();
 
 /*
@@ -60,8 +61,13 @@ var colors = [{
   textcolor: [0.8,0.227,0.196,1.000]
 }]
 
+var pb = 1;
+var rec = 1;
+var rend = 1;
+var flags = [[1,0,0],[1,1,1],[1,0,1],[1,1,0],[0,1,1],[0,0,0]]
 
 function msg_int(a){
+  var flags_out = flags[a]
   if (!isbogus){
     thisbox = this.patcher.parentpatcher.box;
     active = a;
@@ -75,6 +81,10 @@ function msg_int(a){
     var cols = Object.keys(bogus);
     for (k in cols) { thisbox.setboxattr(cols[k],bogus[cols[k]]) };
   }
+  outlet(0,flags_out);
+  outlet(1,flags_out[0])
+  outlet(2,flags_out[1])
+  outlet(3,flags_out[2])
 }
 
 function bang(){

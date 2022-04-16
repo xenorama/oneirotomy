@@ -43,7 +43,7 @@ ATTRIBUES
       }
       else if (r) dir = r;
       else if (patch.filepath) dir = patch.filepath.replace(/(.+\/).+\.maxpat/g,'$1');
-      post("dir attr:",dir,'\n')
+      // post("dir attr:",dir,'\n')
       world_perform.replace("render::dir",dir)
       messnamed(ctx+"_sfrecord",dir+movie_name+".wav")
       output_dict()
@@ -168,6 +168,12 @@ ATTRIBUES
     function set_toggleworld(tw) { toggleworld = tw; world_perform.replace("render::toggleworld",toggleworld) }; set_toggleworld.local = 1;
     function get_toggleworld() { return toggleworld };
 
+  // DEACTIVATE DSP during recording
+  var toggledsp = 0;
+    declareattribute("toggledsp","get_toggledsp","set_toggledsp",0);
+    function set_toggledsp(tw) { toggledsp = tw; world_perform.replace("render::toggledsp",toggledsp) }; set_toggledsp.local = 1;
+    function get_toggledsp() { return toggledsp };
+
   // MOVIE CONTAINER (mov/img_seq)
   var movie_type = 0;
   var mt_prev = movie_type;
@@ -230,6 +236,7 @@ ATTRIBUES
       capture = (arguments.length) ? t : undefined; print("capture texture:",capture);
       asynctex.texture = (capture !== undefined) ? capture : "";
       world_perform.replace("render::capture",capture)
+      gCTX.texture = capture || texture_name;
       // patch.applydeep(get_texture_obj);
     }; set_capture.local = 1;
     function get_capture() { return capture };
@@ -318,6 +325,16 @@ ATTRIBUES
       }; set_audio_record.local = 1;
       function get_audio_record() { return audio_record };
 
+    // AAUDIO TYPE
+    var audio_type = ["wav","int24"];
+      declareattribute("audio_type","get_audio_type","set_audio_type",0);
+      function set_audio_type(f,s) {
+        audio_type = [f,s];
+        world_perform.replace("render::audio_record::filetype",f)
+        world_perform.replace("render::audio_record::samptype",s)
+      }; set_audio_type.local = 1;
+      function get_audio_type() { return audio_type };
+
 
     // HIDE WINDOW
     var hide_window = 1; // || "—";
@@ -338,21 +355,78 @@ ATTRIBUES
       }; set_realtime_texture_input.local = 1;
       function get_realtime_texture_input() { return realtime_texture_input };
 
+    // OVERDRIVE
+    var overdrive = 0; // || "—";
+    var overdrive_user = 1;
+    function odu(od) {overdrive_user = od};
+      declareattribute("overdrive","get_overdrive","set_overdrive",0);
+      function set_overdrive(od) {
+        overdrive = od;
+        world_perform.replace("render::overdrive",overdrive)
+      }; set_overdrive.local = 1;
+      function get_overdrive() { return overdrive };
+
+    // AUDIO INTERRUPT
+    var audio_interrupt = 0; // || "—";
+    var audio_interrupt_user = 1;
+    function aiu(ai) {audio_interrupt_user = ai};
+      declareattribute("audio_interrupt","get_audio_interrupt","set_audio_interrupt",0);
+      function set_audio_interrupt(aupt) {
+        audio_interrupt = aupt;
+        world_perform.replace("render::audio_interrupt",audio_interrupt)
+      }; set_audio_interrupt.local = 1;
+      function get_audio_interrupt() { return audio_interrupt };
+
+    // EXTRA FRAME DELY between render frames
+    var framedelay = 10;
+    declareattribute("framedelay","get_framedelay","set_framedelay",0);
+    function set_framedelay(tw) { framedelay = tw; world_perform.replace("render::framedelay",framedelay) }; set_framedelay.local = 1;
+    function get_framedelay() { return framedelay };
+
+
+    // LIVID CNTRL:R support
+    var cntrlr = 0;
+      declareattribute("cntrlr","get_cntrlr","set_cntrlr",0);
+      function set_cntrlr(tw) { cntrlr = tw; world_perform.replace("render::cntrlr",cntrlr) }; set_cntrlr.local = 1;
+      function get_cntrlr() { return cntrlr };
+
+    // Adobe AfterEffect Tune
+    var ae = 1;
+      declareattribute("ae","get_ae","set_ae",0);
+      function set_ae(tw) { ae = tw; world_perform.replace("render::ae",ae) }; set_ae.local = 1;
+      function get_ae() { return ae };
+
+
+/*
+TIMELINE SETTINGS
+————————————————————————————————————————————————————————————————————————————————————
+*/
+
     // TIMELINE HANDLING
     var timeline_handling = "scale (default)"; // || "—";
       declareattribute("timeline_handling","get_timeline_handling","set_timeline_handling",0);
       function set_timeline_handling(r) {
         timeline_handling = r;
-        world_perform.replace("render::timeline_handling",timeline_handling);
+        world_perform.replace("render::timeline::handling",timeline_handling);
       }; set_timeline_handling.local = 1;
       function get_timeline_handling() { return timeline_handling };
+
+    // TIMELINE PREVIEW
+    var timeline_preview = 1; // || "—";
+      declareattribute("timeline_preview","get_timeline_preview","set_timeline_preview",0);
+      function set_timeline_preview(r) {
+        timeline_preview = r;
+        world_perform.replace("render::timeline::preview",timeline_preview);
+      }; set_timeline_preview.local = 1;
+      function get_timeline_preview() { return timeline_preview };
+
+
 
 var frame_samps = 800;
 var poly_dim = [120,800]
 var frame_current = 0;
 var bogus_frames = 2;
 var time_ms = framecount*1000/fps;
-// outlet(1,"size",framecount)
 
 
 calcTime.local = 1;

@@ -20,7 +20,9 @@ var floats = [];
 var ranges = new Buffer(identifier+"_scale")
 var info = new Dict(identifier+"_info")
 
-
+// function dictionary(u){
+//   if ()
+// }
 
 function check_func(f){
   return (f.maxclass == "mc.function" && f.varname == "mc.function");

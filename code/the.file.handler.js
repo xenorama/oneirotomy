@@ -8,6 +8,7 @@ renderer = new Global(ctx+"_world");
 var settings = new Dict(ctx+"_settings");
 var obj = jsarguments[3];
 var type = jsarguments[4];
+var inherited_identifier = (typeof jsarguments[5] === "number") ? jsarguments[5] : undefined;
 var specs;
 var obj_specs = [];
 var commands = {}
@@ -41,9 +42,9 @@ function import(n){
 }
 
 function name(n){
-  if (n) sname = n;
+  if (n && n !== inherited_identifier) sname = n;
   filename = ctx+"_"+sname+"."+type
-  if (autoread) read();
+  if (aread) read();
 }
 
 
@@ -53,8 +54,10 @@ function read(){
 }
 
 function write() {
-  outlet(0,commands.write,settings.get("dir")+filename);
-  post("directory",settings.get("dir"),'\n')
+  if (awrite && sname !== "") {
+    outlet(0,commands.write,settings.get("render::dir")+filename);
+    // post("directory",settings.get("dir"),'\n')
+  }
 }
 
 function op_mode(o){

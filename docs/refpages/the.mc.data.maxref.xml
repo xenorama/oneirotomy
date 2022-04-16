@@ -55,6 +55,14 @@
 			Specify a unique name to export to after completion of the capturing process, managed by <o>the.jit.renderer~</o>. The resulting filetype is <m>JSON</m> and can be re-exported/imported using the <m>export</m> and <m>import</m> messages, respectively.
 		</description>
 	</attribute>
+	<attribute name="bindto" get="1" set="1" type="list" size="1">
+		<digest>
+			Bind to jit.anim.objects
+		</digest>
+		<description>
+			Bind to jit.anim.objects. In single-channel mode, and when a jit.anim.object is directly connected to <o>the.mc.data</o>, the latter will automatically bind to it. A <m>bang</m> may be necessary when the object in question was instantiated after <o>the.mc.data</o>. In multi-channel mode, and using mc-routing objects, the objects in question must be given a unique name to all of which <o>the.mc.data</o> can bind using the <at>bindto</at> attribute. This will set the <at>active</at> to 4 and disable the jit.anim.objects during rendering — this way all their output can be captured during recording, ignored during playback and taken over during offline rendering.
+		</description>
+	</attribute>
 		<attribute name="hot" get="1" set="1" type="int" size="1">
 		<digest>
 			Replicate latest data on every frame
@@ -75,34 +83,43 @@
 			<br/>1 = operate normally (default); playback, record and output during rendering
 			<br/>2 = playback and output previously recorded data normally but do not record any new data
 			<br/>3 = playback and record normally but do not output data during rendering
-			<br/>4 = record and output during rendering but never pass incoming data
+			<br/>4 = record and output during rendering but never pass incoming data (set automatically when bound to jit.anim.objects)
 			<br/>5 = mute all activity
 			<br/>
 			<br/>Note that while recording is disabled, the automatic export upon recording completion (if a <at>name</at> is specified) is also disabled and previous files will not be overwritten.
 			<br/>Furthermore, the <at>active</at> flag is overriden by the <m>solo</m> state of the object
 		</description>
 	</attribute>
-			<attribute name="import" get="1" set="1" type="symbol" size="1">
-			<digest>
-				Import dictionary JSON file
-			</digest>
-			<description>
-				If a valid JSON-file is provided as argument, it will be attempted to read into <o>the.mc.data</o> from disk and integrated into the timeline.
-			</description>
-		</attribute>
 </attributelist>
 
 	<!--MESSAGES-->
 
 	<methodlist>
-		<method name="bang">
+		<method name="router">
 			<arglist />
 			<digest>
-				Send dictionary data out right outlet
+				Setup mc-output-compatibility
 			</digest>
 			<description>
-				Sending a <m>bang</m> to the left inlet of <o>mtr</o>, results in a dictionary being sent out the right outlet with information about the current state of the object. Both global and track specific informtion is included in the dictionary. An entry that begins with &quot;global_&quot; is the global setting for the specified attribute. If the same attribute has a track specific setting, that value will be listed under the track information.<br/>
-				Note that 'bangs' can thus not be recorded and will always output the infrmation dictionary.
+				Connect an <o>mc.route</o> object to outlets. An optional number of voices specifies number of targets
+			</description>
+		</method>
+		<method name="mctarget">
+			<arglist />
+			<digest>
+				Setup mc-input-compatibility
+			</digest>
+			<description>
+				Connect a <o>funnel</o> and setvalue-method to object. An optional number of voices specifies number of sources (channels)
+			</description>
+		</method>
+		<method name="augment">
+			<arglist />
+			<digest>
+				Setup mc-compatibility
+			</digest>
+			<description>
+				Setup mc-compatibility. A combination of <m>mctarget</m> and <m>router</m> methods
 			</description>
 		</method>
 		<method name="anything">

@@ -52,7 +52,8 @@ function get_world(j){
     renderer.dim = world.getattr("dim");
     proxy.name = world.getattr("name");
     texture_name = proxy.send("getout_name")
-    post("texture_name",texture_name,'\n')
+    gCTX.texture = texture_name;
+    // post("texture_name",texture_name,'\n')
     with(world){
       // setattr("enable",1);
       setboxattr("color",[0.549,0.804,0.961,1.])

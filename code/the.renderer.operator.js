@@ -17,9 +17,12 @@ var progress = 0.;
 var snapshot_index = 0;
 var merge_bg = this.patcher.getattr("locked_bgcolor");
 // post("locked_bgcolor",merge_bg)
-outlet(0,"getsize");
-outlet(0,"bg",merge_bg);
-outlet(0,"dim_render",dim[0]*0.1,dim[1]*0.1);
+
+
+  // outlet(0,"getsize");
+  // outlet(0,"bg",merge_bg);
+  // outlet(0,"dim_render",dim[0]*0.1,dim[1]*0.1);
+
 
 /*
 ____________________________
@@ -103,6 +106,8 @@ function op_mode(m){
     }
     messnamed(ctx+"_render.online",0);
     messnamed(ctx+"_mode.prep.post",mode)
+    messnamed(ctx+"_the.jit.rec.video",0)
+    messnamed(ctx+"_od/ai",overdrive_user,audio_interrupt_user);
   }
 
   // START RENDER
@@ -176,6 +181,7 @@ function op_mode(m){
   else if (mode == 0){
     world.setattr("enable",0)
     messnamed(ctx+"_the.jit.rec.mode",0)
+    messnamed(ctx+"_od/ai",overdrive_user,audio_interrupt_user);
   }
   else if (mode == 1){
     world.setattr("enable",1)
@@ -185,11 +191,13 @@ function op_mode(m){
       messnamed(ctx+"_the.jit.rec.audio",0)
       recording = 0;
     }
+    messnamed(ctx+"_od/ai",overdrive_user,audio_interrupt_user);
   }
   else if (mode == 2){
     if (toggleworld == 1) world.setattr("enable",0);
+    messnamed(ctx+"_od/ai",overdrive,audio_interrupt);
     messnamed(ctx+"_the.jit.rec.audio",1)
-    messnamed(ctx+"_sfrecord",dir+movie_name+".wav");
+    messnamed(ctx+"_sfrecord",dir+movie_name+audio_type[0]);
     messnamed(ctx+"_the.jit.rec.mode",2)
     outlet(3,"record",1)
     recording = 1;
@@ -215,6 +223,7 @@ function op_mode(m){
     rendering = 1;
     // post(mode,realtime_texture_input)
     if (realtime_texture_input) messnamed(ctx+"_render.online",2); else messnamed(ctx+"_render.online",1)
+    messnamed(ctx+"_od/ai",overdrive_user,audio_interrupt_user);
   }
 }
 
@@ -278,7 +287,7 @@ function render_bang(){
       outlet(4,"progress","set");
       outlet(1,0);
       post("the.jit.renderer~: done rendering",movie_name,"("+container+")\n")
-      if (container == "mov" && autoopen == 1) messnamed(ctx+"_openfile","file://"+dir+movie_name);
+      if (container == "mov" && autoopen == 1) messnamed(ctx+"_openfile","file://"+dir+movie_name+".mov");
       else if (container == "img_seq" && autoopen == 1) messnamed(ctx+"_openfile","file://"+dir+movie_name+"_"+frameNumPad(0)+"."+codec);
       if (autoreveal == 1) messnamed(ctx+"_opendir","file://"+dir);
     }

@@ -3,13 +3,10 @@
 TODO
 
 * adaptation of other abstractions
-* migrate everything to the.jit.renderer~
 * update all documentation covering new features
 * update helpfiles
-* the.oneirotomy.setup: replace legacy jit.gl.render/jit.window setups --> depepnds highly on individual setup
 * the.oneirotomy.setup: post upgrade info to console
 * the.oneirotomy.setup: add 'local' flag to operate in current patch only
-* avoid 'bad outlet index' error thrown to console upon instantiation (the.jit.js.renderer~)
 * tutorial patches
 * update reference / vignettes
 * include screenshots of current objects
@@ -19,8 +16,8 @@ TODO
 
 autowatch = 1;
 outlets = 5;
-init = 1;
-// max.clearmaxwindow();
+init = 0;
+max.clearmaxwindow();
 
 /*
 ————————————————————————————
@@ -86,6 +83,9 @@ function print(){
 
 function loadbang(){
   init = 1;
+  outlet(0,"getsize");
+  outlet(0,"bg",merge_bg);
+  outlet(0,"dim_render",dim[0]*0.1,dim[1]*0.1);
   bang();
 }
 

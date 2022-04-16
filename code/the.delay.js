@@ -8,15 +8,3 @@ function delay(func,ms,args){
   else if (typeof args === "string") t.arguments = args.split(/\s/);
   t.schedule(ms);
 }
-
-// function ticker(a,b)
-// {
-//   post("ticker",a,b,'\n');
-// }
-//
-// function cb(a) {
-//  post("cb",a,'\n');
-// }
-//
-// post("init\n")
-// delay(ticker,1000,["blahzayism","numpteyism"])

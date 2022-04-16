@@ -4,7 +4,7 @@
 <c74object name="the.jit.renderer~" module="jitter" category="Jitter System">
 
 	<digest>
-		Manage offline rendering of realtime audiovisual content
+		Manage HQ offline rendering of realtime audiovisual content
 		</digest>
 
 	<description>
@@ -13,18 +13,26 @@
 	</description>
 
 	<discussion>
-		This object lies at the core of every offline-rendering process in the <link type="vignette" module="Oneirotomy" name="oneirotomy-00_introduction">Oneirotomy-package</link>. It currently supports render contexts hosted by <o>jit.world</o> only, for reasons explained <link type="vignette" module="Oneirotomy" name="oneirotomy-03_known-limitations">here</link>. All three outlets of <o>jit.world</o> need to be connected to the rightmost inlet of <o>the.jit.renderer~</o> for the latter to receive
+		This object lies at the core of every offline-rendering process in the <link type="vignette" module="Oneirotomy" name="oneirotomy-00_introduction">Oneirotomy-package</link>. It currently supports render contexts hosted by <o>jit.world</o> only, for reasons explained <link type="vignette" module="Oneirotomy" name="oneirotomy-03_known-limitations">here</link>.
+		<br/> The object needs to be instantiated in the environment and provided with a valid context name. Should it fail to find any <o>jit.world</o> in the patch, it will craete one by the given ctx-name. Its functionality is disabled if only other contexts thatn the provided ctx are found.
+		<br/>
+		<br/>
+		Double-clicking the object or sending an <m>open</m> message will pull up a floating window as GUI to monitor, manage and toggle recording/rendering processes.
+		<br/>All desired rendering parameters can be set manually, all of which can be hard-coded to the object box or sent as Max messages temporarily.
+		<br/>
+		<br/>
+		<h2>Version 2.0 Changes:</h2>
 		<ul>
-			<li>the matrices to render as video</li>
-			<li>render bangs, and</li>
-			<li>information about the current state of <o>jit.world</o></li>
+			<li><o>the.jit.js.renderer~</o> no longer requires a physical connection to the target <o>jit.world</o> object, it instead can be dropped <i>as is</i> to the environment and will link to the named context automatically.</li>
+			<li>The GUI is redesigned and there no longer is a <i>settings</i> tab</li>
+			<li>Video preview is scaled as per output aspect ratio</li>
+			<li><o>the.obj.init</o> is a new object, allowing for flexible attribute switches according to recording/rendering mode of both named objects or when connected</li>
+			<li>The settings are more reliable and tightly-synced</li>
+			<li>Any Gl-texture in the environment can be rendered instead of the main rendering window</li>
+			<li>Widely used dimension presets can be selected from a manu</li>
+			<li>The target diretory will always be that of the main patch when previously saved. When used in an unsaved patch, it defaults to the <i>testground</i> directory in the oneirotomy package</li>
 		</ul>
-		Its rightmost outlet connects to the inlet of <o>jit.world</o> to
-		<ul>
-				<li>send individual render bangs while <o>jit.world</o> is disabled</li>
-		</ul>
-		Double-clicking the object or sending an <m>open</m> message will pull up a floating window as GUI to monitor and toggle recording/rendering processes.
-		<br/>All desired rendering parameters can be set manually in the 'Settings'-tab (or by sending the <m>settings</m> message), all of which can be hard-coded to the object box or sent as Max messages temporarily.
+
 	</discussion>
 
 	<!--METADATA (REMOVE FOR SIMPLICITY) -->
@@ -41,44 +49,42 @@
 
 	<!--ARGUMENTS-->
 	<objarglist>
-		<objarg name="render-context" optional="0" type="symbol" size="1">
+		<objarg name="ctx" optional="0" type="symbol" size="1" default="#0">
 			<digest>
-				Specify a named render context for all children objects to sync to
+				Specify a valid render context for all children objects to sync to
 			</digest>
 			<description>
-				 For convenience, the internal context name can be identical to one's world render context name but is to be considered independent. It is necessary to provide a context name for all members of the offline render family to sync and respond to.
+				As of Version 2.0 the ctx-name must match that of a <o>jit.world</o> present in the patch. It is necessary to provide a context name for all members of the offline render family to sync and respond to.
 			</description>
 		</objarg>
-			<objarg name="settings-file" optional="1" type="symbol" size="1">
+			<objarg name="settings-file-flag" optional="1" type="bool" size="1" default="1">
 			<digest>
-				Specify a previously exported settings-file in JSON-format
+				Flag to load named settings file
 			</digest>
 			<description>
-				Provide a filename (.json) to import all previously saved attributes. If omitted, <o>the.jit.renderer~</o> will launch with default settings or any supported attribute coded to the object box.
+				Flag to load named settings file (default: 1). When flagged, will attempt to load a settings file by the provided ctx-name in the <at>dir</at>-path or in the search path. If omitted or should the search fail, <o>the.jit.renderer~</o> will launch with default settings or any supported attribute coded to the object box. Note that file can be loaded and all explicitly set attributes will override the imported settings.
 			</description>
 		</objarg>
 	</objarglist>
 
 	<!--ATTRIBUTES (REMOVE FOR SIMPLICITY) -->
 	<attributelist>
-		<attribute name="container" get="1" set="1" type="list" size="2">
-			<arglist>
-				<arg name="type" optional="0" type="symbol" />
-				<arg name="image format" optional="1" type="symbol" />
-			</arglist>
+		<attribute name="dir" get="1" set="1" type="symbol" size="1" default="the.oneorotomy/testground/">
 			<digest>
-				Specify a the desired video-container
+				Full path to directory for all export data
 			</digest>
 			<description>
-				The final video can be either rendered as <m>mov</m> (default) or as <m>img_seq</m>. The latter requires an additional argument to specify the image format, i.e. the attribute or message <m>container img_seq tiff</m> will write successive frames to disk in tiff-format. Any previously saved image files will be overwritten and other ones ignored.
+				The <at>dir</at> attribute specifies a valid path where <at>audiofile</at>, <at>videofile</at>, matrix-data and log-files will be saved to
 			</description>
 		</attribute>
-		<attribute name="fps" get="1" set="1" type="float" size="1">
+		<attribute name="filename" get="1" set="1" type="symbol" size="1">
 			<digest>
-				Specify a desired framerate for the final video.
+				Provide a filename for all recorded files to assume
 			</digest>
 			<description>
-				The desired framerate (default: 30fps) needs to be set prior to beginning a render process and must not be changed throughout.
+				Specify, which filename all generated files should assume when being written to the folder specified by the <at>dir</at> attribute. Objects operating in parallel (see the <m>see also</m> listing at the bottom of the reference page) will require an <at>name</at> to format their unique path additionally.
+				<br/>
+				If omitted, <o>the.jit.renderer~</o> uses the <m>render-context</m> as initial filename.
 			</description>
 		</attribute>
 		<attribute name="dim" get="1" set="1" type="int" size="2">
@@ -91,25 +97,16 @@
 				The default render dim is 1280 x 960.
 			</description>
 		</attribute>
-		<attribute name="length" get="1" set="1" type="list" size="1">
+		<attribute name="container" get="1" set="1" type="symbol" size="2">
 			<arglist>
-				<arg name="numeric length" optional="0" type="float" />
-				<arg name="unit: ms, frames or samples" optional="0" type="symbol" />
+				<arg name="type" optional="0" type="symbol" />
+				<arg name="image format" optional="1" type="symbol" />
 			</arglist>
 			<digest>
-				Specify the length of the final video and all its subrecordings
+				Specify a the desired video-container
 			</digest>
 			<description>
-				The word <at>length</at> followed by a floating point or integer value and a symbol specifying a unit, will prepare recording of all children objects for the given length.
-				<br/>
-				<br />
-				Supported units of time are
-				<br/> <m>ms</m>
-				<br/> <m>frames</m>
-				<br/> <m>samples</m>
-				<br/>
-				<br/>
-				Default: <m>length 1000. ms</m>, if the current framerate is set to <m>30.</m> (see also the <at>fps</at> listing), this would yield a length of <m>30 frames</m> and would equal the current <m>samplerate</m> (provided in samples per minute = 1000ms.)
+				The final video can be either rendered as <m>mov</m> (default) or as <m>img_seq</m>. The latter requires an additional argument to specify the image format, i.e. the attribute or message <m>container img_seq tiff</m> will write successive frames to disk in tiff-format. Any previously saved image files will be overwritten and other ones ignored.
 			</description>
 		</attribute>
 		<attribute name="codec" get="1" set="1" type="symbol" size="1">
@@ -119,90 +116,177 @@
 			<description>
 				Set movie codec for recording (default = h264).
 			</description>
-				</attribute>
-			<attribute name="filename" get="1" set="1" type="symbol" size="1">
-					<digest>
-						Provide a filename for all recorded files to assume
-					</digest>
-					<description>
-						Specify, which filename all generated files should assume when being written to the folder specified by the <at>dir</at> attribute. Objects operating in parallel (see the <m>see also</m> listing at the bottom of the reference page) will require an <at>name</at> to format their unique path additionally.
-						<br/>
-						If omitted, <o>the.jit.renderer~</o> uses the <m>render-context</m> as initial filename.
-					</description>
-			</attribute>
-					<attribute name="dir" get="1" set="1" type="symbol" size="1">
-						<digest>
-							Full path to directory for all export data
-						</digest>
-						<description>
-						The <at>dir</at> attribute specifies a valid path where <at>audiofile</at>, <at>videofile</at>, matrix-data and log-files will be saved to
-						</description>
 		</attribute>
-			<attribute name="autoreveal" get="1" set="1" type="bool" size="1">
-				<digest>
-					Open the directory upon render completion automatically
-				</digest>
-				<description>
+		<attribute name="fps" get="1" set="1" type="float" size="1">
+			<digest>
+				Specify a desired framerate for the final video.
+			</digest>
+			<description>
+				The desired framerate (default: 60fps) needs to be set prior to beginning a render process and must not be changed throughout.
+			</description>
+		</attribute>
+		<attribute name="framecount" get="1" set="1" type="int" size="1">
+			<digest>
+				Specify the length of the final video and all its subrecordings
+			</digest>
+			<description>
+			</description>
+		</attribute>
+		<attribute name="ms" get="1" set="1" type="int" size="1">
+			<digest>
+				Specify the length of the final video and all its subrecordings
+			</digest>
+			<description>
+			</description>
+		</attribute>
+		<attribute name="hhmmss" get="1" set="1" type="int" size="1">
+			<digest>
+				Specify the length of the final video and all its subrecordings
+			</digest>
+			<description>
+			</description>
+		</attribute>
+		<attribute name="samples" get="1" set="1" type="int" size="1">
+			<digest>
+				Specify the length of the final video and all its subrecordings
+			</digest>
+			<description>
+			</description>
+		</attribute>
+		<attribute name="length_from_buffer" get="1" set="1" type="int" size="1">
+			<digest>
+				Specify the length of the final video and all its subrecordings
+			</digest>
+			<description>
+			</description>
+		</attribute>
+		<attribute name="sr" get="1" set="1" type="symbol" size="1">
+			<digest>
+				jit_gl_texture
+			</digest>
+			<description>
+				Set movie codec for recording (default = h264).
+			</description>
+		</attribute>
+		<attribute name="adrecord" get="1" set="1" type="bool" size="1">
+			<digest>
+				Record the stereo output of the current audio driver
+			</digest>
+			<description>
+				When this flag is set to '1' any audio streaming through channels 1 and 2, respectively, of the current audio driver output will be recorded at actual volume level. While <o>the.sfbuffer~</o> handles the soundtrack recording of multichannel audio in the rendering queue, this setting will create a separate wav-file with the same <at>filename</at> as the movie nonetheless, to later <m>compile</m> audio and video in realtime as a single file since the internal <o>jit.vcr</o> only supports stereo audio.<br/>
+				If the <at>autocompile</at> flag is also set to '1' the compilation process will commence automatically upon completion of the nonrealtime video rendering process, using the stereo wav-file recorded as soundtrack.<br/>
+				The default is '1' (create stereo file from summed driver output channels 1 and 2)
+			</description>
+		</attribute>
+		<attribute name="overdrive" get="1" set="1" type="bool" size="1">
+			<digest>
+				Set Overdrive flag during recording
+			</digest>
+			<description>
+				Set Overdrive flag during recording
+			</description>
+		</attribute>
+		<attribute name="audio_interrupt" get="1" set="1" type="bool" size="1">
+			<digest>
+				Set Audio Interrupt (Takeover) flag during recording (when @overdrive 1)
+			</digest>
+			<description>
+				Set Audio Interrupt (Takeover) flag during recording (when @overdrive 1)
+			</description>
+		</attribute>
+		<attribute name="hide_window" get="1" set="1" type="int" size="1">
+			<digest>
+				Minimum delaytime between render bangs (ms)
+			</digest>
+			<description>
+				Minimum delaytime between subsequent render bangs. The default is <m>10ms</m>. Increase this value to reduce potential errors or lack of precision. This increases the length of the render process proportionally to the length of the videofile.
+			</description>
+		</attribute>
+		<attribute name="framedelay" get="1" set="1" type="int" size="1">
+			<digest>
+				Minimum delaytime between render bangs (ms)
+			</digest>
+			<description>
+				Minimum delaytime between subsequent render bangs. The default is <m>10ms</m>. Increase this value to reduce potential errors or lack of precision. This increases the length of the render process proportionally to the length of the videofile.
+			</description>
+		</attribute>
+		<attribute name="capture" get="1" set="1" type="symbol" size="1">
+			<digest>
+				jit_gl_texture
+			</digest>
+			<description>
+				Set movie codec for recording (default = h264).
+			</description>
+		</attribute>
+		<attribute name="capture_notification" get="1" set="1" type="symbol" size="1">
+			<digest>
+				jit_gl_texture
+			</digest>
+			<description>
+				Set movie codec for recording (default = h264).
+			</description>
+		</attribute>
+		<attribute name="output_matrix" get="1" set="1" type="symbol" size="1">
+			<digest>
+				jit_gl_texture
+			</digest>
+			<description>
+				Set movie codec for recording (default = h264).
+			</description>
+		</attribute>
+		<attribute name="toggleworld" get="1" set="1" type="bool" size="1">
+			<digest>
+				Toggle <o>jit.world</o> off during audio or data recording
+			</digest>
+			<description>
+				Will disable jit.world rendering during audio or data recording and will reactivate it once recording has stopped.
+				<br/>
+				The default is 1 (toggle video rendering off)
+			</description>
+		</attribute>
+		<attribute name="toggledsp" get="1" set="1" type="bool" size="1">
+			<digest>
+				Toggle DSP off during recording
+			</digest>
+			<description>
+				Will disable DSP during recording process or a potential matrix capturing process and will restore previous DSP state upon recording completion.
+				<br/>
+				The default is 0 (keep DSP on)
+			</description>
+		</attribute>
+		<attribute name="autoreveal" get="1" set="1" type="bool" size="1" default="1">
+			<digest>
 				Open the directory upon render completion automatically
-				</description>
-</attribute>
-	<attribute name="autoopen" get="1" set="1" type="bool" size="1">
-		<digest>
+			</digest>
+			<description>
+			Open the directory upon render completion automatically
+			</description>
+		</attribute>
+		<attribute name="autoopen" get="1" set="1" type="bool" size="1">
+			<digest>
+				Open the videofile upon render completion automatically
+			</digest>
+			<description>
 			Open the videofile upon render completion automatically
-		</digest>
-		<description>
-		Open the videofile upon render completion automatically
-		</description>
-</attribute>
-<attribute name="delaytime" get="1" set="1" type="int" size="1">
-	<digest>
-		Minimum delaytime between render bangs (ms)
-	</digest>
-	<description>
-		Minimum delaytime between subsequent render bangs. The default is <m>10ms</m>. Increase this value to reduce potential errors or lack of precision. This increases the length of the render process proportionally to the length of the videofile.
-	</description>
-</attribute>
-	<attribute name="toggledsp" get="1" set="1" type="bool" size="1">
-		<digest>
-			Toggle DSP off during offline rendering
-		</digest>
-		<description>
-		Will disable DSP during video rendering process or a potential matrix capturing process and will restore previous DSP state upon render completion.
-		<br/>
-		The default is 1 (toggle DSP off)
-		</description>
-</attribute>
-<attribute name="toggleworld" get="1" set="1" type="bool" size="1">
-	<digest>
-		Toggle <o>jit.world</o> off during audio or data recording
-	</digest>
-	<description>
-	Will disable jit.world rendering during audio or data recording and will reactivate it once recording has stopped.
-	<br/>
-	The default is 1 (toggle video rendering off)
-	</description>
-</attribute>
-<attribute name="toggledsp" get="1" set="1" type="bool" size="1">
-	<digest>
-		Toggle DSP off during offline rendering
-	</digest>
-	<description>
-	Will disable DSP during video rendering process and restore to previous state upon render completion.
-	<br/>
-	The default is 1 (toggle DSP off)
-	</description>
-</attribute>
-<attribute name="adrecord" get="1" set="1" type="bool" size="1">
-	<digest>
-		Record the stereo output of the current audio driver
-	</digest>
-	<description>
-		When this flag is set to '1' any audio streaming through channels 1 and 2, respectively, of the current audio driver output will be recorded at actual volume level. While <o>the.sfbuffer~</o> handles the soundtrack recording of multichannel audio in the rendering queue, this setting will create a separate wav-file with the same <at>filename</at> as the movie nonetheless, to later <m>compile</m> audio and video in realtime as a single file since the internal <o>jit.vcr</o> only supports stereo audio.<br/>
-		If the <at>autocompile</at> flag is also set to '1' the compilation process will commence automatically upon completion of the nonrealtime video rendering process, using the stereo wav-file recorded as soundtrack.<br/>
-		The default is '1' (create stereo file from summed driver output channels 1 and 2)
-	</description>
-</attribute>
-<attribute name="autocompile" get="1" set="1" type="bool" size="1">
+			</description>
+		</attribute>
+		<attribute name="timeline_handling" get="1" set="1" type="symbol" size="1">
+			<digest>
+				Open the videofile upon render completion automatically
+			</digest>
+			<description>
+			Open the videofile upon render completion automatically
+			</description>
+		</attribute>
+		<attribute name="timeline_preview" get="1" set="1" type="bool" size="1">
+			<digest>
+				Open the videofile upon render completion automatically
+			</digest>
+			<description>
+			Open the videofile upon render completion automatically
+			</description>
+		</attribute>
+<!-- <attribute name="autocompile" get="1" set="1" type="bool" size="1">
 	<digest>
 		Render video and audio after nonrealtime processing
 	</digest>
@@ -212,15 +296,7 @@
 		The compilation process can also be started separately after recording and nonrealtime rendering using the <m>avcompile</m> method.<br/>
 		The newly rendered videofile with audio will yield the augmentation '_soundtrack'
 	</description>
-</attribute>
-<attribute name="ae" get="1" set="1" type="bool" size="1">
-	<digest>
-		Play classic Adobe After Effects sounds after rendering
-	</digest>
-	<description>
-		When set to 1 (default!), will play back the classic Adobe After Effects sound upon rendering completion. However, if DSP was disabled prior to rendering, this setting will not toggle the digital signal processing.
-	</description>
-</attribute>
+</attribute> -->
 <attribute name="cntrlr" get="1" set="1" type="bool" size="1">
 	<digest>
 		Use LIVID CNTRL:R to control GUI and rendering operations
@@ -307,7 +383,7 @@
 				All attributes can be set and operations performed in the GUI.
 			</description>
 		</method>
-		<method name="settings">
+		<method name="snapshot">
 			<arglist />
 			<digest>
 				Open the settings-GUI
@@ -334,7 +410,7 @@
 				If a valid target directory is specified using the <at>dir</at> attribute, the message <m>reveal</m> will open the respective folder. This can be scheduled to happen at upon render completion using the <at>autoreveal</at> attribute.
 			</description>
 		</method>
-		<method name="length">
+		<method name="sendworld">
 			<arglist>
 				<arg name="numeric length" optional="0" type="float" />
 				<arg name="unit: ms, frames or samples" optional="0" type="symbol" />
