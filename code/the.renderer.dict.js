@@ -25,6 +25,7 @@ function update_dict(){
     replace("render::overdrive",overdrive); gCTX.overdrive = overdrive;
     replace("render::audio_interrupt",audio_interrupt); gCTX.audio_interrupt = audio_interrupt;
     replace("render::length_from_buffer",length_from_buffer); gCTX.length_from_buffer = length_from_buffer;
+    replace("render::length_from_movie",length_from_movie); gCTX.length_from_movie = length_from_movie;
     replace("render::sr",sr); gCTX.sr = sr;
     replace("render::audio_record::active",audio_record);
     replace("render::audio_record::source",audio_source);
@@ -66,6 +67,7 @@ function reapply_settings(u){
     overdrive = world_perform.get("render::overdrive"); gCTX.overdrive = overdrive;
     audio_interrupt = world_perform.get("render::audio_interrupt"); gCTX.audio_interrupt = audio_interrupt;
     length_from_buffer = world_perform.get("render::length_from_buffer"); gCTX.samples = length_from_buffer;
+    length_from_movie = world_perform.get("render::length_from_movie"); gCTX.samples = length_from_movie;
     sr = world_perform.get("render::sr"); gCTX.sr = sr;
     audio_record = world_perform.get("render::audio_record::active");
     audio_source = world_perform.get("render::audio_record::source");

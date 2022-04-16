@@ -156,11 +156,29 @@ ATTRIBUES
         length_from_buffer = l;
         ms = get_buffer(length_from_buffer);
         calc_time_format("ms");
+        length_from_movie = "";
+        world_perform.replace("render::length_from_movie",length_from_movie)
       }
       else length_from_buffer = "";
       world_perform.replace("render::length_from_buffer",length_from_buffer)
     }; set_length_from_buffer.local = 1;
     function get_length_from_buffer() { return length_from_buffer };
+
+  // LENGTH FROM MOVIE
+  var length_from_movie = "";
+    declareattribute("length_from_movie","get_length_from_movie","set_length_from_movie",0);
+    function set_length_from_movie(l) {
+      if (l !== "bang") {
+        length_from_movie = l;
+        find_movs();
+        calc_time_format("ms");
+        length_from_buffer = "";
+        world_perform.replace("render::length_from_buffer",length_from_buffer)
+      }
+      else length_from_movie = "";
+      world_perform.replace("render::length_from_movie",length_from_movie)
+    }; set_length_from_movie.local = 1;
+    function get_length_from_movie() { return length_from_movie };
 
   // DEACTIVATE JIT.WORLD during recording
   var toggleworld = 1;

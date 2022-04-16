@@ -153,11 +153,20 @@
 			<description>
 			</description>
 		</attribute>
-		<attribute name="length_from_buffer" get="1" set="1" type="int" size="1">
+		<attribute name="length_from_buffer" get="1" set="1" type="symbol" size="1">
 			<digest>
-				Specify the length of the final video and all its subrecordings
+				Specify the length of the final video and all its subrecordings by a named buffer
 			</digest>
 			<description>
+				Will apply the length of the named <o>buffer</o> to the timeline
+			</description>
+		</attribute>
+		<attribute name="length_from_movie" get="1" set="1" type="symbol" size="1">
+			<digest>
+				Specify the length of the final video and all its subrecordings by a present moviefile
+			</digest>
+			<description>
+				Will look for any present <o>jit.movie</o> objects in the environment hosting a <at>moviefile</at> with the given name and applies its length to the timeline
 			</description>
 		</attribute>
 		<attribute name="sr" get="1" set="1" type="symbol" size="1">
