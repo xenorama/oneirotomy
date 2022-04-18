@@ -27,11 +27,11 @@ Since most of the patches one comes up with are designed to generate audio and v
   <li>A lot of sensitive timing</li>
 </ul>
 <p>
-To render our realtime patches offline—i.e., with idle DSP and no relevant clock running in realtime—all hubs at which domains are converted will need to be hijacked and recorded, then paired with the render-frames of the specified framerate and video-length. 
-<br/>Within a single domain—audio, data or video—every stream, or queue, can remain untouched. The ports at which one domain converts to another are those of interest. 
-<br/>It will not necessarily be straight forward or obvious where such conversions take place in an individual patch. However, there are a limited number of objects to remember which perform such conversions and knowing one's patch well enough, as well as understanding its stream of data will make it a lot easier to record the necessary frames. Bear in mind that video operates at a much slower rate than does audio and hence we will only need to <i>render</i>> what is actually visible in the end—at the same time, video content can be dependent and building upon accumulated data inbetween frames which may, or may not have a massive impact on the result.
+To render our realtime patches offline—i.e., with idle DSP and no relevant clock running in realtime—all hubs at which domains are converted will need to be hijacked and recorded, then paired with the render-frames of the specified framerate and video-length.
+<br/>Within a single domain—audio, data or video—every stream, or queue, can remain untouched. The ports at which one domain converts to another are those of interest.
+<br/>It will not necessarily be straight forward or obvious where such conversions take place in an individual patch. However, there are a limited number of objects to remember which perform such conversions and knowing one's patch well enough, as well as understanding its stream of data will make it a lot easier to record the necessary frames. Bear in mind that video operates at a much slower rate than does audio and hence we will only need to <i>render</i> what is actually visible in the end—at the same time, video content can be dependent and building upon accumulated data inbetween frames which may, or may not have a massive impact on the result.
 </p>
-<p>
+<!-- <p>
 Open the tutorial patch.
 <br/>The boxes in different colours highlight sections of an audiovisual patch where conversions are taking place.
 <br/>Activate <o>jit.world</o> to start the renderer. Nothing will happen.
@@ -46,6 +46,23 @@ A metronome will start playing and in the <o>jit.pwindow</o> we can see a faint 
 <p>
 Next, enable the <i>grid</i>, which translatse the audible signal into a stream of jitter matrices using <o>jit.catch~</o>. >out will see slightly varying white bars across the sequencer, reflecting the captured sound of the metronome.
 <br/>
+</p> -->
+<p>
+  When using the Oneirotomy package and beginning to familiarize with its offline rendering system, one should start thinking of the Jitter patch in two different scenarios:
+  <ul>
+    <li><b>Realtime</b>: Everything can be scaled down to support realtime performance, which enables smooth recording of all necessary data/signals</li>
+    <li><b>Non-Realtime</b>: Everything can be scaled up to desired output formats, dimensions, resolutions — recalling recorded data frame by frame</li>
+  </ul>
+</p>
+<p>
+  <o>the.jit.renderer~</o> toggles between four modes of operation:
+  <ul>
+    <li><b>0:</b> Manual frame recall (after recording has taken place or using <o>the.timeline</o>), essentially <i>Rendering</i> mode without rendering to disk</li>
+    <li><b>1:</b> Regular Playback</li>
+    <li><b>2:</b> Record (Data/Audio/Domain translations)</li>
+    <li><b>3:</b> Render Video frame-by-frame to disk</li>
+    <li><b>4:</b> Capture current video stream in realtime to disk (expect little…)</li>
+  </ul>
 </p>
 
 <seealsolist>

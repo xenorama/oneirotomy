@@ -56,6 +56,11 @@
     <p>
       Correct movie playback per frame requires many tweaks and calls to the <o>jit.movie</o> object which haven't fully been implemented, and/or understood perfectly with regards to individual patches and usecases.
     </p>
+
+    <h2>Camera input</h2>
+    <p>
+      To make use of <o>jit.grab</o> in non-realtime contexts, the video stream would have to be recorded as video beforehand to later be used in offline scenarios. This feature has not been attended yet and would require a separate recording engine than the one native to <o>the.jit.renderer~</o>.
+    </p>
     <!-- <illustration><img   id="_x0000_i1003" src="images/jit.anim.path_example.png"/></illustration> -->
 
     <!-- <caption>
