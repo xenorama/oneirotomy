@@ -15,6 +15,7 @@ var snapshot_active = 0;
 var percent = 0;
 var progress = 0.;
 var snapshot_index = 0;
+var bogus_frames = 0;
 var merge_bg = this.patcher.getattr("locked_bgcolor");
 // post("locked_bgcolor",merge_bg)
 
@@ -118,11 +119,11 @@ function op_mode(m){
     messnamed(ctx+"_the.jit.prerender.bang")
     messnamed(ctx+"_samps/frame",frame_samps);
     messnamed(ctx+"_recmode",3)
-    messnamed(ctx+"_the.jit.rec.mode",3)
-    messnamed(ctx+"_the.jit.rec.video",1)
     world.setattr("enable",0);
     world.setattr("size",dim);
     world.setattr("dim",dim);
+    messnamed(ctx+"_the.jit.rec.mode",3)
+    messnamed(ctx+"_the.jit.rec.video",1)
 
       if (hide_window == 1) {
         world.setattr("visible",0);
@@ -131,7 +132,7 @@ function op_mode(m){
       else {
         world.setattr("visible",1);
         world.setattr("windowposition",[0,45]);
-        world.setattr("floating",0)
+        if (world.getattr("floating") == 1) world.setattr("floating",0)
       }
 
     if (capture === undefined) {
@@ -158,13 +159,14 @@ function op_mode(m){
     if (movie_type == 0) omat.write(dir+movie_name);
     else imat.name = async.out_name;
     outlet(3,"render")
-    world.message("bang");
-
     if (output_matrix) {
       outlet(0,"getsize");
       outlet(0,"bg",merge_bg);
       outlet(0,"dim_render",dim[0]*0.1,dim[1]*0.1);
     }
+
+    world.message("bang");
+
     post("waiting.\n")
     // DELAY INITIAL FRAME and begin RENDERING
     delay(post_prep,1000)
@@ -235,10 +237,10 @@ function post_prep(){
 }
 
 function start_render(){
-  messnamed(ctx+"_current.frame",0)
+  frame_current = -bogus_frames;
+  messnamed(ctx+"_current.frame",frame_current)
   post("rendering.\n")
   world.message("bang");
-  frame_current = -bogus_frames;
   rendering = 1;
 }
 
@@ -261,7 +263,8 @@ RENDER
 function render_bang(){
   if (mode == 3){
     if (capture !== undefined) asynctex.jit_gl_texture(capture);
-    if (frame_current < (framecount + bogus_frames)){
+    // if (frame_current < (framecount + bogus_frames)){
+    if (frame_current < framecount){
       world.message("bang");
       if (frame_current < 0) {
         messnamed(ctx+"_the.jit.prerender.bang")

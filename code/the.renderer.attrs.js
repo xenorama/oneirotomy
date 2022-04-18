@@ -443,7 +443,6 @@ TIMELINE SETTINGS
 var frame_samps = 800;
 var poly_dim = [120,800]
 var frame_current = 0;
-var bogus_frames = 2;
 var time_ms = framecount*1000/fps;
 
 

@@ -17,8 +17,10 @@ var aread = 1;
 var mode = 1;
 var filename = "";
 var recording = 0;
+var rendering = 0;
 var rec_enable = 1;
 var sname = "";
+var obj_type = jsarguments[6] || undefined;
 
 
 function export(n){
@@ -62,11 +64,13 @@ function write() {
 
 function op_mode(o){
   mode = o;
-  if (mode < 2 && recording == 1){
+  if (mode < 2 && (recording == 1 || (rendering == 1 && obj_type == "timeline"))){
     if (awrite == 1) write()
     recording = 0;
+    rendering = 0;
   }
   else if (mode == 2 && recording == 0 && rec_enable == 1) { recording = 1; }
+  else if (mode == 3 && rendering == 0 && rec_enable == 1) { rendering = 1; }
 }
 
 function bang(){

@@ -122,6 +122,16 @@
 				Setup mc-compatibility. A combination of <m>mctarget</m> and <m>router</m> methods
 			</description>
 		</method>
+		<method name="anim_merge">
+			<arglist />
+			<digest>
+				Bindto to all jit.anim objects in the patch layer
+			</digest>
+			<description>
+				Bindto to all jit.anim objects in the patch layer.<br/>
+				Scans the patch layer and binds to all jit.anim objects it finds. This will <m>augment</m> all found objects regardless of whether they are already controlled by another instance of <o>the.mc.data</o>
+			</description>
+		</method>
 		<method name="anything">
 			<arglist>
 				<arg name="input" optional="0" type="list" />
@@ -130,7 +140,7 @@
 				Store the message on the timeline
 			</digest>
 			<description>
-				The internal <o>mtr</o> object can store any type of data it receives—other than matrices or signals—including complex lists.
+				Legacy Note: The internal <o>mtr</o> object can store any type of data it receives—other than matrices or signals—including complex lists.
 				Although <o>mtr</o> can record individual bytes of MIDI messages received from <o>midiin</o>, it stores each byte with a separate delta time, and does not format the MIDI messages the way <o>seq</o> does. If you want to record complete MIDI messages and edit them later, <o>seq</o> is better suited for the task. On the other hand, <o>mtr</o> is perfectly suited for recording sequences of numbers, lists, or symbols from virtually any object in Max: specialized MIDI objects such as <o>notein</o> or <o>pgmin</o>, user interface objects such as <link name="number" type="refpage">number box</link>, <o>slider</o>, and <o>dial</o>, or any other object.
 			</description>
 		</method>
