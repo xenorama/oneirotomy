@@ -42,6 +42,8 @@ tag_colors.replace("timing",[0.9,0.2,0.,1]);
 tag_colors.replace("recording",[0.7,0.1,0.,1]);
 tag_colors.replace("dance",[0.,0.3,0.9,1]);
 tag_colors.replace("cv",[0.2,0.5,0.6,1]);
+tag_colors.replace("node",[0.5,0.7,0.3,1]);
+tag_colors.replace("mc",[1,0.2,1,1]);
 var tag_list = tag_colors.getkeys();
 var tags_pos = this.box.rect[3]-this.box.rect[1]; // bottm left
 var tag_layout = 1;
