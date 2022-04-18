@@ -13,31 +13,45 @@
     Certain objects are designed to serve an immediate function when working in the GL-domain, and they do so amazingly! However, when attemping to work with them <i>offline</i>, they may not work as expected, if at all. The following paragraphs may help in implementing this package's objects in such a way that these objects' functionality can be leveraged nonetheless.
   </p>
 
+  <h2><o>jit.movie</o></h2>
+  <p>
+    Correct movie playback per frame requires many tweaks and calls to the <o>jit.movie</o> object which haven't fully been implemented, and/or understood perfectly with regards to individual patches and usecases.
+  </p>
+  <!-- <illustration><img   id="_x0000_i1003" src="images/jit.anim.path_example.png"/></illustration> -->
+
+  <!-- <caption>
+		<i>Use <o>the.mc.data</o> @active 4 to record data from <o>jit.anim.path</o></i>
+	</caption> -->
+
+  <!-- <techdetail>
+  	<b>framedelay</b>: <o>the.mc.data</o> captures all data it receives during recording into an internal <o>mtr</o> object. During rendering, however,—and obviously at a lower rate due to the <i>fps</i> setting—the data accumulated inbetween frames is being spilled before the next frame is rendered. To ensure all data can be output before the next frame is being rendered, it is advised to set <o>the.jit.renderer~</o>' <at>framedelay</at> setting to at least <m>1</m> frame. This will ensure that the next frame will not be rendered until the internal data is back up to date.<br/>
+    <b>toggleworld</b>: For <o>the.mc.data</o> to capture data output by a world-bound gl-object such as the <o>jit.anim.path</o>, the world rendering context must be running during recording and thus <o>the.jit.renderer~</o>' <at>toggleworld</at> setting must be disabled to keep <o>jit.world</o> running.
+  </techdetail> -->
+
   <h2><o>jit.anim.path</o></h2>
   <p>
-    <o>jit.anim.path</o> only outputs its transformation data to target GL-objects when both a local <b>render context</b> is <i>enabled</i> and that very target object is directly attached to it. The data it outputs is a case for <o>the.cerebellum</o>, however, the latter needs to be implemented additionally and <i>@active 4</i> to record the data output by the <o>jit.anim.path</o> while not outputing in parallel, but only during rendering instead of the idle <o>jit.anim.path</o>, which will yield no data when the render engine is not enabled. Furthermore, <o>the.jit.thalamus</o> needs to be set to <i>@toggleworld 0</i> so that all world data is collected along with signals and timing data. <br/>
-    Consider also to set <o>the.cerebellum</o> to <i>solo 1</i> if complex signal processing is occuring during recording. This way, data can be collected separately.
+    <o>jit.anim.path</o> only outputs its transformation data to target GL-objects when both a local <b>render context</b> is <i>enabled</i> and that very target object is directly attached to it. The data it outputs is a case for <o>the.mc.data</o>, however, the latter needs to be implemented additionally and <i>@active 4</i> to record the data output by the <o>jit.anim.path</o> while not outputing in parallel, but only during rendering instead of the idle <o>jit.anim.path</o>, which will yield no data when the render engine is not enabled. Furthermore, <o>the.jit.renderer~</o> needs to be set to <i>@toggleworld 0</i> so that all world data is collected along with signals and timing data. <br/>
+    Consider also to set <o>the.mc.data</o> to <i>solo</i> in the <m>queue</m> setup of <o>the.jit.renderer~</o> if complex signal processing is occuring during recording. This way, data can be collected separately.
+    <br/>
+    <br/>
+    See the following section for <o>jit.anim.drive</o> for implementation guidelines.
   </p>
-  <illustration><img   id="_x0000_i1003" src="images/jit.anim.path_example.png"/></illustration>
 
-  <caption>
-		<i>Use <o>the.cerebellum</o> @active 4 to record data from <o>jit.anim.path</o></i>
-	</caption>
-
-  <techdetail>
-  	<b>framedelay</b>: <o>the.cerebellum</o> captures all data it receives during recording into an internal <o>mtr</o> object. During rendering, however,—and obviously at a lower rate due to the <i>fps</i> setting—the data accumulated inbetween frames is being spilled before the next frame is rendered. To ensure all data can be output before the next frame is being rendered, it is advised to set <o>the.jit.thalamus</o>' <at>framedelay</at> setting to at least <m>1</m> frame. This will ensure that the next frame will not be rendered until the internal data is back up to date.<br/>
-    <b>toggleworld</b>: For <o>the.cerebellum</o> to capture data output by a world-bound gl-object such as the <o>jit.anim.path</o>, the world rendering context must be running during recording and thus <o>the.jit.thalamus</o>' <at>toggleworld</at> setting must be disabled to keep <o>jit.world</o> running.
-  </techdetail>
+  <!-- <techdetail>
+  	<b>framedelay</b>: <o>the.mc.data</o> captures all data it receives during recording. During rendering, however,—and obviously at a lower rate due to the <i>fps</i> setting—the data accumulated inbetween frames is being spilled before the next frame is rendered. To ensure all data can be output before the next frame is being rendered, it is advised to set <o>the.jit.renderer~</o>' <at>framedelay</at> setting to at least <m>1</m> frame. This will ensure that the next frame will not be rendered until the internal data is back up to date.<br/>
+    <b>toggleworld</b>: For <o>the.mc.data</o> to capture data output by a world-bound gl-object such as the <o>jit.anim.path</o>, the world rendering context must be running during recording and thus <o>the.jit.renderer~</o>' <at>toggleworld</at> setting must be disabled to keep <o>jit.world</o> running.
+  </techdetail> -->
 
   <h2><o>jit.anim.drive</o></h2>
   <p>
-    <o>jit.anim.drive</o> behaves similarly to <o>jit.anim.path</o> (see entry above) inasmuch as it only outputs its transformation data to target GL-objects when both a local <b>render context</b> is <i>enabled</i> and that very target object is directly attached to it. The data it outputs is a case for <o>the.cerebellum</o> in the style explained above. <o>the.jit.thalamus</o> needs to again be set to <i>@toggleworld 0</i> so that all world data is collected along with signals and timing data. <br/>
-    Transformation messages sent by <o>jit.anim.drive</o> can be approximately replicated using simple Max messages per render bang; this can be adapted globally and a <o>jit.anim.drive</o> may not be necessary after all.
+    <o>jit.anim.drive</o> behaves similarly to <o>jit.anim.path</o> (see entry above) inasmuch as it only outputs its transformation data to target GL-objects when both a local <b>render context</b> is <i>enabled</i> and that very target object is directly attached to it. The data it outputs is a case for <o>the.mc.data</o> in the style explained above. <o>the.jit.renderer~</o> needs to again be set to <i>@toggleworld 0</i> so that all world data is collected along with signals and timing data. <br/>
+    Transformation messages sent by <o>jit.anim.drive</o> can be approximately replicated using simple Max messages per render bang (should no ongoing transformation messages be sent to the object); this can be adapted globally and a <o>jit.anim.drive</o> may not be necessary after all.
   </p>
-  <illustration><img   id="_x0000_i1005" src="images/jit.anim.drive_example.png"/></illustration>
+
+  <illustration><img   id="_x0000_i1003" src="images/the.mc.data-anims_example.png"/></illustration>
 
   <caption>
-		<i>Use <o>the.cerebellum</o> @active 4 to record data from <o>jit.anim.drive</o> or replace the latter by Max messages</i>
+		<i>Use <o>the.mc.data</o> @active 4 to record data from <o>jit.anim.path</o> — the object box coloring occurs automatically according to its active state and when bound, automatically defaults to &quot;4&quot;</i>
 	</caption>
 
   <techdetail>
@@ -47,30 +61,30 @@
 
   <h2><o>jit.mo.func</o></h2>
   <p>
-    Every active <o>jit.mo.func</o> object will require a <o>the.jit.mojo</o> object attached to its inlet in order for the <at>speed</at> attribute to be controlled by the progressing frames rather than internally. Disabling <o>jit.world</o> will not produce the desired timing in these objects otherwise.
+    Every active <o>jit.mo.func</o> object will require a <o>the.jit.mo.drive</o> object attached to its inlet in order for the <at>speed</at> attribute to be controlled by the progressing frames rather than internally. Disabling <o>jit.world</o> will not produce the desired timing in these objects otherwise.
   </p>
 
-<illustration><img   id="_x0000_i1004" src="images/the.jit.mojo_example.png"/></illustration>
+<illustration><img   id="_x0000_i1004" src="images/the.jit.mo.drive_example.png"/></illustration>
 
   <caption>
-		<i>Attach to any <o>jit.mo.func</o>'s inlet to control the <at>speed</at> attribute manually when <o>jit.world</o> is disabled</i>
+		<i>Attach to <o>jit.mo.func</o> to control the <at>speed</at> attribute manually using its <m>phase</m> attribute while <o>jit.world</o> is disabled (as  when rendering in non-realtime)</i>
 	</caption>
-  
-  <h2>Replace <o>jit.catch~</o> by <o>the.mc.jit.mnemonic~</o> (not officially supported though)</h2>
+
+  <h2>Replace <o>jit.catch~</o> by <o>the.mc.jit.catch~</o> (not officially supported though)</h2>
  <p>
-    An abstraction called <o>the.mc.jit.mnemonic~</o> can meanwhile be used to replace a <o>jit.catch~</o> object. It has not ben thoroughly tested yet and operation <at>mode</at> 0 is currently not supported. A second argument for the number of audio channels is required, even in single-channel mode (1 in that case). Reference and helpfiles do exist, however, not in much detail.
+    An abstraction called <o>the.mc.jit.catch~</o> can meanwhile be used to replace a <o>jit.catch~</o> object. It has not ben thoroughly tested yet and operation <at>mode</at> 0 is currently not supported. A second argument for the number of audio channels is required, even in single-channel mode (1 in that case). Reference and helpfiles do exist, however, not in much detail.
     <br/>Note also, that since it is an abstraction, using <o>attrui</o> to change object attributes is not supported by Max, and they have to be replaced by message-boxes to change <o>jit.catch~</o> attributes. For the same reason why <m>mode 0</m> is not supported, the <at>framesize</at> attribute cannot be changed while recording.
     <br/>Feedback and suggestions welcome.
   </p>
 
-<illustration><img   id="_x0000_i1004" src="images/the.mc.jit.mnemonic_example.png"/></illustration>
+<illustration><img   id="_x0000_i1005" src="images/the.mc.jit.catch~_example.png"/></illustration>
 
   <caption>
-		<i>Replacing <o>jit.catch~</o>. Native mode 0 is not supported and will default to mode 1, attributes have to be sent as Max messages.</i>
+		<i>Replacing <o>jit.catch~</o>. Functionality is not quite supported yet, attributes have to be sent as Max messages.</i>
 	</caption>
   <techdetail>
-  	To record matrix data output by <o>jit.catch~</o> or the hardly documented <o>mc.jit.catch~</o>, every frame of MSP audio—represented by a single-dimensional matrix—is accumulated into one large <m>jit_matrix</m> using <o>jit.concat</o>. When recording or playing back long audio sequences, this may tackle available memory or cause leaks. At least, is hasn't been throughly tested.
-    <br/>A similar methodology to that used by <o>the.mc.jit.amygdala~</o> (recording blocks of temporary matrices to later concatenate them) is of course thinkable, but as long as mode 0 is not supported, the optimization of this method will not be pursued.
+  	To record matrix data output by <o>the.mc.jit.catch~</o>, every frame of MSP audio—represented by a single-dimensional matrix—is accumulated into one large <m>jit_matrix</m> using <o>jit.concat</o>. When recording or playing back long audio sequences, this may tackle available memory or cause leaks. At least, is hasn't been throughly tested.
+    <br/>A similar methodology to that used by <o>the.jit.poke~</o> (recording blocks of temporary matrices to later concatenate them) is of course thinkable, but as long as mode 0 is not supported, the optimization of this method will not be pursued.
   </techdetail>
 
   <br/>
@@ -81,7 +95,7 @@
 
   <seealsolist>
 		<!-- <seealso name="timing_events_topic" module="topics" type="vignette" />	-->
-    <seealso name="the.jit.thalamus" />
+    <seealso name="the.jit.renderer~" />
   </seealsolist>
 
 </vignette>

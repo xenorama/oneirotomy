@@ -10,38 +10,58 @@
 
 	<h2>Rendering Manager</h2>
   <ul>
-    <li><o>the.jit.thalamus</o> - Manage offline rendering of realtime audiovisual content</li>
+    <li><o>the.jit.renderer~</o> - Manage offline rendering of realtime audiovisual content</li>
   </ul>
   <p>
-    The <a href="https://en.wikipedia.org/wiki/Thalamus">Thalamus</a> <i>has multiple functions, generally believed to act as a relay station, or hub, relaying information between different subcortical areas and the cerebral cortex</i>. In the context of <b>Oneirotomy</b>, it is the first object to add to your existing Jitter patch. <br/>
-    It hosts a GUI to manage all rendering settings and is to be connected to an existing <o>jit.world</o> as described in its <openfilelink filename="the.jit.thalamus.maxhelp">helpfile</openfilelink>.
+    In the context of <b>Oneirotomy</b>, it is the first object to add to your existing Jitter patch. It requires an initial render context name as argument which is identical to the name of a <o>jit.world</o> instance present in the environment<br/>
+    <o>the.jit.renderer~</o> hosts a GUI to manage all recording and rendering settings, as well as file specifications, see the <openfilelink filename="the.jit.renderer~.maxhelp">helpfile</openfilelink> for details. If legacy render setups are used in a patch, namely based around <o>jit.gl.render</o>, these have to be upgraded to <o>jit.world</o> for Oneirotomy-compatibility. This can be done using <o>the.oneirotomy.setup</o> object, which you'll want to use to upgrade any existing patch to compatibility.
   </p>
 
     <techdetail>
-  	Video rendering settings must be specified <i>before</i> any audio or data recording takes place to quantize the captured data to the desired framerate. Changing the @fps-attribute to <o>the.jit.thalamus</o> after recording will yield unpredictable, i.e. incorrect results which are likely to disappoint and mismatch the audio. The recording length can be set to 'free' to support performance-oriented video. <br/>
-    The default fps is 30 frames/second.
+  	Video rendering settings must be specified <i>before</i> any audio or data recording takes place to quantize the captured data to the desired framerate. Changing the @fps-attribute to <o>the.jit.renderer~</o> after recording will yield unpredictable, i.e. incorrect results which are likely to disappoint and mismatch the audio. As of V 2.0 this is true also for the length of the final video. <br/>
+    The default fps is 60 frames/second.
   </techdetail>
 
-    <illustration><img   id="_x0000_i1002" src="images/the.jit.thalamus_example.png"/></illustration>
+    <illustration><img   id="_x0000_i1002" src="images/the.jit.renderer~-implementation.png"/></illustration>
+
+    <caption>
+      <i>automatically binds to a <o>jit.world</o> with the same name. Object boxes are coloured accordingly when bound successfully</i>
+    </caption>
+
+    <techdetail>
+    Note: If the desired <o>jit.world</o> is not found, alternative contexts are posted to the Max Window. If no <o>jit.world</o> is found at all, it will be created and placed next to <o>the.jit.renderer~</o>.
+  </techdetail>
+
+  <illustration><img   id="_x0000_i1003" src="images/the.jit.renderer~-other-ctx.png"/></illustration>
 
   <caption>
-		<i>connections between <o>jit.world</o> and <o>the.jit.thalamus</o></i>
-	</caption>
+    <i>Max Console lists other instances of <o>jit.world</o> when binding cannot atke place</i>
+  </caption>
+
+
+
 
   <h2>Domain Translation Capture</h2>
   <p>
     To render Jitter patches based on audio or timed data, the nodes translating the aforementioned types into the video domain are key in the process. Those parts of the patch need to be <i>hijacked</i>, i.e. 'captured' to later recall the frame-based states as opposed to sampling rate or transport, for example, when rendering without DSP or timing. The following objects serve this function in different ways and areas:
   </p>
   <ul>
-    <li><o>the.cochlea~</o> - Frame-based storage of running MSP audio</li>
-    <li><o>the.mc.jit.amygdala~</o> - Poke signal data to a named matrix and store progressions for non-realtime rendering</li>
-    <li><o>the.cerebellum</o> - Capture timing-sensitive data for offline video rendering</li>
-    <li><o>the.jit.mojo</o> - Control a <o>jit.mo.func</o> object in non-realtime</li>
+    <li><o>the.snapshot~</o> - Frame-based storage of running MSP audio, for multi-channel audio, use <o>the.mc.snapshot~</o></li>
+    <li><o>the.jit.poke~</o> - Poke signal data to a named matrix and store progressions for non-realtime rendering</li>
+    <li><o>the.mc.jit.catch~</o> - Transform signal data into matrices and store data for non-realtime rendering</li>
+    <li><o>the.jit.mo.drive</o> - Control a <o>jit.mo.func</o> object in non-realtime</li>
+    <li><o>the.mc.data</o> - Capture timing-sensitive data for offline video rendering</li>
+    <li><o>the.bang</o> - Imitate and capture bang successions for non-realtime rendering</li>
   </ul>
+
+  <p>
+    The objects with familiar Max-names are set to replace the respective objects entirely, this again can be done using <o>the.oneirotomy.setup</o> — in its <openfilelink filename="the.oneirotomy.setup.maxhelp">helpfile</openfilelink> some methods are presented as to how a patch can be understood with regards to its non-realtime compatibility by highlighting the objects in question. These can also be <i>upgraded</i>, i.e. replaced or augmented by objects of this package. The process of upgrading the patch, however, is subject to individual patch designs and not all realtime Jitter patches can be tweaked to work in non-realtime without further ado.
+  </p>
+
   <illustration><img   id="_x0000_i1004" src="images/domain.translation_examples.png"/></illustration>
 
   <caption>
-		<i>Some objects can be safely replaced, timed objects require additions to the patch</i>
+		<i>Some objects can be safely replaced, timed objects <i>may</i> require additions to the patch</i>
 	</caption>
 
 
@@ -52,24 +72,49 @@
     Rendering 'realtime' video offline assumes some sort of a timeline. While this subject can be explored in depth and its development is subject to  a multitude of upgrades, a raw, frame-based approximation of a timeline can be used to animate certain parameters in the rendering process:
   </p>
   <ul>
-    <li><o>the.circadian</o> - Provide a running timeline from <o>the.jit.thalamus</o></li>
+    <li><o>the.timeline</o> - Provide a running timeline from <o>the.jit.renderer~</o></li>
   </ul>
 
-  <illustration><img   id="_x0000_i1004" src="images/the.circadian_example.png"/></illustration>
+  <illustration><img   id="_x0000_i1006" src="images/the.timeline_example.png"/></illustration>
 
   <caption>
-		<i>Use available timeline-information to control parameters along the sequence</i>
+		<i>Use available timeline-information and multichannel automation lanes with variable ranges to control parameters along the sequence</i>
 	</caption>
+
+
+
+  <h2>Object Initialization and Render Präparation</h2>
+  <p>
+    Since rendering and realtime are now essentially two different modes of operation, desired attributes and object settings can be toggled between performance-friendly patching mode (realtime) and potentially inefficient rendering settings. For instance, very intense shading can be dispensed with during playback and applied during rendering — literally any message any object understands can be sent to it (via connection or remotely when bound to it by argument #2) whenever the operation mode changes. While this opens the tunnel to endlessly convenient possibilities, there are the odd caveats one may not expect; i.e., chaning a <o>jit.matrix</o> dimensions can be done before populating a <o>jit.gl.mesh</o>, but when controlled using <o>the.jit.poke~</o>, for example, the old dimensions are used in the latter if these aren't updated there as well.
+  </p>
+  <ul>
+    <li><o>the.obj.init</o> - Switch object attributes as per offline rendering modes of <o>the.jit.renderer~</o></li>
+  </ul>
+
+  <illustration><img   id="_x0000_i1007" src="images/the.obj.init_example.png"/></illustration>
+
+  <caption>
+		<i>Not only attributes, but also messages to inputs and outputs for <o>jit.gl.bfg</o>, <o>jit.gl.texture</o> or <o>jit.gl.pix</o> can be sent. Single objects can be explicitly addressed remotely with extra arguments</i>
+	</caption>
+
+  <techdetail>
+  Note: The desired attributes states need to be expressed as two single entries, i.e. symbols in case of lists, representing playback and rendering modes. Changing texture dimensions must thus be coded as &quot;@dim "320 240" "1920 1080"&quot;, for example.
+</techdetail>
+
+
+
 
   <h2>Context Audio Recording</h2>
   <p>
-    When audio files or sound performances are fundamental or part of a Jitter patch, any signal or multichannel-signal can be recorded along the timeline:
+    When audio files or sound performances are fundamental or part of a Jitter patch, any signal or multichannel-signal can be recorded along the timeline from within <o>the.jit.renderer~</o>. This can be specified using the <i>audio_record</i> setting, where <b>adinput</b> (<o>adc~</o>), <b>adoutput</b> (<o>dac~</o>) or <b>patch</b> (any multichannel input to <o>the.jit.renderer~</o>) can be recorded with up to 16 channels.
   </p>
-  <ul>
-    <li><o>the.mc.pac~</o> - Record multi-channel MSP audio in line with a frame-based render process</li>
-  </ul>
 
-    <h2>Framecheck and Post-Pro Prep</h2>
+  <illustration><img   id="_x0000_i1008" src="images/the.jit.renderer~-adrecord.png"/></illustration>
+
+  <caption>
+    <i>Preview of recording audio coming from adc~ inputs 1 and 2</i>
+  </caption>
+    <!-- <h2>Framecheck and Post-Pro Prep</h2>
     <p>
       The rendered video and audio files can be checked in parallel before submitting them to further queues in other software:
     </p>
@@ -77,7 +122,7 @@
       <li><o>the.jit.pinealis</o> - Perform a simple framecheck on offline rendered video files</li>
       <li><o>the.jit.tinnitus~</o> - Perform a comprehensive frame check on an audio buffer~ accompanying a rendered video</li>
     </ul>
-    <br/>
+    <br/> -->
     Previous: <b><link type="vignette" module="Oneirotomy" name="oneirotomy-00_introduction">Introduction</link></b><br/><br/>
     Next: <b><link type="vignette" module="Oneirotomy" name="oneirotomy-02_implementation">Implementation</link></b>
 
@@ -85,7 +130,7 @@
 
   <seealsolist>
 		<!-- <seealso name="timing_events_topic" module="topics" type="vignette" />	-->
-    <seealso name="the.jit.thalamus" />
+    <seealso name="the.jit.renderer~" />
   </seealsolist>
 
 </vignette>
