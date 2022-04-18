@@ -13,20 +13,6 @@
     Certain objects are designed to serve an immediate function when working in the GL-domain, and they do so amazingly! However, when attemping to work with them <i>offline</i>, they may not work as expected, if at all. The following paragraphs may help in implementing this package's objects in such a way that these objects' functionality can be leveraged nonetheless.
   </p>
 
-  <h2><o>jit.movie</o></h2>
-  <p>
-    Correct movie playback per frame requires many tweaks and calls to the <o>jit.movie</o> object which haven't fully been implemented, and/or understood perfectly with regards to individual patches and usecases.
-  </p>
-  <!-- <illustration><img   id="_x0000_i1003" src="images/jit.anim.path_example.png"/></illustration> -->
-
-  <!-- <caption>
-		<i>Use <o>the.mc.data</o> @active 4 to record data from <o>jit.anim.path</o></i>
-	</caption> -->
-
-  <!-- <techdetail>
-  	<b>framedelay</b>: <o>the.mc.data</o> captures all data it receives during recording into an internal <o>mtr</o> object. During rendering, however,—and obviously at a lower rate due to the <i>fps</i> setting—the data accumulated inbetween frames is being spilled before the next frame is rendered. To ensure all data can be output before the next frame is being rendered, it is advised to set <o>the.jit.renderer~</o>' <at>framedelay</at> setting to at least <m>1</m> frame. This will ensure that the next frame will not be rendered until the internal data is back up to date.<br/>
-    <b>toggleworld</b>: For <o>the.mc.data</o> to capture data output by a world-bound gl-object such as the <o>jit.anim.path</o>, the world rendering context must be running during recording and thus <o>the.jit.renderer~</o>' <at>toggleworld</at> setting must be disabled to keep <o>jit.world</o> running.
-  </techdetail> -->
 
   <h2><o>jit.anim.path</o></h2>
   <p>
