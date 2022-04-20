@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="the.jit.movie.ctrl" module="max" category="Data, Timing">
+
+	<digest>
+		Playback <o>jit.movie</o> objects during offline rendering
+	</digest>
+
+	<description>
+		Written by Tim Heinze © 2022, www.xenorama.com. <br/>
+		Playback realtime movies offline to support frame-by-frame scrubbing. By default, all moviefiles hosted in the bound objects are loaded into RAM once before rendering. Supported objects are currently <o>jit.movie</o> and <o>jit.movie~</o>.
+	</description>
+
+	<discussion>
+		<o>the.jit.renderer~</o> providing a central context is required in the enviroment.
+		<br/>
+		<br/>
+	</discussion>
+
+	<!--METADATA (REMOVE FOR SIMPLICITY) -->
+	<metadatalist>
+		<metadata name="author">Tim Heinze</metadata>
+		<metadata name="tag">Xenorama</metadata>
+		<metadata name="tag">Offline Video Rendering</metadata>
+		<metadata name="tag">Data, Timing</metadata>
+	</metadatalist>
+
+	<!--INLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--OUTLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--ARGUMENTS-->
+	<objarglist>
+		<objarg name="render-context" optional="0" type="symbol" size="1">
+			<digest>
+				Specify a named render context to bind to.
+			</digest>
+			<description>
+				For convenience, this can be identical to one's world render context name but is to be considered independent. <o>the.jit.renderer~</o> with a unique context name is required running in parallel for all members of the offline render family to sync and respond to.
+			</description>
+		</objarg>
+	</objarglist>
+
+	<!--ATTRIBUTES (REMOVE FOR SIMPLICITY) -->
+	<attributelist>
+	<attribute name="loadram" get="1" set="1" type="symbol" size="1">
+		<digest>
+			Load entire movie into RAM before rendering
+		</digest>
+		<description>
+			Load entire movie into RAM before rendering. Unflagging this setting will not load the file into RAM — note, that this may cause framedrops or incorrect recalling of frames.
+		</description>
+	</attribute>
+	<attribute name="active" get="1" set="1" type="int" size="1">
+		<digest>
+			Set the active flag
+		</digest>
+		<description>
+			Set the active flag. There are 4 active states available suitable for different purposes:
+			<br/>
+			<br/>0 = ignore this object and pass everything through without recording or recalling
+			<br/>1 = operate normally (default); playback, record and output during rendering
+			<br/>2 = playback and output previously recorded data normally but do not record any new data
+			<br/>3 = playback and record normally but do not output data during rendering
+			<br/>4 = record and output during rendering but never pass incoming data (set automatically when bound to jit.anim.objects)
+			<br/>5 = mute all activity
+			<br/>
+			<br/>Note that while recording is disabled, the automatic export upon recording completion (if a <at>name</at> is specified) is also disabled and previous files will not be overwritten.
+			<br/>Furthermore, the <at>active</at> flag is overriden by the <m>solo</m> state of the object
+		</description>
+	</attribute>
+</attributelist>
+
+	<!--MESSAGES-->
+
+	<methodlist>
+		<method name="bang">
+			<arglist />
+			<digest>
+				Update established connection to jit.movie objects
+			</digest>
+			<description>
+				Update established connection to jit.movie objects. So far, only a single movie object is supported. Any connection not established between the dumpout of jit.movie and the rightmost inlet of the.jit.movie.ctrl will be repatched accordingly.
+			</description>
+		</method>
+		<method name="unloadram">
+			<arglist />
+			<digest>
+				Unload movies from RAM for all bound objects
+			</digest>
+			<description>
+				Unload movies from RAM for all bound objects
+			</description>
+		</method>
+		<method name="frame">
+			<arglist>
+				<arg name="position" optional="0" type="int" />
+			</arglist>
+			<digest>
+				Jump to specific frame
+			</digest>
+			<description>
+				Output the corresponding frame at the specified position while not rendering by <o>jit.world</o>.
+				<br/>This method will only work if data has been recorded previously.
+				<br/>This method has not yet been thoroughly tested and is subject to user feedback.
+			</description>
+		</method>
+<method name="queue">
+	<arglist />
+	<digest>
+		Open the core Queue Manager GUI
+	</digest>
+	<description>
+		The message <m>queue</m> will open the core Queue Manager GUI in <o>the.jit.renderer~</o> to specify which instance is recording or rendering in the next step.
+	</description>
+</method>
+	</methodlist>
+
+	<!--EXAMPLE-->
+	<examplelist>
+		<example img="the.jit.movie.ctrl.png" caption="insert after timing-objects and before matrix/texture domain to record/render realtime data" />
+	</examplelist>
+
+	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
+	<seealsolist>
+		<seealso name="the.jit.renderer~"/>
+		<seealso name="the.snapshot~"/>
+		<seealso name="the.jit.poke~"/>
+		<seealso name="the.mc.sfrecord~"/>
+		<seealso name="the.jit.mo.drive"/>
+		<seealso name="the.jit.framecheck"/>
+		<seealso name="the.jit.framecheck~"/>
+		<seealso name="the.timeline"/>
+		<seealso name="the.mc.jit.catch~"/>
+	</seealsolist>
+
+</c74object>

@@ -52,7 +52,7 @@ include("the.renderer.operator.js") // operation mode, necessary JitterObjects a
 include("the.delay.js") // more precise timing method
 include("the.renderer.buffers.js") // hosted audio buffers (idle atm)
 include("the.audio.buffer.js")
-include("the.mov.ctrl.js") // watch jit.movie objects in patch
+include("the.mov.info.js") // watch jit.movie objects in patch
 // include("the.test.js");
 
 

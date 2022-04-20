@@ -11,7 +11,7 @@ var this_name = jsarguments[1]+"_data"; // init name
 var explicit = 0; // flagging explicit naming of bind objects
 var mode = 1; // active flag
 var valid = 0; // valid objects connected
-var verbose = 1; // post info to max window (deac)
+var verbose = 0; // post info to max window (deac)
 var hilite_color = [0.831,0.373,0.184,1]; // set object box color when rendering @automtic 0
 var d_binds = new Dict();
 var mcroute = undefined;
@@ -57,8 +57,9 @@ function get_objs(){
 }
 
 // SET AUTOMATIC MODE
-function automatic(i,j){
+function op_mode(k,j){
   if (valid && (j || mode !== 0)) {
+    var i = (k !== 3);
     for (a in bind_sources) {
       if (bind_sources[a].automatic) {
         if (bind_sources[a].obj.understands("automatic")) bind_sources[a].obj.setattr("automatic",i); else bind_sources[a].obj.setattr("enable",i)
@@ -69,6 +70,19 @@ function automatic(i,j){
     outlet(0,"automatic",i)
   }
 }
+// // SET AUTOMATIC MODE
+// function automatic(i,j){
+//   if (valid && (j || mode !== 0)) {
+//     for (a in bind_sources) {
+//       if (bind_sources[a].automatic) {
+//         if (bind_sources[a].obj.understands("automatic")) bind_sources[a].obj.setattr("automatic",i); else bind_sources[a].obj.setattr("enable",i)
+//         if (!i) bind_sources[a].obj.setboxattr("color",hilite_color)
+//         else bind_sources[a].obj.setboxattr("color",bind_sources[a].border)
+//       }
+//     }
+//     outlet(0,"automatic",i)
+//   }
+// }
 
 // SET NAME for VERBOSE MODE
 function name(n){
@@ -125,7 +139,6 @@ function check_anim(a){
 
 // function check_anim(a){ return (binds.indexOf(a.maxclass) !== -1 && a.patchcords.outputs.forEach(function (x) { return (/jit\.anim\..+/).test(x.dstobject.maxclass) }).indexOf(true) == -1); }
 function assign_bind(a){
-  post(a.getattr("name"),bind_names.indexOf(a.getattr("name")),'\n')
   var obj = new Bind(a);
   bind_sources.push(obj);
 }

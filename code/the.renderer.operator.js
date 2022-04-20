@@ -6,6 +6,10 @@ VARIABLES
 */
 
 renderer = new Global(ctx+"_world");
+loadingram = new Global(ctx+"_loadingram")
+loadingram.objects = 0;
+loadingram.await = 0;
+
 var mode = 1; // 0 = manual frame recall, 1 = playback, 2 = record, 3 = render
 var manual_recall = 0;
 var playback = 1;
@@ -199,7 +203,7 @@ function op_mode(m){
     if (toggleworld == 1) world.setattr("enable",0);
     messnamed(ctx+"_od/ai",overdrive,audio_interrupt);
     messnamed(ctx+"_the.jit.rec.audio",1)
-    messnamed(ctx+"_sfrecord",dir+movie_name+audio_type[0]);
+    messnamed(ctx+"_sfrecord",dir+movie_name+"."+audio_type[0]);
     messnamed(ctx+"_the.jit.rec.mode",2)
     outlet(3,"record",1)
     recording = 1;
@@ -237,11 +241,14 @@ function post_prep(){
 }
 
 function start_render(){
-  frame_current = -bogus_frames;
-  messnamed(ctx+"_current.frame",frame_current)
-  post("rendering.\n")
-  world.message("bang");
-  rendering = 1;
+  // post("start rendering, loadingram.objects ==",loadingram.objects,'\n')
+  if (loadingram.objects == 0){
+    frame_current = -bogus_frames;
+    messnamed(ctx+"_current.frame",frame_current)
+    post("rendering.\n")
+    world.message("bang");
+    rendering = 1;
+  }
 }
 
 function texture(u){ // only if jit.world leftmost outlet is connected to the.jit.js.renderer~; requires a setup to send texture message instead of internal metro in subpatch
