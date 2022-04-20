@@ -421,7 +421,8 @@ TIMELINE SETTINGS
 */
 
     // TIMELINE HANDLING
-    var timeline_handling = "scale (default)"; // || "—";
+    // var timeline_handling = "scale (default)"; // || "—";
+    var timeline_handling = 0; // || "—";
       declareattribute("timeline_handling","get_timeline_handling","set_timeline_handling",0);
       function set_timeline_handling(r) {
         timeline_handling = r;
@@ -462,6 +463,7 @@ function calcTime(i,j,k){
   }
 }
 
+calc_time_format.local = 1;
 function calc_time_format(a,t){
   switch(a){
     case "samples":

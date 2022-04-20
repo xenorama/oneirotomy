@@ -5,7 +5,8 @@ var file_identifier = jsarguments[2]; // inherited from abstraction as argument 
 var abstraction_map = { // map javascript files as per abstraction
   data: "the.bindto.ctrl", // jit.anim objects
   movie: "the.mov.bind", // jit.movie
-  grab: "the.caminput.ctrl" // jit.grab
+  grab: "the.grab.bind" // jit.grab
+  // grab: "the.caminput.ctrl" // jit.grab
 }
 
 include(abstraction_map[file_identifier]+".js") // include js-file

@@ -69,6 +69,98 @@
 
 	<!--ATTRIBUTES (REMOVE FOR SIMPLICITY) -->
 	<attributelist>
+		<attribute name="ae" get="1" set="1" type="bool" size="1">
+			<digest>
+				Play classic Adobe After Effects sounds after rendering
+			</digest>
+			<description>
+				When set to 1 (default!), will play back the classic Adobe After Effects sound upon rendering completion. However, if DSP was disabled prior to rendering, this setting will not toggle the digital signal processing.
+			</description>
+		</attribute>
+		<attribute name="audio_interrupt" get="1" set="1" type="bool" size="1">
+			<digest>
+				Set Audio Interrupt (Takeover) flag during recording (when &quot;@overdrive 1&quot;)
+			</digest>
+			<description>
+				Set Audio Interrupt (Takeover) flag during recording (when &quot;@overdrive 1&quot;)
+			</description>
+		</attribute>
+		<attribute name="audio_record" get="1" set="1" type="bool" size="1">
+			<digest>
+				Record audio as soundtrack
+			</digest>
+			<description>
+				When this flag is set to &quot;1&quot; any audio streaming through channels 1 and 2, respectively, of the current audio driver output will be recorded at actual volume level. <br/>
+				Alternatively, three arguments instead of the flag can specify what to record:<br/><br/>
+				<m>adoutput</m>: record audio output from driver (default)<br/>
+				<m>adinput</m>: record audio input to driver<br/>
+				<m>patch</m>: record input at leftmost inlet of the.jit.renderer~<br/><br/>
+				Further numeric arguments specify which audio channels to record. For example, &quot;@audio_record adinput 3 5 6&quot; will record audio driver input channels 3, 5 and 6, respectively. <m>patch</m> does not require any further arguments, since the number of channels automatically adapts to the connected multichannel signal input.<br/>
+				Setting audio_driver to &quot;0&quot; will disable audio recording entirely.
+			</description>
+		</attribute>
+		<attribute name="autoopen" get="1" set="1" type="bool" size="1">
+			<digest>
+				Open the videofile upon render completion automatically
+			</digest>
+			<description>
+				Open the videofile upon render completion automatically
+			</description>
+		</attribute>
+		<attribute name="autoreveal" get="1" set="1" type="bool" size="1" default="1">
+			<digest>
+				Open the directory upon render completion automatically
+			</digest>
+			<description>
+			Open the directory upon render completion automatically
+			</description>
+		</attribute>
+		<attribute name="capture" get="1" set="1" type="symbol" size="1">
+			<digest>
+				Capture named jit_gl_texture instead of jit.world
+			</digest>
+			<description>
+				Capture named jit_gl_texture instead of jit.world. Useful for post-processing or rendering intermediate layers.
+			</description>
+		</attribute>
+		<attribute name="capture_notification" get="1" set="1" type="symbol" size="1">
+			<digest>
+				Text notification on main rendering window when capturing different texture
+			</digest>
+			<description>
+				Text notification on main rendering window when capturing different texture. When the <at>capture</at> attribute is set to  anmed jit_gl_texture, this flag reminds us of this when <at>hide_window</at> is disabled, since the main rendering window does not show what we capture.
+			</description>
+		</attribute>
+		<attribute name="codec" get="1" set="1" type="symbol" size="1">
+			<digest>
+				Set movie codec for recording
+			</digest>
+			<description>
+				Set movie codec for recording (default = <m>jpeg</m>). Depends on the <at>container</at> setting.
+			</description>
+		</attribute>
+		<attribute name="container" get="1" set="1" type="symbol" size="2">
+			<arglist>
+				<arg name="type" optional="0" type="symbol" />
+				<arg name="image format" optional="1" type="symbol" />
+			</arglist>
+			<digest>
+				Specify a the desired video-container
+			</digest>
+			<description>
+				The final video can be either rendered as <m>mov</m> (default) or as <m>img_seq</m>. The latter requires an additional argument to specify the image format, i.e. the attribute or message <m>container img_seq tiff</m> will write successive frames to disk in tiff-format. Any previously saved image files will be overwritten and other ones ignored.
+			</description>
+		</attribute>
+		<attribute name="dim" get="1" set="1" type="int" size="2">
+			<digest>
+				Specify a desired dimension (resolution) of the final video.
+			</digest>
+			<description>
+				The resolution of the final video need not be the current resolution but will change accordingly before beginning the render process. The initial dim of the world's render context will be re-established after rendering is complete.
+				<br />
+				The default render dim is 1280 x 960.
+			</description>
+		</attribute>
 		<attribute name="dir" get="1" set="1" type="symbol" size="1" default="the.oneorotomy/testground/">
 			<digest>
 				Full path to directory for all export data
@@ -87,36 +179,6 @@
 				If omitted, <o>the.jit.renderer~</o> uses the <m>render-context</m> as initial filename.
 			</description>
 		</attribute>
-		<attribute name="dim" get="1" set="1" type="int" size="2">
-			<digest>
-				Specify a desired dimension (resolution) of the final video.
-			</digest>
-			<description>
-				The resolution of the final video need not be the current resolution but will change accordingly before beginning the render process. The initial dim of the world's render context will be re-established after rendering is complete.
-				<br />
-				The default render dim is 1280 x 960.
-			</description>
-		</attribute>
-		<attribute name="container" get="1" set="1" type="symbol" size="2">
-			<arglist>
-				<arg name="type" optional="0" type="symbol" />
-				<arg name="image format" optional="1" type="symbol" />
-			</arglist>
-			<digest>
-				Specify a the desired video-container
-			</digest>
-			<description>
-				The final video can be either rendered as <m>mov</m> (default) or as <m>img_seq</m>. The latter requires an additional argument to specify the image format, i.e. the attribute or message <m>container img_seq tiff</m> will write successive frames to disk in tiff-format. Any previously saved image files will be overwritten and other ones ignored.
-			</description>
-		</attribute>
-		<attribute name="codec" get="1" set="1" type="symbol" size="1">
-			<digest>
-				Set movie codec for recording
-			</digest>
-			<description>
-				Set movie codec for recording (default = h264).
-			</description>
-		</attribute>
 		<attribute name="fps" get="1" set="1" type="float" size="1">
 			<digest>
 				Specify a desired framerate for the final video.
@@ -130,85 +192,7 @@
 				Specify the length of the final video and all its subrecordings
 			</digest>
 			<description>
-			</description>
-		</attribute>
-		<attribute name="ms" get="1" set="1" type="int" size="1">
-			<digest>
-				Specify the length of the final video and all its subrecordings
-			</digest>
-			<description>
-			</description>
-		</attribute>
-		<attribute name="hhmmss" get="1" set="1" type="int" size="1">
-			<digest>
-				Specify the length of the final video and all its subrecordings
-			</digest>
-			<description>
-			</description>
-		</attribute>
-		<attribute name="samples" get="1" set="1" type="int" size="1">
-			<digest>
-				Specify the length of the final video and all its subrecordings
-			</digest>
-			<description>
-			</description>
-		</attribute>
-		<attribute name="length_from_buffer" get="1" set="1" type="symbol" size="1">
-			<digest>
-				Specify the length of the final video and all its subrecordings by a named buffer
-			</digest>
-			<description>
-				Will apply the length of the named <o>buffer</o> to the timeline
-			</description>
-		</attribute>
-		<attribute name="length_from_movie" get="1" set="1" type="symbol" size="1">
-			<digest>
-				Specify the length of the final video and all its subrecordings by a present moviefile
-			</digest>
-			<description>
-				Will look for any present <o>jit.movie</o> objects in the environment hosting a <at>moviefile</at> with the given name and applies its length to the timeline
-			</description>
-		</attribute>
-		<attribute name="sr" get="1" set="1" type="symbol" size="1">
-			<digest>
-				jit_gl_texture
-			</digest>
-			<description>
-				Set movie codec for recording (default = h264).
-			</description>
-		</attribute>
-		<attribute name="adrecord" get="1" set="1" type="bool" size="1">
-			<digest>
-				Record the stereo output of the current audio driver
-			</digest>
-			<description>
-				When this flag is set to '1' any audio streaming through channels 1 and 2, respectively, of the current audio driver output will be recorded at actual volume level. While <o>the.sfbuffer~</o> handles the soundtrack recording of multichannel audio in the rendering queue, this setting will create a separate wav-file with the same <at>filename</at> as the movie nonetheless, to later <m>compile</m> audio and video in realtime as a single file since the internal <o>jit.vcr</o> only supports stereo audio.<br/>
-				If the <at>autocompile</at> flag is also set to '1' the compilation process will commence automatically upon completion of the nonrealtime video rendering process, using the stereo wav-file recorded as soundtrack.<br/>
-				The default is '1' (create stereo file from summed driver output channels 1 and 2)
-			</description>
-		</attribute>
-		<attribute name="overdrive" get="1" set="1" type="bool" size="1">
-			<digest>
-				Set Overdrive flag during recording
-			</digest>
-			<description>
-				Set Overdrive flag during recording
-			</description>
-		</attribute>
-		<attribute name="audio_interrupt" get="1" set="1" type="bool" size="1">
-			<digest>
-				Set Audio Interrupt (Takeover) flag during recording (when @overdrive 1)
-			</digest>
-			<description>
-				Set Audio Interrupt (Takeover) flag during recording (when @overdrive 1)
-			</description>
-		</attribute>
-		<attribute name="hide_window" get="1" set="1" type="int" size="1">
-			<digest>
-				Minimum delaytime between render bangs (ms)
-			</digest>
-			<description>
-				Minimum delaytime between subsequent render bangs. The default is <m>10ms</m>. Increase this value to reduce potential errors or lack of precision. This increases the length of the render process proportionally to the length of the videofile.
+				Specify the length of the final video and all its subrecordings in <m>frames</m>
 			</description>
 		</attribute>
 		<attribute name="framedelay" get="1" set="1" type="int" size="1">
@@ -219,38 +203,99 @@
 				Minimum delaytime between subsequent render bangs. The default is <m>10ms</m>. Increase this value to reduce potential errors or lack of precision. This increases the length of the render process proportionally to the length of the videofile.
 			</description>
 		</attribute>
-		<attribute name="capture" get="1" set="1" type="symbol" size="1">
+		<attribute name="hhmmss" get="1" set="1" type="int" size="1">
 			<digest>
-				jit_gl_texture
+				Specify the length of the final video and all its subrecordings
 			</digest>
 			<description>
-				Set movie codec for recording (default = h264).
+				Specify the length of the final video and all its subrecordings in <m>hours minutes seconds</m> (three integers)
 			</description>
 		</attribute>
-		<attribute name="capture_notification" get="1" set="1" type="symbol" size="1">
+		<attribute name="hide_window" get="1" set="1" type="int" size="1">
 			<digest>
-				jit_gl_texture
+				Minimum delaytime between render bangs (ms)
 			</digest>
 			<description>
-				Set movie codec for recording (default = h264).
+				Minimum delaytime between subsequent render bangs. The default is <m>10ms</m>. Increase this value to reduce potential errors or lack of precision. This increases the length of the render process proportionally to the length of the videofile.
+			</description>
+		</attribute>
+		<attribute name="length_from_buffer" get="1" set="1" type="symbol" size="1">
+			<digest>
+				Specify the length of the final video and all its subrecordings by a named buffer
+			</digest>
+			<description>
+				Specify the length of the final video and all its subrecordings by the length of the named <o>buffer</o>
+			</description>
+		</attribute>
+		<attribute name="length_from_movie" get="1" set="1" type="symbol" size="1">
+			<digest>
+				Specify the length of the final video and all its subrecordings by a present moviefile
+			</digest>
+			<description>
+				Specify the length of the final video and all its subrecordings by the length of a the named moviefile hosted in a <o>jit.movie</o> or related object in the patch. Will look for any present <o>jit.movie</o> objects in the environment hosting a <at>moviefile</at> with the given name and applies its length to the timeline
+			</description>
+		</attribute>
+		<attribute name="ms" get="1" set="1" type="int" size="1">
+			<digest>
+				Specify the length of the final video and all its subrecordings
+			</digest>
+			<description>
+				Specify the length of the final video and all its subrecordings in <m>ms</m>
 			</description>
 		</attribute>
 		<attribute name="output_matrix" get="1" set="1" type="symbol" size="1">
 			<digest>
-				jit_gl_texture
+				Preview and output jit_matrix in GUI and from the object
 			</digest>
 			<description>
-				Set movie codec for recording (default = h264).
+				Preview and output jit_matrix in GUI and from the object
 			</description>
 		</attribute>
-		<attribute name="toggleworld" get="1" set="1" type="bool" size="1">
+		<attribute name="overdrive" get="1" set="1" type="bool" size="1">
 			<digest>
-				Toggle <o>jit.world</o> off during audio or data recording
+				Set Overdrive flag during recording
 			</digest>
 			<description>
-				Will disable jit.world rendering during audio or data recording and will reactivate it once recording has stopped.
+				Set Overdrive flag during recording
+			</description>
+		</attribute>
+		<attribute name="samples" get="1" set="1" type="int" size="1">
+			<digest>
+				Specify the length of the final video and all its subrecordings
+			</digest>
+			<description>
+				Specify the length of the final video and all its subrecordings in <m>samples</m>. See the <at>sr</at> listing.
+			</description>
+		</attribute>
+		<attribute name="sr" get="1" set="1" type="symbol" size="1">
+			<digest>
+				Set samplerate of current DSP and of target audio file
+			</digest>
+			<description>
+				Set samplerate of current DSP and of target audio file
+			</description>
+		</attribute>
+
+		<attribute name="timeline_handling" get="1" set="1" type="symbol" size="1">
+			<digest>
+				Specify handling of framecount changes in <o>the.timeline</o>
+			</digest>
+			<description>
+				Specify handling of framecount changes in <o>the.timeline</o>. Three different modes are available:<br/>
 				<br/>
-				The default is 1 (toggle video rendering off)
+				0: scale (default) — framecount changes do not affect events but their timing<br/>
+				1: prepend/cut from beginning — framecount changes affect beginning of timelines<br/>
+				2: append/cut from end — framecount changes affect end of timelines<br/>
+				<br/>
+				this setting is applied globally to all timeline objects
+			</description>
+		</attribute>
+		<attribute name="timeline_preview" get="1" set="1" type="bool" size="1">
+			<digest>
+				Toggle video frame preview in <o>the.timeline</o> GUIs
+			</digest>
+			<description>
+				Toggle video frame preview in <o>the.timeline</o> GUIs
 			</description>
 		</attribute>
 		<attribute name="toggledsp" get="1" set="1" type="bool" size="1">
@@ -263,38 +308,18 @@
 				The default is 0 (keep DSP on)
 			</description>
 		</attribute>
-		<attribute name="autoreveal" get="1" set="1" type="bool" size="1" default="1">
+		<attribute name="toggleworld" get="1" set="1" type="bool" size="1">
 			<digest>
-				Open the directory upon render completion automatically
+				Toggle <o>jit.world</o> off during audio or data recording
 			</digest>
 			<description>
-			Open the directory upon render completion automatically
+				Toggle <o>jit.world</o> off during audio or data recording. Will disable jit.world rendering during audio or data recording and will reactivate it once recording has stopped. Unflag this setting whenever realtime rendering is needed during recording.<br/>
+				When recording jit.movie objects in the pipeline using <o>the.jit.movie.ctrl</o>, jit.anim objects using <o>the.mc.data</o> or other setups involving render bangs at framerate, this flag should be set to &quot;0&quot;.
+				<br/>
+				The default is 1 (toggle realtime render bangs off)
 			</description>
 		</attribute>
-		<attribute name="autoopen" get="1" set="1" type="bool" size="1">
-			<digest>
-				Open the videofile upon render completion automatically
-			</digest>
-			<description>
-			Open the videofile upon render completion automatically
-			</description>
-		</attribute>
-		<attribute name="timeline_handling" get="1" set="1" type="symbol" size="1">
-			<digest>
-				Open the videofile upon render completion automatically
-			</digest>
-			<description>
-			Open the videofile upon render completion automatically
-			</description>
-		</attribute>
-		<attribute name="timeline_preview" get="1" set="1" type="bool" size="1">
-			<digest>
-				Open the videofile upon render completion automatically
-			</digest>
-			<description>
-			Open the videofile upon render completion automatically
-			</description>
-		</attribute>
+
 <!-- <attribute name="autocompile" get="1" set="1" type="bool" size="1">
 	<digest>
 		Render video and audio after nonrealtime processing
@@ -306,7 +331,7 @@
 		The newly rendered videofile with audio will yield the augmentation '_soundtrack'
 	</description>
 </attribute> -->
-<attribute name="cntrlr" get="1" set="1" type="bool" size="1">
+<!-- <attribute name="cntrlr" get="1" set="1" type="bool" size="1">
 	<digest>
 		Use LIVID CNTRL:R to control GUI and rendering operations
 	</digest>
@@ -315,20 +340,129 @@
 	<br/>
 		The default is 0 (ignore controller).
 	</description>
-</attribute>
-<attribute name="ae" get="1" set="1" type="bool" size="1">
-	<digest>
-		Play classic Adobe After Effects sounds after rendering
-	</digest>
-	<description>
-		When set to 1 (default!), will play back the classic Adobe After Effects sound upon rendering completion. However, if DSP was disabled prior to rendering, this setting will not toggle the digital signal processing.
-	</description>
-</attribute>
+</attribute> -->
+
 	</attributelist>
 
 		<!--MESSAGES-->
 
 	<methodlist>
+		<method name="bang">
+			<arglist />
+			<digest>
+				Seek and bind to named <o>jit.world</o>
+			</digest>
+			<description>
+				Seek and bind to named <o>jit.world</o>. Will output a dictionary from the third outlet containing all render and playback settings.
+			</description>
+		</method>
+		<method name="close">
+			<arglist />
+			<digest>
+				Hide the GUI
+			</digest>
+			<description>
+				All attributes can be set and operations performed in the GUI.
+			</description>
+		</method>
+		<method name="frame">
+	<arglist>
+		<arg name="position" optional="0" type="int" />
+	</arglist>
+	<digest>
+		Jump to specific frame
+	</digest>
+	<description>
+		Output the corresponding frame at the specified position while not rendering by <o>jit.world</o> for all children objects.
+		<br/>This will put <o>the.jit.renderer~</o> into playback mode '0', to re-enable output by children objects, send a '1' to the leftmost inlet (see the <m>int</m> listing).
+		<br/>Note that any accumulative data cannot be reproduced correctly when previewing non-linearly. The state of any <m>jit_matrix</m> populated by <o>the.jit.poke~~</o> or <o>the.mc.jit.catch~</o> will not be overwritten before recalling individual frames and will only be cleared prior to rendering when these objects' <at>autoclear</at> flag is set to '1'.
+		<br/>This method has not yet been thoroughly tested and is subject to user feedback.
+	</description>
+</method>
+		<method name="importattrs">
+			<arglist />
+			<digest>
+				Import previously saved render settings
+			</digest>
+			<description>
+				Will attempt to read a JSON-file containing render settings from the directory specified by <at>dir</at>, or will prompt the user to choose a file.
+				<br/>
+				Current settings can be exported with <m>exportattrs</m>
+			</description>
+		</method>
+		<method name="int">
+			<arglist />
+			<digest>
+				Toggle operation modes
+			</digest>
+			<description>
+				0 = halt any through output by children objects to support individual <m>frame</m> query. This mode is toggled automatically when a <m>frame</m> message with an integer specifying a frame is received.
+				<br/>1 = stop any current process and enable <o>jit.world</o>, mostly identical to <m>0</m>
+				<br/>2 = start recording audio and timed data, same as <m>record</m>
+				<br/>3 = start rendering frame-by-frame, same as <m>render</m>
+				<br/>(reserved)
+			</description>
+		</method>
+		<method name="multichannelsignal">
+			<arglist />
+			<digest>
+				Records mc-audio when operating &quot;@audio_record patch&quot;
+			</digest>
+			<description>
+				Records mc-audio when operating &quot;@audio_record patch&quot;
+			</description>
+		</method>
+		<method name="open">
+			<arglist />
+			<digest>
+				Open the GUI
+			</digest>
+			<description>
+				All attributes can be set and operations performed in the GUI.
+			</description>
+		</method>
+		<method name="pause">
+			<arglist />
+			<digest>
+				Pause any running render process
+			</digest>
+			<description>
+				Pause/continue any running render process. Until the message <m>pause</m> is sent again or the render process is stopped entirely, it will be frozen and any necessary modifications or other work within Max can be executed since <o>jit.world</o> is currently idle and awaiting its next drawing command from <o>the.jit.renderer~</o>.<br/>
+				Note that the running clock for elapsed time in the process information window will be reset whenever the rendering process is paused.
+			</description>
+		</method>
+		<method name="play">
+			<arglist />
+			<digest>
+				Playback Jitter patch normally
+			</digest>
+			<description>
+				Playback Jitter patch normally.<br/>
+				<br/> Same as sending a <m>1</m> integer to first inlet.
+			</description>
+		</method>
+		<!-- <method name="preview">
+			<arglist>
+				<arg name="position" optional="0" type="float" />
+			</arglist>
+			<digest>
+				Normalised position (0. - 1.) (not yet supported)
+			</digest>
+			<description>
+				Output the corresponding frame at the normalised position while not rendering by <o>jit.world</o> for all children objects.
+				<br/>Note that any accumulative data cannot be reproduced correctly when previewing non-linearly.
+				<br/>This method is not yet supported and may require fundamental recoding as well as documenting.
+			</description>
+		</method> -->
+		<method name="queue">
+		<arglist />
+		<digest>
+			Open the queue-manager-GUI
+		</digest>
+		<description>
+		The message <m>queue</m> will open a panel managing and monitoring the recording/rendering queue among related instances with their current active flag. These can be changed to taste and temporarily stored in a preset.
+		</description>
+		</method>
 		<method name="record">
 			<arglist />
 			<digest>
@@ -350,64 +484,15 @@
 				<br/> Same as sending a <m>3</m> integer to first inlet.
 			</description>
 		</method>
-		<method name="stop">
+		<method name="rendernow">
 			<arglist />
 			<digest>
-				Stop any current render process
+				Start writing the current stream of frames to disk (realtime)
 			</digest>
 			<description>
-				This will stop recording audio (without subsequent export) or rendering video. Any previously written video data will be compiled.
-				<br/> Same as sending a <m>0</m> integer to first inlet.
-			</description>
-		</method>
-		<method name="pause">
-			<arglist />
-			<digest>
-				Pause/continue any running render process
-			</digest>
-			<description>
-				Pause/continue any running render process. Until the message <m>pause</m> is sent again or the render process is stopped entirely, it will be frozen and any necessary modifications or other work within Max can be executed since <o>jit.world</o> is currently idle and awaiting its next drawing command from <o>the.jit.renderer~</o>.<br/>
-				Note that the running clock for elapsed time in the process information window will be reset whenever the rendering process is paused.
-			</description>
-		</method>
-		<method name="int">
-			<arglist />
-			<digest>
-				Toggle operation modes
-			</digest>
-			<description>
-				0 = halt any through output by children objects to support individual <m>frame</m> query. This mode is toggled automatically when a <m>frame</m> message with an integer specifying a frame is received.
-				<br/>1 = stop any current process and enable <o>jit.world</o>, mostly identical to <m>0</m>
-				<br/>2 = start recording audio and timed data, same as <m>record</m>
-				<br/>3 = start rendering frame-by-frame, same as <m>render</m>
-				<br/>(reserved)
-			</description>
-		</method>
-		<method name="open">
-			<arglist />
-			<digest>
-				Open the GUI
-			</digest>
-			<description>
-				All attributes can be set and operations performed in the GUI.
-			</description>
-		</method>
-		<method name="snapshot">
-			<arglist />
-			<digest>
-				Open the settings-GUI
-			</digest>
-			<description>
-				Opens the specific window managing the render and recording settings, all of which can be hard-coded or sent as Max messages.
-			</description>
-		</method>
-		<method name="close">
-			<arglist />
-			<digest>
-				Hide the GUI
-			</digest>
-			<description>
-				All attributes can be set and operations performed in the GUI.
+				Start writing the current stream of frames to disk (realtime). This ignores any render settings.<br/>
+				This feature has not been fully tested and is subject to user feedback.<br/>
+				<br/> Same as sending a <m>4</m> integer to first inlet.
 			</description>
 		</method>
 		<method name="reveal">
@@ -419,60 +504,58 @@
 				If a valid target directory is specified using the <at>dir</at> attribute, the message <m>reveal</m> will open the respective folder. This can be scheduled to happen at upon render completion using the <at>autoreveal</at> attribute.
 			</description>
 		</method>
+		<method name="signal">
+			<arglist />
+			<digest>
+				Records audio when operating &quot;@audio_record patch&quot;
+			</digest>
+			<description>
+				Records audio when operating &quot;@audio_record patch&quot;
+			</description>
+		</method>
+		<method name="stop">
+			<arglist />
+			<digest>
+				Stop any current render process
+			</digest>
+			<description>
+				This will stop recording audio (without subsequent export) or rendering video and return to normal playback. Any previously written video data will be compiled.
+				<br/> Same as sending a <m>1</m> integer to first inlet.
+			</description>
+		</method>
 		<method name="sendworld">
-			<arglist>
-				<arg name="numeric length" optional="0" type="float" />
-				<arg name="unit: ms, frames or samples" optional="0" type="symbol" />
-			</arglist>
+			<arglist />
 			<digest>
-				Specify the length of the final video and all its subrecordings
+				Send any message to the bound <o>jit.world</o>
 			</digest>
 			<description>
-				The word <at>length</at> followed by a floating point or integer value and a symbol specifying a unit, will prepare recording of all children objects for the given length.
-				<br/>
-				<br />
-				Supported units of time are
-				<br/> <m>ms</m>
-				<br/> <m>frames</m>
-				<br/> <m>samples</m>
-				<br/>
-				<br/>
-				Default: <m>length 1000. ms</m>, if the current framerate is set to <m>30.</m> (see also the <at>fps</at> listing), this would yield a length of <m>30 frames</m> and would equal the current <m>samplerate</m> (provided in samples per minute = 1000ms.)
-				<br/>
-				<br/>
-				The word <m>length</m> without any arguments sets the recording mode to 'free' and will not stop until the <m>stop</m> message is received in the leftmost inlet or toggled in the GUI.
-				<br/> Alternatively, the arguments <m>free</m> and <m>fixed</m> toggle between an assumed performance mode and a fixed time, provided by the respective arguments in a separate message.
-				<br/> Note that a lot of data can ptoentially be accumulated in 'free' recording mode when stretched extensively. This pertains to analysed signals, as well as regular timing data and especially matrix-based anylsis. The latter, however, is currently happening in <o>the.jit.poke~~</o> where matrices are handled and written to disk in  temporary blocks to later populate a <o>jit.matrixset</o>.
+				Send any message to the bound <o>jit.world</o>
 			</description>
 		</method>
-		<method name="preview">
-			<arglist>
-				<arg name="position" optional="0" type="float" />
-			</arglist>
+		<method name="snapshot">
+			<arglist />
 			<digest>
-				Normalised position (0. - 1.) (not yet supported)
+				Open the settings-GUI
 			</digest>
 			<description>
-				Output the corresponding frame at the normalised position while not rendering by <o>jit.world</o> for all children objects.
-				<br/>Note that any accumulative data cannot be reproduced correctly when previewing non-linearly.
-				<br/>This method is not yet supported and may require fundamental recoding as well as documenting.
+				Opens the specific window managing the render and recording settings, all of which can be hard-coded or sent as Max messages.
 			</description>
 		</method>
-				<method name="frame">
-			<arglist>
-				<arg name="position" optional="0" type="int" />
-			</arglist>
-			<digest>
-				Jump to specific frame
-			</digest>
-			<description>
-				Output the corresponding frame at the specified position while not rendering by <o>jit.world</o> for all children objects.
-				<br/>This will put <o>the.jit.renderer~</o> into playback mode '0', to re-enable output by children objects, send a '1' to the leftmost inlet (see the <m>int</m> listing).
-				<br/>Note that any accumulative data cannot be reproduced correctly when previewing non-linearly. The state of any <m>jit_matrix</m> populated by <o>the.jit.poke~~</o> or <o>the.mc.jit.mnemonic~</o> will not be overwritten before recalling individual frames and will only be cleared prior to rendering when these objects' <at>autoclear</at> flag is set to '1'.
-				<br/>This method has not yet been thoroughly tested and is subject to user feedback.
-			</description>
+			<method name="trash">
+				<arglist>
+					<arg name="total-flag" optional="1" type="anything" />
+				</arglist>
+		<digest>
+			Delete all files but the latest ones from disk which have been recorded or rendered
+		</digest>
+		<description>
+		The message <m>trash</m> will delete all recorded or rendered files from disk which had previously been written in the current session, except the very last versions written by its related instances. Essentially, it will pruge all unwanted data which may have been written accidentally or in the course of trial-and-error. <br/>If, however, the message <m>trash</m> is followed by any argument, all previous files will be deleted, including the latest one. <br/>This action cannot be undone and no confirmation will be demanded. The respective files are deleted permanently from disk.
+		</description>
 		</method>
-		<method name="solo">
+
+
+
+		<!-- <method name="solo">
 			<arglist>
 				<arg name="object-name" optional="0" type="symbol" />
 				<arg name="solo-mode" optional="0" type="int" />
@@ -490,8 +573,8 @@
 		<br/>
 		The message <m>solo 0</m> unsolos all objects and returns them to their set active flag
 	</description>
-</method>
-		<method name="unsolo">
+</method> -->
+		<!-- <method name="unsolo">
 	<arglist />
 	<digest>
 		Remove all solo states in children objects
@@ -501,8 +584,8 @@
 		<br/>
 		Same as sending the message <m>solo 0</m>
 	</description>
-</method>
-<method name="getstate">
+</method> -->
+<!-- <method name="getstate">
 <arglist />
 <digest>
 Query information about current objects in the context
@@ -510,28 +593,9 @@ Query information about current objects in the context
 <description>
 The message <m>getstate</m> will post relevant status information about every object in the current context to the Max Console and open the latter for viewing. Sending this message to individual objects will do so for the respective ones only. Send this message to monitor which objects will record or render and whether a meaningful name has been allocated to them.
 </description>
-</method>
-	<method name="queue">
-	<arglist />
-	<digest>
-		Open the queue-manager-GUI
-	</digest>
-	<description>
-	The message <m>queue</m> will open a panel managing and monitoring the recording/rendering queue among related instances with their current active flag. These can be changed to taste and temporarily stored in a preset.
-	</description>
-	</method>
-		<method name="trash">
-			<arglist>
-				<arg name="total-flag" optional="1" type="anything" />
-			</arglist>
-	<digest>
-		Delete all files but the latest ones from disk which have been recorded or rendered
-	</digest>
-	<description>
-	The message <m>trash</m> will delete all recorded or rendered files from disk which had previously been written in the current session, except the very last versions written by its related instances. Essentially, it will pruge all unwanted data which may have been written accidentally or in the course of trial-and-error. <br/>If, however, the message <m>trash</m> is followed by any argument, all previous files will be deleted, including the latest one. <br/>This action cannot be undone and no confirmation will be demanded. The respective files are deleted permanently from disk.
-	</description>
-	</method>
-		<method name="avcompile">
+</method> -->
+
+		<!-- <method name="avcompile">
 		<arglist>
 		</arglist>
 	<digest>
@@ -540,9 +604,9 @@ The message <m>getstate</m> will post relevant status information about every ob
 	<description>
 		Render previously recorded audio and nonrealtime rendered silent video into a single moviefile with soundtrack. This option is only available when audio was previously recorded using the <at>adrecord</at> flag and the <at>codec</at> is 'mov'. When <at>autocompile</at> is active, the compilation process begins automatically upon completion of the nonrealtime video rendering process.<br/>
 		The newly rendered videofile with audio will yield the augmentation '_soundtrack'
-	</description>
-	</method>
-		<method name="exportattrs">
+	</description> -->
+	<!-- </method> -->
+		<!-- <method name="exportattrs">
 			<arglist />
 			<digest>
 				Export all current settings to disk
@@ -552,42 +616,24 @@ The message <m>getstate</m> will post relevant status information about every ob
 				<br/>
 				These settings can be imported with <m>importattrs</m>
 			</description>
-		</method>
-		<method name="importattrs">
-			<arglist />
-			<digest>
-				Import previously saved render settings
-			</digest>
-			<description>
-				Will attempt to read a JSON-file containing render settings from the directory specified by <at>dir</at>, or will prompt the user to choose a file.
-				<br/>
-				Current settings can be exported with <m>exportattrs</m>
-			</description>
-		</method>
-		<method name="mtr">
-			<arglist />
-			<digest>
-				Send messages to all <o>the.mtr</o> objects
-			</digest>
-			<description>
-			Send any message to all <o>the.mtr</o> objects within the bound render-context.
-			</description>
-		</method>
+		</method> -->
+
 	</methodlist>
 
 	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
 	<seealsolist>
-		<seealso name="the.snapshot~"/>
+		<seealso name="the.oneirotomy.setup"/>
+		<seealso name="the.jit.renderer~"/>
 		<seealso name="the.jit.poke~"/>
-		<seealso name="the.mc.sfrecord~"/>
-		<seealso name="the.mtr"/>
 		<seealso name="the.jit.mo.drive"/>
-		<seealso name="the.jit.framecheck"/>
-		<seealso name="the.jit.framecheck~"/>
+		<seealso name="the.jit.movie.ctrl"/>
 		<seealso name="the.timeline"/>
+		<seealso name="the.snapshot~"/>
+		<seealso name="the.mc.data"/>
+		<seealso name="the.obj.init"/>
 		<seealso name="the.mc.jit.catch~"/>
-		<seealso module="Oneirotomy" name="oneirotomy_table_of_contents_topic" type="vignette" />
-		<seealso module="Oneirotomy" name="oneirotomy-01_object-overview" type="vignette" />
+		<seealso module="jitter" name="oneirotomy-00_introduction" type="vignette" />
+		<seealso module="jitter" name="oneirotomy-01_object-overview" type="vignette" />
 	</seealsolist>
 
 </c74object>

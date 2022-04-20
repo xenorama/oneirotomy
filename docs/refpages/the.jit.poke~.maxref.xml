@@ -37,12 +37,13 @@
 
 	<!--ARGUMENTS-->
 	<objarglist>
-		<objarg name="render-context" optional="0" type="symbol" size="1">
+		<objarg name="ctx" optional="0" type="symbol" size="1">
 			<digest>
 				Specify a named render context to bind to.
 			</digest>
 			<description>
-				For convenience, this can be identical to one's world render context name but is to be considered independent. <o>the.jit.renderer~</o> with a unique context name is required running in parallel for all members of the offline render family to sync and respond to.
+				Specify a named render context to bind to. A valid context — represented by identically named <o>jit.world</o> and <o>the.jit.renderer~</o>, respectively — is necessary for all offline rendering operations.
+				<br/>As of Version 2.0, the context name must be identical to that of a <o>jit.world</o> instance in the environment. Omission of the render-context will highlight the object bogus and throw an error.
 			</description>
 		</objarg>
 		<objarg name="matrix-name" optional="0" type="symbol" size="1">
@@ -73,6 +74,52 @@
 
 	<!--ATTRIBUTES (REMOVE FOR SIMPLICITY) -->
 <attributelist>
+	<attribute name="active" get="1" set="1" type="int" size="1">
+		<digest>
+			Set the active flag
+		</digest>
+		<description>
+			Set the active flag. There are 5 active states available suitable for different purposes:
+			<br/>
+			<br/>0 = ignore this object and pass everything through without recording or recalling
+			<br/>1 = operate normally (default); playback, record and output during rendering
+			<br/>2 = playback and output previously recorded data normally but do not record any new data
+			<br/>3 = playback and record normally but do not output data during rendering
+			<br/>4 = record and output during rendering but never pass incoming data
+			<br/>5 = mute all activity
+			<br/>
+			<br/>Note that while recording is disabled, the automatic export upon recording completion (if an <at>exportname</at> is specified) is also disabled and previous files will not be overwritten.
+			<br/>Furthermore, the <at>active</at> flag is overriden by the <m>solo</m> state of the object, which can be handled using the <m>queue</m> method.
+		</description>
+	</attribute>
+	<attribute name="autoclear" get="1" set="1" type="bool" size="1">
+		<digest>
+			Clear the compressed matrix before recording
+		</digest>
+		<description>
+			Clear the compressed matrix before recording. Ensures that later video rendering will only add the recorded data. <br/>
+			<at>autoclear</at> is disabled (0) by default
+		</description>
+	</attribute>
+	<attribute name="clearmess" get="1" set="1" type="anything" size="1">
+		<digest>
+			Format a message to initialise the target matrix
+		</digest>
+		<description>
+			Specify a message to be sent to the target matrix before recording/rendering.
+			The default message is 'clear' (start out with a blank jit_matrix)
+		</description>
+	</attribute>
+	<attribute name="name" get="1" set="1" type="symbol" size="1">
+		<digest>
+			Specify a unique name to write to.
+		</digest>
+		<description>
+			Specify a unique name to export to after completion of the capturing process, managed by <o>the.jit.renderer~</o>. The resulting filetype is <m>jxf</m> (Jitter binary data file) and can be re-exported/imported using the <m>export</m> and <m>import</m> messages, respectively.
+			<br/>
+			Same as <at>exportname</at>
+		</description>
+	</attribute>
 	<attribute name="verbose" get="1" set="1" type="bool" size="1">
 		<digest>
 		Toggle continuous matrix monitoring
@@ -84,61 +131,6 @@
 		<br/>
 		The default is 0 (disabled)
 		</description>
-</attribute>
-<attribute name="autoclear" get="1" set="1" type="bool" size="1">
-	<digest>
-	Clear the compressed matrix before recording
-	</digest>
-	<description>
-	Clear the compressed matrix before recording. Ensures that later video rendering will only add the recorded data. <br/>
-	<at>autoclear</at> is disabled (0) by default
-	</description>
-</attribute>
-<attribute name="clearmess" get="1" set="1" type="anything" size="1">
-	<digest>
-	Format a message to initialise the target matrix
-	</digest>
-	<description>
-	Specify a message to be sent to the target matrix before recording/rendering.
-	The default message is 'clear' (start out with a blank jit_matrix)
-	</description>
-</attribute>
-<attribute name="exportname" get="1" set="1" type="symbol" size="1">
-	<digest>
-		Specify a unique name to write to.
-	</digest>
-	<description>
-		Specify a unique name to export to after completion of the capturing process, managed by <o>the.jit.renderer~</o>. The resulting filetype is <m>jxf</m> (Jitter binary data file) and can be re-exported/imported using the <m>export</m> and <m>import</m> messages, respectively.
-		<br/>Same as <at>name</at>
-	</description>
-</attribute>
-<attribute name="name" get="1" set="1" type="symbol" size="1">
-	<digest>
-		Specify a unique name to write to.
-	</digest>
-	<description>
-		Specify a unique name to export to after completion of the capturing process, managed by <o>the.jit.renderer~</o>. The resulting filetype is <m>jxf</m> (Jitter binary data file) and can be re-exported/imported using the <m>export</m> and <m>import</m> messages, respectively.
-		<br/>
-		Same as <at>exportname</at>
-	</description>
-</attribute>
-<attribute name="active" get="1" set="1" type="int" size="1">
-	<digest>
-		Set the active flag
-	</digest>
-	<description>
-		Set the active flag. There are 4 active states available suitable for different purposes:
-		<br/>
-		<br/>0 = bypass this object and poke signal data without recording
-		<br/>1 = operate normally (default); poke and record
-		<br/>2 = poke but do not record any new data
-		<br/>3 = (idle)
-		<br/>4 = record but never poke directly to matrix
-		<br/>5 = mute all activity
-		<br/>
-		<br/>Note that while recording is disabled, the automatic export upon recording completion (if an <at>exportname</at> is specified) is also disabled and previous files will not be overwritten.
-		<br/>Furthermore, the <at>active</at> flag is overriden by the <m>solo</m> state of the object
-	</description>
 </attribute>
 	</attributelist>
 		<!--MESSAGES-->
@@ -179,20 +171,6 @@
 				During recording, the plane in the target matrix can be changed with the <m>plane $1</m> message
 			</description>
 		</method>
-		<method name="export">
-			<arglist>
-				<arg name="filename" optional="1" type="symbol" />
-			</arglist>
-			<digest>
-				Export as Jitter binary data file
-			</digest>
-			<description>
-				If an <at>exportname</at> has previously been specified, the jxf-file will be written to the <m>dir</m> as specified by <o>the.jit.renderer~</o>.
-				<br/> If an optional argument is provided (symbol), a jxf-file with this name will be written to disk.
-				<br/> The resulting file is designed to populate a <o>jit.matrixset</o> which in return is being read from during offline rendering of complex matrix data.
-				<br/> An additional <m>json</m>-file is also written, holding information about the blocks of recorded data.
-			</description>
-		</method>
 		<method name="import">
 			<arglist>
 				<arg name="index" optional="1" type="symbol" />
@@ -223,37 +201,16 @@
 				The message <m>clearall</m> will clear all matrices which have been referenced using the <at>matrix_name</at> attribute during recording.
 			</description>
 		</method>
-				<method name="unsolo">
-			<arglist />
-			<digest>
-				Remove all solo states in sibling objects
-			</digest>
-			<description>
-				The message <m>unsolo</m> does not remove the <m>solo</m> state of this object alone—as would the message <m>solo 0</m>—but does so for all other objects in the context as well.
-			</description>
-		</method>
-		<method name="getstate">
-	<arglist />
-	<digest>
-		Query information about this object's current state
-	</digest>
-	<description>
-		The message <m>getstate</m> will post relevant status information about this object to the Max Console and open the latter for viewing. Sending this message to <o>the.jit.renderer~</o> will do so for all objects in the current context. Send this message to monitor whether objects will record or render and whether a meaningful name has been allocated to them.
-	</description>
-</method>
 	</methodlist>
 
 	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
 	<seealsolist>
+		<seealso name="the.oneirotomy.setup"/>
 		<seealso name="the.jit.renderer~"/>
-		<seealso name="the.snapshot~"/>
-		<seealso name="the.mtr"/>
-		<seealso name="the.mc.sfrecord~"/>
-		<seealso name="the.jit.mo.drive"/>
-		<seealso name="the.jit.framecheck"/>
-		<seealso name="the.jit.framecheck~"/>
-		<seealso name="the.timeline"/>
 		<seealso name="the.mc.jit.catch~"/>
+		<seealso name="the.snapshot~"/>
+		<seealso name="the.timeline"/>
+		<seealso module="jitter" name="oneirotomy-00_introduction" type="vignette" />
+		<seealso module="jitter" name="oneirotomy-01_object-overview" type="vignette" />
 	</seealsolist>
-
 </c74object>

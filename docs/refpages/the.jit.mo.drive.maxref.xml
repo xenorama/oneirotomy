@@ -33,33 +33,25 @@
 
 	<!--ARGUMENTS-->
 	<objarglist>
-		<objarg name="render-context" optional="0" type="symbol" size="1">
+		<objarg name="ctx" optional="0" type="symbol" size="1">
 			<digest>
 				Specify a named render context to bind to.
 			</digest>
 			<description>
-				For convenience, this can be identical to one's world render context name but is to be considered independent. <o>the.jit.renderer~</o> with a unique context name is required running in parallel for all members of the offline render family to sync and respond to.
+				Specify a named render context to bind to. A valid context — represented by identically named <o>jit.world</o> and <o>the.jit.renderer~</o>, respectively — is necessary for all offline rendering operations.
+				<br/>As of Version 2.0, the context name must be identical to that of a <o>jit.world</o> instance in the environment. Omission of the render-context will highlight the object bogus and throw an error.
 			</description>
 		</objarg>
 	</objarglist>
 
 	<!--ATTRIBUTES (REMOVE FOR SIMPLICITY) -->
 	<attributelist>
-		<attribute name="speed" get="1" set="1" type="int" size="1">
-			<digest>
-				Control the speed of an attached <o>jit.mo.func</o>.
-			</digest>
-			<description>
-				Any <at>speed</at> automation must be applied to the <o>jit.mo.drive</o> instead while the <o>jit.mo.func</o> must be set to a <at>speed</at> of 0 at all times to avoid inevitable timing conflicts.
-				<br/> The speed is set in Hz, analogous to the same <o>jit.mo.func</o> attribute.
-			</description>
-		</attribute>
 		<attribute name="active" get="1" set="1" type="int" size="1">
 			<digest>
 				Set the active flag
 			</digest>
 			<description>
-				Set the active flag. There are 4 active states available suitable for different purposes:
+				Set the active flag. There are 5 active states available suitable for different purposes:
 				<br/>
 				<br/>0 = ignore this object and pass everything through without recording or recalling
 				<br/>1 = operate normally (default); playback, record and output during rendering
@@ -69,7 +61,24 @@
 				<br/>5 = mute all activity
 				<br/>
 				<br/>Note that while recording is disabled, the automatic export upon recording completion (if an <at>exportname</at> is specified) is also disabled and previous files will not be overwritten.
-				<br/>Furthermore, the <at>active</at> flag is overriden by the <m>solo</m> state of the object
+				<br/>Furthermore, the <at>active</at> flag is overriden by the <m>solo</m> state of the object, which can be handled using the <m>queue</m> method.
+			</description>
+		</attribute>
+		<attribute name="name" get="1" set="1" type="symbol" size="1">
+			<digest>
+				Specify a unique name to write to.
+			</digest>
+			<description>
+				Specify a unique name to export to after completion of the capturing process, managed by <o>the.jit.renderer~</o>. The resulting filetype is <m>txt</m> file and can be imported using the <m>import</m> message.
+			</description>
+		</attribute>
+		<attribute name="speed" get="1" set="1" type="int" size="1">
+			<digest>
+				Control the speed of an attached <o>jit.mo.func</o>.
+			</digest>
+			<description>
+				Any <at>speed</at> automation must be applied to the <o>jit.mo.drive</o> instead while the <o>jit.mo.func</o> must be set to a <at>speed</at> of 0 at all times to avoid inevitable timing conflicts.
+				<br/> The speed is set in Hz, analogous to the same <o>jit.mo.func</o> attribute.
 			</description>
 		</attribute>
 	</attributelist>
@@ -89,48 +98,25 @@
 				<br/> The speed is set in Hz, analogous to the same <o>jit.mo.func</o> attribute.
 			</description>
 		</method>
-<method name="queue">
-	<arglist />
-	<digest>
-		Open the core Queue Manager GUI
-	</digest>
-	<description>
-		The message <m>queue</m> will open the core Queue Manager GUI in <o>the.jit.renderer~</o> to specify which instance is recording or rendering in the next step.
-	</description>
-</method>
-		<method name="unsolo">
-	<arglist />
-	<digest>
-		Remove all solo states in sibling objects
-	</digest>
-	<description>
-		The message <m>unsolo</m> does not remove the 'solo'-state of this object alone, but does so for all other objects in the context as well.
-	</description>
-</method>
-<method name="getstate">
-<arglist />
-<digest>
-Query information about this object's current state
-</digest>
-<description>
-The message <m>getstate</m> will post relevant status information about this object to the Max Console and open the latter for viewing. Sending this message to <o>the.jit.renderer~</o> will do so for all objects in the current context. Send this message to monitor whether objects will record or render and whether a meaningful name has been allocated to them.
-</description>
-</method>
+		<method name="queue">
+			<arglist />
+			<digest>
+				Open the core Queue Manager GUI
+			</digest>
+			<description>
+				The message <m>queue</m> will open the core Queue Manager GUI in <o>the.jit.renderer~</o> to specify which instance is recording or rendering in the next step.
+			</description>
+		</method>
 	</methodlist>
 
 	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
 	<seealsolist>
+		<seealso name="the.oneirotomy.setup"/>
 		<seealso name="the.jit.renderer~"/>
+		<seealso module="jitter" name="oneirotomy-00_introduction" type="vignette" />
+		<seealso module="jitter" name="oneirotomy-01_object-overview" type="vignette" />
 		<seealso name="jit.mo.func"/>
 		<seealso name="jit.mo.join"/>
-		<seealso name="the.snapshot~"/>
-		<seealso name="the.mtr"/>
-		<seealso name="the.jit.poke~"/>
-		<seealso name="the.mc.sfrecord~"/>
-		<seealso name="the.jit.framecheck"/>
-		<seealso name="the.jit.framecheck~"/>
-		<seealso name="the.timeline"/>
-		<seealso name="the.mc.jit.catch~"/>
 	</seealsolist>
 
 </c74object>
