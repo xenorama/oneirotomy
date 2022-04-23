@@ -6,7 +6,10 @@ include("the.obj.lock.js");
 include("the.delay.js");
 // include("the.render.world.js");
 
+
 var ctx = jsarguments[1] || "ctx-missing";
+jitrenderer = new Global(ctx+"_world");
+
 var old_ctx = undefined;
 var perform_upgrade = 0;
 var perform_highlight = 0;
@@ -168,9 +171,12 @@ function highlight(){
 }
 
 function renderer(){
-  var rect = this.patcher.box.rect;
-  patch.newdefault(rect[0],rect[1]-75,"the.jit.renderer~",ctx);
-  outlet(0,"the.jit.renderer~","created");
+  if (jitrenderer.bound !== ctx){
+    var rect = this.patcher.box.rect;
+    patch.newdefault(rect[0],rect[1]-75,"the.jit.renderer~",ctx);
+    outlet(0,"the.jit.renderer~","created");
+  }
+  else messnamed(jsarguments[2]+"_print","an instance of the.jit.renderer~ '"+ctx+"' was already found and will not be instantiated.")
 }
 
 function world(){
@@ -179,7 +185,7 @@ function world(){
   if (attrlist.length) {
     var rect = setup.glrender.object.getattr("patching_rect");
     var jattrlist = compare_world_attrs(setup.glrender.attrs,setup.glrender.object);
-    post(jattrlist.toString(),'\n')
+    // post(jattrlist.toString(),'\n')
     var wattrlist = compare_win_attrs(setup.window.attrs,setup.window.object);
     jattrlist = jattrlist.concat(wattrlist);
     var jworld = patch.newdefault(rect[0],rect[1],"jit.world",ctx,jattrlist)
@@ -212,10 +218,10 @@ function world(){
 
   }
   patch.remove(setup.glrender.object)
-  if (setup.window.object !== undefined){
+  if (setup.window.object !== undefined && setup.glrender.object !== undefined){
     patch.remove(setup.window.object);
   }
-  else error("no jit.gl.render object previously detected, cannot create jit.world")
+  else error("no jit.gl.render object previously detected, cannot create jit.world. If only a jit.window object is present under the name '"+ctx+"', it has now been renamed to <bogus>.")
   outlet(0,"replaced jit.gl.render/jit.window by jit.world/jit.gl.camera");
 }
 

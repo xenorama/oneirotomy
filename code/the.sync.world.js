@@ -17,7 +17,7 @@ TODO
 autowatch = 1;
 outlets = 5;
 init = 0;
-max.clearmaxwindow();
+// max.clearmaxwindow();
 
 /*
 ————————————————————————————

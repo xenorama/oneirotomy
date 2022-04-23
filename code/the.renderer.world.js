@@ -23,6 +23,7 @@ var texture_name;
 seek_world.local = 1
 function seek_world(){
   if (init && ctx !== 0) {
+    world = undefined;
     patch.applydeepif(get_world,check_world)
     if (world === undefined) {
       if (other_worlds.length) {
@@ -46,10 +47,15 @@ OBJECT LISTENER
 
 get_world.local = 1
 function get_world(j){
-  if (j.getattr("name") == ctx){
+  if (j.getattr("name") == ctx && j.maxclass == "jit.window") {
+    world = "bogus";
+    print("a jit.window named '"+ctx+"' was found. Remove this jit.window to create a jit.world by this name. To transform legacy render setups using jit.gl.render, send the 'transform' message to an instance of 'the.oneirotomy.setup "+ctx+"'")
+  }
+  else if (j.getattr("name") == ctx){
     print("binding to jit.world @name "+ctx,"\n");
     world = j // jit.world object in environment
     renderer.dim = world.getattr("dim");
+    renderer.bound = ctx;
     proxy.name = world.getattr("name");
     texture_name = proxy.send("getout_name")
     gCTX.texture = texture_name;
@@ -74,11 +80,11 @@ function get_world(j){
     update_dict();
     output_dict();
   }
-  else other_worlds.push(j.getattr("name"))
+  else if (j.maxclass == "jit.world") other_worlds.push(j.getattr("name"))
 }
 
 function check_world(j){
-	return j.maxclass == "jit.world";
+	return (j.maxclass == "jit.world" || j.maxclass == "jit.window");
 }
 
 connect_texture_output.local = 1;
