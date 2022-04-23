@@ -94,7 +94,13 @@ function observe_attr(attr){
   movies.forEach(function (x,i) {
     if (x.obj == attr.maxobject) {
       x[attr.attrname] = attr.value;
-      if (attr.attrname == "moviefile") get_metadata(attr.maxobject,i);
+      if (attr.attrname == "moviefile") {
+        if (attr.value !== ""){
+          get_metadata(attr.maxobject,i);
+          x[active] = 1;
+        }
+        else x[active] = 0;
+      }
     }
   })
   update_dict();
@@ -117,6 +123,7 @@ function Movie(m){
   this.fps = 0
   this.framecount = 0
   this.ms = 0
+  this.active = 0;
   // this.movies[m].looppoints_ms = [0,1]
   this.ram_loaded = 0;
   this.watchattrs = [];
@@ -139,6 +146,8 @@ function get_metadata(film,index){
   movies[m].ms = movies[m].framecount*1000/movies[m].fps;
   movies[m].ram_loaded = 0;
   movies[m].moviefile = film.getattr("moviefile");
+  if (movies[m].moviefile == "") movies[m].active = 0;
+  else movies[m].active = 1;
   movies[m].looppoints_ms = film.getattr("looppoints_ms")
   movies[m].cache_size = film.getattr("cache_size")
   update_dict();
@@ -152,16 +161,18 @@ function msg_int(i){
     var time = pos * 1000;
 
     for (m in movies) {
-    if (movies[m].loop == 1) time %= movies[m].ms;
-    else if (movies[m].loop == 2) {
-      var dbtime = time % (movies[m].ms*2)
-      time %= movies[m].ms;
-      time = (dbtime >= movies[m].ms) ? movies[m].ms - time : time;
-    }
-    else if (movies[m].loop == 3) time = Math.max(movies[m].looppoints_ms[0],Math.min(time,movies[m].looppoints_ms[1]))
-    time = Math.max(0,Math.min(time,movies[m].ms));
-      movies[m].obj.message("time_ms",time)
-      movies[m].obj.message("bang")
+    if (movies[m].active){
+      if (movies[m].loop == 1) time %= movies[m].ms;
+      else if (movies[m].loop == 2) {
+        var dbtime = time % (movies[m].ms*2)
+        time %= movies[m].ms;
+        time = (dbtime >= movies[m].ms) ? movies[m].ms - time : time;
+      }
+      else if (movies[m].loop == 3) time = Math.max(movies[m].looppoints_ms[0],Math.min(time,movies[m].looppoints_ms[1]))
+      time = Math.max(0,Math.min(time,movies[m].ms));
+        movies[m].obj.message("time_ms",time)
+        movies[m].obj.message("bang")
+      }
     }
   }
 }
@@ -182,35 +193,39 @@ function op_mode(o){
       loadingram.objects = 0;
       loadingram.await = 0;
       for (m in movies) {
-        // if (mode == 2 && movie.class == "jit.movie~") movie.message("start");
-        if (mode == 2) {
-          // movies[m].obj.message("automatic",0)
-          movies[m].obj.message("stop");
-          movies[m].obj.message("time_ms",movies[m].looppoints_ms[0])
-          // movies[m].obj.message("position",0)
-          movies[m].obj.message("start");
+        if (movies[m].active){
+          // if (mode == 2 && movie.class == "jit.movie~") movie.message("start");
+          if (mode == 2) {
+            // movies[m].obj.message("automatic",0)
+            movies[m].obj.message("stop");
+            movies[m].obj.message("time_ms",movies[m].looppoints_ms[0])
+            // movies[m].obj.message("position",0)
+            movies[m].obj.message("start");
+          }
+          movies[m].obj.setattr("automatic",movies[m].automatic)
+          movies[m].obj.setattr("autostart",movies[m].autostart)
         }
-        movies[m].obj.setattr("automatic",movies[m].automatic)
-        movies[m].obj.setattr("autostart",movies[m].autostart)
       }
     }
     else {
       for (m in movies) {
-        with(movies[m].obj){
-          setattr("automatic",0)
-          setattr("autostart",0)
-          message("time_ms",movies[m].looppoints_ms[0])
+        if (movies[m].active){
+          with(movies[m].obj){
+            setattr("automatic",0)
+            setattr("autostart",0)
+            message("time_ms",movies[m].looppoints_ms[0])
+          }
+          if (perf_loadram && !movies[m].ram_loaded) {
+            loadingram.await = 1;
+            loadingram.objects++;
+            movies[m].obj.message("loadram")
+          }
+          if (perf_loadram) {
+            listensto.replace("loadram","pending…")
+            outlet(0,"dictionary",listensto.name);
+          }
+          mode = 3;
         }
-        if (perf_loadram && !movies[m].ram_loaded) {
-          loadingram.await = 1;
-          loadingram.objects++;
-          movies[m].obj.message("loadram")
-        }
-        if (perf_loadram) {
-          listensto.replace("loadram","pending…")
-          outlet(0,"dictionary",listensto.name);
-        }
-        mode = 3;
       }
     }
   }
@@ -236,6 +251,7 @@ function loadram(b,e){
 
 function update_dict(){
   listensto.replace(movies[m].class+"::moviefile",movies[m].moviefile)
+  listensto.replace(movies[m].class+"::active",movies[m].active)
   listensto.replace(movies[m].class+"::loop",movies[m].loop)
   listensto.replace(movies[m].class+"::length_ms",movies[m].ms)
   listensto.replace(movies[m].class+"::looppoints_ms",movies[m].looppoints_ms)
@@ -249,4 +265,7 @@ function unloadram(){
   update_dict();
 }
 
-function anything(){}
+function sendmovies(){
+  var msg = arrayfromargs(arguments)
+  for (m in movies) movies[m].obj.message(msg);
+}

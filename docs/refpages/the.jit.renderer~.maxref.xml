@@ -622,8 +622,10 @@ The message <m>getstate</m> will post relevant status information about every ob
 
 	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
 	<seealsolist>
+		<seealso name="jit.record"/>
+		<seealso name="jit.vcr~"/>
+		<seealso name="jit.gl.asyncread"/>
 		<seealso name="the.oneirotomy.setup"/>
-		<seealso name="the.jit.renderer~"/>
 		<seealso name="the.jit.poke~"/>
 		<seealso name="the.jit.mo.drive"/>
 		<seealso name="the.jit.movie.ctrl"/>

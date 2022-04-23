@@ -29,12 +29,12 @@
 
 	<!--ARGUMENTS-->
 	<objarglist>
-		<objarg name="render-context" optional="0" type="symbol" size="1">
+		<objarg name="ctx" optional="0" type="symbol" size="1" default="#0">
 			<digest>
-				Specify a named render context for all children objects to sync to
+				Specify a valid render context for all children objects to sync to
 			</digest>
 			<description>
-				Specify a named render context for all children objects to sync to. If a valid context is already present in the patch, make sure the given context name is identical.
+				As of Version 2.0 the ctx-name must match that of a <o>jit.world</o> present in the patch. It is necessary to provide a context name for all members of the offline render family to sync and respond to.
 			</description>
 		</objarg>
 	</objarglist>
@@ -63,24 +63,6 @@
 				Highlight all potentially relevant objects' boxes.
 			</description>
 		</method>
-		<method name="upgrade">
-			<arglist />
-			<digest>
-				Upgrade all designated objects and configurations
-			</digest>
-			<description>
-				Upgrade all designated objects and configurations
-			</description>
-		</method>
-		<method name="world">
-			<arglist />
-			<digest>
-				Upgrade any legacy <o>jit.gl.render</o> setup
-			</digest>
-			<description>
-				Upgrade any legacy <o>jit.gl.render</o> setup. Should <o>jit.gl.render</o> and <o>jit.window</o> by the context-name be found, these will be replaced by <o>jit.world</o> and <o>jit.gl.camera</o>. The latter is instantiated when respective options are currently set in the <o>jit.gl.render</o> object. The re-routing of the pipeline and frame-based data/bang flow has to be upgraded accordingly by the user.
-			</description>
-		</method>
 		<method name="renderer">
 			<arglist />
 			<digest>
@@ -99,13 +81,40 @@
 				Perform an entire patch upgrade with all possible replacements. This essentially chains the methods <m>upgrade</m>, <m>world</m> and <m>renderer</m>, respectively.
 			</description>
 		</method>
+		<method name="upgrade">
+			<arglist />
+			<digest>
+				Upgrade all designated objects and configurations
+			</digest>
+			<description>
+				Upgrade all designated objects and configurations
+			</description>
+		</method>
+		<method name="world">
+			<arglist />
+			<digest>
+				Upgrade any legacy <o>jit.gl.render</o> setup
+			</digest>
+			<description>
+				Upgrade any legacy <o>jit.gl.render</o> setup. Should <o>jit.gl.render</o> and <o>jit.window</o> by the context-name be found, these will be replaced by <o>jit.world</o> and <o>jit.gl.camera</o>. The latter is instantiated when respective options are currently set in the <o>jit.gl.render</o> object. The re-routing of the pipeline and frame-based data/bang flow has to be upgraded accordingly by the user.
+			</description>
+		</method>
 	</methodlist>
 
 	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
 	<seealsolist>
 		<seealso name="the.jit.renderer~"/>
-		<seealso module="Oneirotomy" name="oneirotomy_table_of_contents_topic" type="vignette" />
-		<seealso module="Oneirotomy" name="oneirotomy-01_object-overview" type="vignette" />
+		<seealso name="the.jit.poke~"/>
+		<seealso name="the.jit.mo.drive"/>
+		<seealso name="the.jit.movie.ctrl"/>
+		<seealso name="the.timeline"/>
+		<seealso name="the.snapshot~"/>
+		<seealso name="the.mc.data"/>
+		<seealso name="the.obj.init"/>
+		<seealso name="the.mc.jit.catch~"/>
+		<seealso module="jitter" name="oneirotomy-00_introduction" type="vignette" />
+		<seealso module="jitter" name="oneirotomy-01_object-overview" type="vignette" />
+		<seealso module="jitter" name="oneirotomy-02_implementation" type="vignette" />
 	</seealsolist>
 
 </c74object>

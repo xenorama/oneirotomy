@@ -47,7 +47,7 @@ OBJECT LISTENER
 get_world.local = 1
 function get_world(j){
   if (j.getattr("name") == ctx){
-    post("the.jit.renderer~: binding to jit.world @name "+ctx,"\n");
+    print("binding to jit.world @name "+ctx,"\n");
     world = j // jit.world object in environment
     renderer.dim = world.getattr("dim");
     proxy.name = world.getattr("name");

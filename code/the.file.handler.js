@@ -44,7 +44,7 @@ function import(n){
 }
 
 function name(n){
-  if (n && n !== inherited_identifier) sname = n;
+  if (n && n !== inherited_identifier && inherited_identifier !== undefined) sname = n;
   filename = ctx+"_"+sname+"."+type
   if (aread) read();
 }

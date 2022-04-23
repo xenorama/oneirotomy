@@ -106,6 +106,15 @@
 			The message <m>queue</m> will open the core Queue Manager GUI in <o>the.jit.renderer~</o> to specify which instance is recording or rendering in the next step.
 		</description>
 	</method>
+	<method name="sendmovies">
+		<arglist />
+		<digest>
+			Send any message to all bound jit.movie objects
+		</digest>
+		<description>
+			Send any message to all bound jit.movie objects
+		</description>
+	</method>
 	<method name="unloadram">
 		<arglist />
 		<digest>

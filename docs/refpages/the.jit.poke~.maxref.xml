@@ -205,11 +205,14 @@
 
 	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
 	<seealsolist>
+		<seealso name="jit.poke~"/>
 		<seealso name="the.oneirotomy.setup"/>
 		<seealso name="the.jit.renderer~"/>
 		<seealso name="the.mc.jit.catch~"/>
 		<seealso name="the.snapshot~"/>
 		<seealso name="the.timeline"/>
+		<seealso name="poly~"/>
+		<seealso name="node.script"/>
 		<seealso module="jitter" name="oneirotomy-00_introduction" type="vignette" />
 		<seealso module="jitter" name="oneirotomy-01_object-overview" type="vignette" />
 	</seealsolist>

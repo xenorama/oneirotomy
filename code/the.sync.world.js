@@ -78,7 +78,8 @@ DEBUGGER
 
 print.local = 1;
 function print(){
-  if (quiet) post("the.jit.renderer~:",arrayfromargs(arguments),'\n')
+  // if (quiet) post("the.jit.renderer~:",arrayfromargs(arguments),'\n')
+  if (quiet) messnamed(ctx+"_print",arrayfromargs(arguments))
   else error("the.jit.renderer~:",arrayfromargs(arguments),'\n')
 }
 

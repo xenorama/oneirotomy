@@ -233,6 +233,13 @@ function op_mode(m){
   }
 }
 
+// CANCEL
+function cancel(){
+  frame_current = framecount;
+  render_bang();
+  print("rendering cancelled");
+}
+
 // second round of initializing
 function post_prep(){
   messnamed(ctx+"_mode.prep.post",3)

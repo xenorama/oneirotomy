@@ -133,7 +133,6 @@ ATTRIBUES
     declareattribute("hhmmss","get_hhmmss","set_hhmmss",0);
     function set_hhmmss(h,m,s) {
       hhmmss = [h,m,s];
-      post(hhmmss,'\n')
       calc_time_format("hhmmss",hhmmss);
     }; set_hhmmss.local = 1;
     function get_hhmmss() { return hhmmss };

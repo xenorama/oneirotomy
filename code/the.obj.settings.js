@@ -5,7 +5,7 @@ outlets = 3;
 inlets = 3;
 
 var ctx = jsarguments[1]
-var obj_name = jsarguments[2]
+var obj_name = ((/^@.#/).test(jsarguments[2])) ? "unbound" : jsarguments[2]
 
 gCTX = new Global(ctx+"_properties");
 
@@ -190,4 +190,9 @@ function remove(a){
 function save_dict(){
   outlet(2,"dictionary",sets.name)
   if (autosave) sets.export_json(ctx+"_"+obj+".json")
+}
+
+
+function loadbang(){
+  bang();
 }

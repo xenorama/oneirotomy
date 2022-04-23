@@ -39,7 +39,11 @@ var replace = {
   jitcatch: "the.mc.jit.catch~",
   mcsnapshot: "the.mc.snapshot~",
   mcjitcatch: "the.mc.jit.catch~",
-  jitpoke: "the.jit.poke~"
+  jitpoke: "the.jit.poke~",
+  peakamp: "the.snapshot~",
+  mcpeakamp: "the.mc.snapshot~",
+  avg: "the.snapshot~",
+  mcavg: "the.mc.snapshot~"
 }
 var stripdotildes = new RegExp('[\.\~]','g');
 
@@ -115,7 +119,7 @@ var obj_list = {
     color: [0,1,0,1]
   },
   replace: {
-    objects: ["snapshot~","mc.snapshot~","jit.catch~","mc.jit.catch~","jit.poke~"],
+    objects: ["snapshot~","mc.snapshot~","jit.catch~","mc.jit.catch~","jit.poke~","peakamp~","avg~","mc.peakamp~","mc.avg~"],
     color: [1,0,0,1]
   },
   renderer: {
@@ -123,6 +127,10 @@ var obj_list = {
     bgcolor: [0.607843,0.490196,0.419608,1.],
     color: [0.667,0.396,0.059,1.000],
     textcolor: [1,1,1,1]
+  },
+  movie: {
+    objects: ["jit.movie","jit.movie~"],
+    color: [0.6,0.8,1,1]
   }
 }
 
@@ -238,10 +246,14 @@ function highlight_objs(o){
         }
       }
 
-      if (type !== "mtr"){
+      if (type){
         if (found_objs.getkeys() === null || found_objs.getkeys().indexOf(o.maxclass) == -1) found_objs.replace(o.maxclass,(o.getattr("name") || "<unnamed>"))
         else found_objs.append(o.maxclass,(o.getattr("name") || "<unnamed>"))
       }
+      // if (type !== "mtr"){
+      //   if (found_objs.getkeys() === null || found_objs.getkeys().indexOf(o.maxclass) == -1) found_objs.replace(o.maxclass,(o.getattr("name") || "<unnamed>"))
+      //   else found_objs.append(o.maxclass,(o.getattr("name") || "<unnamed>"))
+      // }
 
       if (perform_upgrade) {
       if (type == "anim"){
@@ -268,6 +280,27 @@ function highlight_objs(o){
                 mtr.setboxattr(attrlist[a],obj_list[type][attrlist[a]]);
               }
             }
+          }
+        }
+      if (type == "movie"){
+        if (mov) path.remove(mov);
+        patch = o.patcher;
+        var upgrade = 1;
+        var cx_objs = o.patchcords.outputs;
+        if (cx_objs.length) {
+          for (ou=0;ou<cx_objs.length;ou++) {
+          if (cx_objs[ou].dstobject.maxclass == "patcher" && (/the\.jit\.movie\.ctrl\[\d+\]/).test(cx_objs[ou].dstobject.varname)) { upgrade = 0; break; }
+          }
+        }
+        if (upgrade) {
+          var mov = patch.newdefault(o.rect[0]+25,o.rect[1]+50,"the.jit.movie.ctrl",ctx);
+          mov.varname = "the.jit.movie.ctrl[1]";
+          var outlet_index = (o.maxclass == "jit.movie~") ? 3 : 1;
+          patch.connect(o,outlet_index,mov,1)
+            for (a=1;a<attrlist.length;a++){
+              mov.setboxattr(attrlist[a],obj_list[type][attrlist[a]]);
+            }
+          mov.message("bang");
           }
         }
       else if (type == "mo"){
@@ -380,6 +413,29 @@ function inherit_attrs(nm,obj,prv){
       else objbox_attrs.push("@interval",obj.getattr("interval")[0],obj.getattr("interval")[1])
     }
     if (obj.getattr("active") !== 1) { objbox_attrs.push("@active",obj.getattr("active")) };
+  }
+
+  else if (nm == "peakamp~"){
+    objbox_attrs.push("@mode","peakamp")
+    if (obj.getattr("signed") !== 0) {
+      objbox_attrs.push("@signed",obj.getattr("signed"))
+    }
+  }
+
+  else if (nm == "mc.peakamp~"){
+    objbox_attrs.push(Math.max(obj.getattr("chans"),1))
+    objbox_attrs.push("@mode","peakamp")
+    if (obj.getattr("signed") !== 0) {
+      objbox_attrs.push("@signed",obj.getattr("signed"))
+    }
+  }
+  else if (nm == "avg~"){
+    objbox_attrs.push("@mode","peakamp")
+  }
+
+  else if (nm == "mc.avg~"){
+    objbox_attrs.push(Math.max(obj.getattr("chans"),1))
+    objbox_attrs.push("@mode","avg")
   }
 
   else if (nm == "jit.poke~"){
