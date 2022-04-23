@@ -33,8 +33,9 @@ In **Oneirotomy**, the approach to render lossless hiQ video is to capture and r
 
 #### Edit & Development:
 * advanced knowledge of Max/MSP/Jitter
+* mostly based around [JavaScript](https://docs.cycling74.com/max7/refpages/js) codes
 * [dictionaries](https://docs.cycling74.com/max7/refpages/dict)
-* some [gen~](https://docs.cycling74.com/max7/refpages/gen~) for **the.mc.pac~**
+* [gen](https://docs.cycling74.com/max7/refpages/gen)
 
 ## Nomenclature
 **Oneirotomy** (/ɒnɪˈrɒt​ɔmi/; from Greek ὄνειρον, oneiron, «dream»; and /tomé/; «cut, slice») is a neologism to be translated as _dream slice_, where individual frames of realtime video can be sliced and reproduced in non-realtime.
