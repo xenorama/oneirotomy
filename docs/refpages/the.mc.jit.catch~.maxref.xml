@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
 
-<c74object name="the.mc.jit.mnemonic~" module="jitter" category="Jitter System">
+<c74object name="the.mc.jit.catch~" module="jitter" category="Jitter System">
 
 	<digest>
-		Replace a <o>jit.catch~</o> for non-realtime rendering (W.I.P.)
+		Replace a <o>jit.catch~</o> for non-realtime rendering
 	</digest>
 
 	<description>
@@ -16,7 +16,7 @@
 		<o>the.jit.thalamus</o> providing a central context is required in the enviroment.
 		<br/>
 		<br/>
-	 	Disclaimer: <o>the.mc.jit.mnemonic~</o> is to be seen as a <i>work-in-progress</i>-solution to support existing <o>jit.catch~</o> objects in the Jitter environment. Limitations are that the results may not match the intended/expected matrices to 100% accuracy, changes to <at>mode</at> and <at>framesize</at> cannot be applied during recording/performance and triggering output of the internal <o>jit.catch~</o> is likely to only work when applied <b>at low priority</b> (i.e. using a <o>qmetro</o>).<br/>
+	 	Disclaimer: <o>the.mc.jit.catch~</o> is to be seen as a <i>work-in-progress</i>-solution to support existing <o>jit.catch~</o> objects in the Jitter environment. Limitations are that the results may not match the intended/expected matrices to 100% accuracy, changes to <at>mode</at> and <at>framesize</at> cannot be applied during recording/performance and triggering output of the internal <o>jit.catch~</o> is likely to only work when applied <b>at low priority</b> (i.e. using a <o>qmetro</o>).<br/>
 		The basic functionality of this object is built around a <o>jit.concat</o> capturing the resulting matrices in blocks, storing them temporarily to disk to recompile them into a large <i>jxf</i>-format file to be read by a <o>jit.matrixset</o>. A separate dictionary assigns the blocks to their different sizes. The final set of matrices has to have the largest dimension recorded in the process to avoid data loss and wrong interpolation. Upon rebuilding the entire stream, each block is read from in sizes of matrices recorded per frame. <br/>
 		In <i>mode 1</i> the dimension of the resulting matrix varies according to the current <at>framesize</at> and—unfortunately—the interval at which the internal <o>jit.catch~</o> it being triggered. Hence, when working with low framesize and longer output intervals (these have to be deferred to the low priority thread to avoid Max crashing!), dim[1] can increase heavily to host all data previosuly buffered. This in return may cause the internal <o>jit.concat</o> to fail in recording the output matrix properly.<br/>
 		The unintuitive <at>concapture</at> attribute specifies how many matrices (of whichever size according to <at>mode</at>) will be concatenated into a temproary file, i.e. the lower the value <at>concapture</at> is set to, the more files are being created. While this will increase the efficiency overall, it may yield the odd frame loss during recording—in this case, a higher value may be more efficient. The default value is 66 matrices.
@@ -47,18 +47,111 @@
 				<br/>As of Version 2.0, the context name must be identical to that of a <o>jit.world</o> instance in the environment. Omission of the render-context will highlight the object bogus and throw an error.
 			</description>
 		</objarg>
-		<objarg name="channels" optional="0" type="int" size="1">
+		<!-- <objarg name="number-of-channels" optional="0" type="int" size="1">
 			<digest>
 				Number of audio-channels
 			</digest>
 			<description>
 				Number of expected audio channels in the multichannel-signal, likely to represent individual planes of the resulting matrix. Set this argument to '1' when working with single channel audio.
 			</description>
-		</objarg>
+		</objarg> -->
 	</objarglist>
 
 	<!--ATTRIBUTES (REMOVE FOR SIMPLICITY) -->
 <attributelist>
+	<attribute name="active" get="1" set="1" type="int" size="1">
+		<digest>
+			Set the active flag
+		</digest>
+		<description>
+			Set the active flag. There are 4 active states available suitable for different purposes:
+			<br/>
+			<br/>0 = bypass this object and poke signal data without recording
+			<br/>1 = operate normally (default); poke and record
+			<br/>2 = poke but do not record any new data
+			<br/>3 = (idle)
+			<br/>4 = record but never poke directly to matrix
+			<br/>5 = mute all activity
+			<br/>
+			<br/>Note that while recording is disabled, the automatic export upon recording completion (if an <at>name</at> is specified) is also disabled and previous files will not be overwritten.
+			<br/>Furthermore, the <at>active</at> flag is overriden by the <m>solo</m> state of the object
+		</description>
+	</attribute>
+	<attribute name="downsample" get="1" set="1" type="int" size="1">
+		<digest>
+			Set downsampling factor
+		</digest>
+		<description>
+			A downsampling factor (default=1). If downsampling value is set to n, each group of n successive samples are averaged.
+		</description>
+	</attribute>
+	<attribute name="framesize" get="1" set="1" type="int" size="1">
+		<digest>
+			Output matrix width
+		</digest>
+		<description>
+			In some modes, the width of the output matrix. (default=320)
+		</description>
+		<attributelist>
+			<attribute name="basic" get="1" set="1" type="int" size="1" value="1" />
+			<attribute name="category" get="1" set="1" type="symbol" size="1" value="Behavior" />
+			<attribute name="label" get="1" set="1" type="symbol" size="1" value="Framesize" />
+		</attributelist>
+	</attribute>
+	<attribute name="mode" get="1" set="1" type="int" size="1">
+		<digest>
+			Capture and output mode
+		</digest>
+		<description>
+			Four different modes are possible: in mode 0, all data since the last output would be output in a one-dimensional matrix. In mode 1 the amount of buffered data that fits into a multiple of the <at>framesize</at> is output in two dimensions; data not output will be saved for the next time. In these first two modes, every sample collected should be output once and only once. In mode 2 a <at>framesize</at> of the most recent data is output. Mode 3 causes <o>jit.catch~</o> to behave like an oscilloscope, triggering on channel <at>trigchan</at> when the signal crosses <at>triglevel</at> in the direction <at>trigdir</at>. If the threshold has not been passed for the duration of the entire internal data buffer (100 ms), jit.catch~ reverts temporarily to mode 2 behavior and outputs the most recent data until the threshold is crossed again.
+		</description>
+		<attributelist>
+			<attribute name="basic" get="1" set="1" type="int" size="1" value="1" />
+			<attribute name="category" get="1" set="1" type="symbol" size="1" value="Behavior" />
+			<attribute name="label" get="1" set="1" type="symbol" size="1" value="Capture Mode" />
+		</attributelist>
+	</attribute>
+	<attribute name="trigdir" get="1" set="1" type="int" size="1">
+		<digest>
+			Set the trigger direction
+		</digest>
+		<description>
+			The direction to use to identify crosses in the trigger point: 0 is upwards, and 1 is downwards. (default=0)
+		</description>
+	</attribute>
+	<attribute name="name" get="1" set="1" type="symbol" size="1">
+		<digest>
+			Specify a unique name to write to.
+		</digest>
+		<description>
+			Specify a unique name to export to after completion of the capturing process, managed by <o>the.jit.thalamus</o>. The resulting filetype is <m>jxf</m> (Jitter binary data file) and can be re-exported/imported using the <m>export</m> and <m>import</m> messages, respectively.
+			<br/>Same as <at>name</at>
+		</description>
+	</attribute>
+	<attribute name="trigchan" get="1" set="1" type="int" size="1">
+		<digest>
+			Set the channel for trigger points
+		</digest>
+		<description>
+			In mode 3, the channel to use for trigger points (default=0)
+		</description>
+	</attribute>
+	<attribute name="trigthresh" get="1" set="1" type="float" size="1">
+		<digest>
+			Set the trigger signal level
+		</digest>
+		<description>
+			The signal level at which to trigger a redraw in mode 3 (default=0.0)
+		</description>
+	</attribute>
+	<attribute name="concapture" get="1" set="1" type="int" size="1">
+		<digest>
+			Specify how many matrices one block is comprised of
+		</digest>
+		<description>
+			Specify how many matrices one block is comprised of. The default is 66 (matrices) and when this number is reached, a temporary Jitter binary file is created to later form one block in the entire chain of blocks which are being rebuilt using a <o>jit.matrixset</o>. Lower values craete more files and can thus cause the odd frame loss while being more efficient overall. Higher values are prone to lost frames but create less files and hubs between them. When not comfortable with changing this attribute, do leave it at 66. When the results are full of frame drops, do consider increasing or decreasing this value before recording.<br/>See the <m>discussion</m> for more info.
+		</description>
+	</attribute>
 	<attribute name="verbose" get="1" set="1" type="bool" size="1">
 		<digest>
 		Toggle continuous matrix monitoring
@@ -71,112 +164,19 @@
 		The default is 0 (disabled)
 		</description>
 </attribute>
-<attribute name="exportname" get="1" set="1" type="symbol" size="1">
-	<digest>
-		Specify a unique name to write to.
-	</digest>
-	<description>
-		Specify a unique name to export to after completion of the capturing process, managed by <o>the.jit.thalamus</o>. The resulting filetype is <m>jxf</m> (Jitter binary data file) and can be re-exported/imported using the <m>export</m> and <m>import</m> messages, respectively.
-		<br/>Same as <at>name</at>
-	</description>
-</attribute>
-<attribute name="name" get="1" set="1" type="symbol" size="1">
+<!-- <attribute name="name" get="1" set="1" type="symbol" size="1">
 	<digest>
 		Specify a unique name to write to.
 	</digest>
 	<description>
 		Specify a unique name to export to after completion of the capturing process, managed by <o>the.jit.thalamus</o>. The resulting filetype is <m>jxf</m> (Jitter binary data file) and can be re-exported/imported using the <m>export</m> and <m>import</m> messages, respectively.
 		<br/>
-		Same as <at>exportname</at>
+		Same as <at>name</at>
 	</description>
-</attribute>
-<attribute name="active" get="1" set="1" type="int" size="1">
-	<digest>
-		Set the active flag
-	</digest>
-	<description>
-		Set the active flag. There are 4 active states available suitable for different purposes:
-		<br/>
-		<br/>0 = bypass this object and poke signal data without recording
-		<br/>1 = operate normally (default); poke and record
-		<br/>2 = poke but do not record any new data
-		<br/>3 = (idle)
-		<br/>4 = record but never poke directly to matrix
-		<br/>5 = mute all activity
-		<br/>
-		<br/>Note that while recording is disabled, the automatic export upon recording completion (if an <at>exportname</at> is specified) is also disabled and previous files will not be overwritten.
-		<br/>Furthermore, the <at>active</at> flag is overriden by the <m>solo</m> state of the object
-	</description>
-</attribute>
-<attribute name="downsample" get="1" set="1" type="int" size="1">
-			<digest>
-				Set downsampling factor
-			</digest>
-			<description>
-				A downsampling factor (default=1). If downsampling value is set to n, each group of n successive samples are averaged.
-			</description>
-		</attribute>
-		<attribute name="framesize" get="1" set="1" type="int" size="1">
-			<digest>
-				Output matrix width
-			</digest>
-			<description>
-				In some modes, the width of the output matrix. (default=320)
-			</description>
-			<attributelist>
-				<attribute name="basic" get="1" set="1" type="int" size="1" value="1" />
-				<attribute name="category" get="1" set="1" type="symbol" size="1" value="Behavior" />
-				<attribute name="label" get="1" set="1" type="symbol" size="1" value="Framesize" />
-			</attributelist>
-		</attribute>
-		<attribute name="mode" get="1" set="1" type="int" size="1">
-			<digest>
-				Capture and output mode
-			</digest>
-			<description>
-				Four different modes are possible: in mode 0, all data since the last output would be output in a one-dimensional matrix. In mode 1 the amount of buffered data that fits into a multiple of the <at>framesize</at> is output in two dimensions; data not output will be saved for the next time. In these first two modes, every sample collected should be output once and only once. In mode 2 a <at>framesize</at> of the most recent data is output. Mode 3 causes <o>jit.catch~</o> to behave like an oscilloscope, triggering on channel <at>trigchan</at> when the signal crosses <at>triglevel</at> in the direction <at>trigdir</at>. If the threshold has not been passed for the duration of the entire internal data buffer (100 ms), jit.catch~ reverts temporarily to mode 2 behavior and outputs the most recent data until the threshold is crossed again.
-			</description>
-			<attributelist>
-				<attribute name="basic" get="1" set="1" type="int" size="1" value="1" />
-				<attribute name="category" get="1" set="1" type="symbol" size="1" value="Behavior" />
-				<attribute name="label" get="1" set="1" type="symbol" size="1" value="Capture Mode" />
-			</attributelist>
-		</attribute>
-		<attribute name="trigdir" get="1" set="1" type="int" size="1">
-			<digest>
-				Set the trigger direction
-			</digest>
-			<description>
-				The direction to use to identify crosses in the trigger point: 0 is upwards, and 1 is downwards. (default=0)
-			</description>
-		</attribute>
-		<attribute name="trigchan" get="1" set="1" type="int" size="1">
-			<digest>
-				Set the channel for trigger points
-			</digest>
-			<description>
-				In mode 3, the channel to use for trigger points (default=0)
-			</description>
-		</attribute>
-		<attribute name="trigthresh" get="1" set="1" type="float" size="1">
-			<digest>
-				Set the trigger signal level
-			</digest>
-			<description>
-				The signal level at which to trigger a redraw in mode 3 (default=0.0)
-			</description>
-		</attribute>
-		<attribute name="concapture" get="1" set="1" type="int" size="1">
-			<digest>
-				Specify how many matrices one block is comprised of
-			</digest>
-			<description>
-				Specify how many matrices one block is comprised of. The default is 66 (matrices) and when this number is reached, a temporary Jitter binary file is created to later form one block in the entire chain of blocks which are being rebuilt using a <o>jit.matrixset</o>. Lower values craete more files and can thus cause the odd frame loss while being more efficient overall. Higher values are prone to lost frames but create less files and hubs between them. When not comfortable with changing this attribute, do leave it at 66. When the results are full of frame drops, do consider increasing or decreasing this value before recording.<br/>See the <m>discussion</m> for more info.
-			</description>
-		</attribute>
+</attribute> -->
 	</attributelist>
-		<!--MESSAGES-->
 
+		<!--MESSAGES-->
 	<methodlist>
 		<method name="bang">
 			<arglist />
