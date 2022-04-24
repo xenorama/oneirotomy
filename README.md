@@ -1,4 +1,4 @@
-# Oneirotomy
+# Oneirotomy V2.0
 Tools for non-realtime Rendering of generative content in Max/MSP/Jitter
 Written by Tim Heinze © 2020, [www.xenorama.com](www.xenorama.com)
 
