@@ -41,6 +41,15 @@
 
 	<!--ATTRIBUTES (REMOVE FOR SIMPLICITY) -->
 	<attributelist>
+		<attribute name="ignore_handles" get="1" set="1" type="bool" size="1">
+			<digest>
+				Ignore instances of <o>jit.gl.handle</o>
+			</digest>
+			<description>
+				Ignore instances of <o>jit.gl.handle</o>. By default, this setting is flagged &quot;1&quot; to not add a controller to instances of jit.gl.handle. When unflagged, the handles will get augmented by <o>the.mc.data</o> which will only be necessary when explicitly recording mouse movement of the scene. <br/>
+				When the <m>highlight</m> method is called, all handles will still be highlighted.
+			</description>
+		</attribute>
 		<attribute name="verbose" get="1" set="1" type="bool" size="1">
 			<digest>
 				Post information to the max window

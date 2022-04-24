@@ -17,17 +17,25 @@ var perform_highlight = 0;
 var found_objs = new Dict(ctx+"_legacy.objects")
 
 // VERBOSE: POST INFO TO MAX WINDOW
-var verbose = 0;
+var verbose = 1;
   declareattribute("verbose","get_verbose","set_verbose",0);
   function set_verbose(a) {
     verbose = a;
+    if (verbose && found_objs.getkeys()) print("dictionary",found_objs.name);
   }; set_verbose.local = 1;
   function get_verbose() { return verbose };
 
+var ignore_handles = 1;
+  declareattribute("ignore_handles","get_ignore_handles","set_ignore_handles",0);
+  function set_ignore_handles(ih) {
+    ignore_handles = ih;
+  }; set_ignore_handles.local = 1;
+  function get_ignore_handles() { return ignore_handles };
+
 print.local = 1;
 function print(){
-  var info = arrayfromargs(arguments);
-  post("the.oneirotomy.setup ("+ctx+"):",info,'\n')
+  var msg = arrayfromargs(arguments);
+  messnamed(jsarguments[2]+"_print",msg)
 }
 
 throw_error.local = 1;
@@ -101,17 +109,39 @@ var setup = {
   }
 }
 
+var suggestions = {
+  timing: ["thru","the.mc.data",1],
+  bangs: ["thru/replace","the.bang (WIP)",1],
+  anim: ["augment","the.mc.data @active 4",1],
+  replace: ["replace","add prefix + ctx",1],
+  mo: ["control","the.jit.mo.drive",1],
+  movie: ["attach","the.jit.movie.ctrl",1],
+  renderer: ["substitute","jit.world + jit.gl.camera",1]
+}
+
 var tolerate = {
   jitglrender: "drawto",
   jitwindow: "name"
 }
 
 var obj_list = {
-  mtr: {
-    objects: ["clocker", "cpuclock", "timepoint", "timer", "delay", "line", "pipe", "qlim", "quickthresh", "speedlim", "thresh", "when", "translate", "metro", "qmetro", "tempo", "transport"],
+  // timing: {
+  //   objects: ["clocker", "cpuclock", "timepoint", "timer", "delay", "line", "pipe", "qlim", "quickthresh", "speedlim", "thresh", "when", "translate", "metro", "qmetro", "tempo", "transport"],
+  //   color: [1.000,0.596,0.059,1],
+  //   bgcolor: [0,0,0,1],
+  //   textcolor: [1.000,0.596,0.059,1]
+  // },
+  timing: {
+    objects: ["clocker", "cpuclock", "timepoint", "timer", "line", "pipe", "qlim", "quickthresh", "speedlim", "thresh", "translate", "tempo", "transport"],
     color: [1.000,0.596,0.059,1],
     bgcolor: [0,0,0,1],
     textcolor: [1.000,0.596,0.059,1]
+  },
+  bangs: {
+    objects: ["delay", "when", "metro", "qmetro"],
+    color: [1.000,0.396,0.159,1],
+    bgcolor: [0,0,0,1],
+    textcolor: [1.000,0.796,0.159,1]
   },
   anim: {
     objects: ["jit.anim.drive","jit.anim.node","jit.anim.path","jit.gl.handle"],
@@ -162,12 +192,14 @@ function upgrade(){
 }
 
 function highlight(){
+  for (type in Object.keys(suggestions)) { Object.keys(suggestions)[k][2] = 1; }
   perform_upgrade = 0;
   perform_highlight = 1;
   found_objs.clear();
   patch.applydeep(highlight_objs);
   outlet(0,"highliting","performed")
   outlet(1,"dictionary",found_objs.name)
+  if (verbose && found_objs.getkeys()) print("dictionary",found_objs.name);
 }
 
 function renderer(){
@@ -253,7 +285,12 @@ function highlight_objs(o){
       }
 
       if (type){
-        if (found_objs.getkeys() === null || found_objs.getkeys().indexOf(o.maxclass) == -1) found_objs.replace(o.maxclass,(o.getattr("name") || "<unnamed>"))
+        if (found_objs.getkeys() === null || found_objs.getkeys().indexOf(o.maxclass) == -1) {
+          found_objs.replace(type+"::count",suggestions[type][2])
+          found_objs.append(type+"::objects::"+o.maxclass,(o.getattr("name") || "•"))
+          found_objs.replace(type+"::"+suggestions[type][0],suggestions[type][1])
+          suggestions[type][2]++;
+        }
         else found_objs.append(o.maxclass,(o.getattr("name") || "<unnamed>"))
       }
       // if (type !== "mtr"){
@@ -263,27 +300,29 @@ function highlight_objs(o){
 
       if (perform_upgrade) {
       if (type == "anim"){
-        if (mtr) path.remove(mtr);
-        patch = o.patcher;
-        var cx_objs = o.patchcords.outputs;
-        var upgrade = 1;
-        if (cx_objs.length) {
-          for (ou=0;ou<cx_objs.length;ou++) {
-          if (cx_objs[ou].dstobject.maxclass == "patcher" && (/the\.mc\.data\[\d+\]/).test(cx_objs[ou].dstobject.varname)) { upgrade = 0; break; }
-          else if (obj_list.anim.objects.indexOf(cx_objs[ou].dstobject.maxclass) !== -1) { upgrade = 0; break; }
+        if (o.maxclass !== "jit.gl.handle" || ignore_handles == 0) {
+          if (mtr) path.remove(mtr);
+          patch = o.patcher;
+          var cx_objs = o.patchcords.outputs;
+          var upgrade = 1;
+          if (cx_objs.length) {
+            for (ou=0;ou<cx_objs.length;ou++) {
+            if (cx_objs[ou].dstobject.maxclass == "patcher" && (/the\.mc\.data\[\d+\]/).test(cx_objs[ou].dstobject.varname)) { upgrade = 0; break; }
+            else if (obj_list.anim.objects.indexOf(cx_objs[ou].dstobject.maxclass) !== -1) { upgrade = 0; break; }
+            }
           }
-        }
-        if (upgrade) {
-          var num_cx_objs = cx_objs.length
-          if (num_cx_objs !== 0){
-            var mtr = patch.newdefault(o.rect[0]+30,o.rect[1]+50,"the.mc.data",ctx,"@active",4);
-            mtr.varname = "the.mc.data[1]";
-            patch.connect(o,0,mtr,0)
-            for(c=0;c<num_cx_objs;c++){
-              patch.connect(mtr,0,cx_objs[c].dstobject,cx_objs[c].dstinlet);
-              }
-              for (a=1;a<attrlist.length;a++){
-                mtr.setboxattr(attrlist[a],obj_list[type][attrlist[a]]);
+          if (upgrade) {
+            var num_cx_objs = cx_objs.length
+            if (num_cx_objs !== 0){
+              var mtr = patch.newdefault(o.rect[0]+30,o.rect[1]+50,"the.mc.data",ctx,"@active",4);
+              mtr.varname = "the.mc.data[1]";
+              patch.connect(o,0,mtr,0)
+              for(c=0;c<num_cx_objs;c++){
+                patch.connect(mtr,0,cx_objs[c].dstobject,cx_objs[c].dstinlet);
+                }
+                for (a=1;a<attrlist.length;a++){
+                  mtr.setboxattr(attrlist[a],obj_list[type][attrlist[a]]);
+                }
               }
             }
           }

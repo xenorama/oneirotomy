@@ -109,7 +109,6 @@ function update_bindings(){
 }
 
 function check_bind(a){ return (binds.indexOf(a.maxclass) !== -1 && bind_names.indexOf(a.getattr("name")) !== -1); }
-// function check_anim(a){ return (binds.indexOf(a.maxclass) !== -1) }
 function check_anim(a){
   if (binds.indexOf(a.maxclass) !== -1) {
     var cx_objs = a.patchcords.outputs;
@@ -125,14 +124,13 @@ function check_anim(a){
   else return false;
 }
 
-// function check_anim(a){ return (binds.indexOf(a.maxclass) !== -1 && a.patchcords.outputs.forEach(function (x) { return (/jit\.anim\..+/).test(x.dstobject.maxclass) }).indexOf(true) == -1); }
 function assign_bind(a){
   var obj = new Bind(a);
   bind_sources.push(obj);
   solo_ovverride = 5;
 }
 
-// bind OBJECT
+// BIND object
 function Bind(src){
   this.obj = src;
   this.type = src.maxclass;

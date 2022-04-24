@@ -68,16 +68,13 @@ var flags = [[1,0,0],[1,1,1],[1,0,1],[1,1,0],[0,1,1],[0,0,0]]
 
 function msg_int(a){
   var flags_out = flags[a]
+  thisbox = this.patcher.parentpatcher.box;
   if (!isbogus){
-    thisbox = this.patcher.parentpatcher.box;
     active = a;
     var cols = Object.keys(colors[a]);
     for (k in cols) { thisbox.setboxattr(cols[k],colors[a][cols[k]]) };
   }
   else {
-    // thisbox = this.patcher.parentpatcher.box;
-    // thisbox.setboxattr("color",1,0,0,1)
-    thisbox = this.patcher.parentpatcher.box;
     var cols = Object.keys(bogus);
     for (k in cols) { thisbox.setboxattr(cols[k],bogus[cols[k]]) };
   }
