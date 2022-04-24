@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
 
-<c74object name="the.cerebellum" module="jitter" category="Jitter System">
+<c74object name="the.jit.template~" module="jitter" category="Jitter System">
 
 	<digest>
 		(Short info)
@@ -38,15 +38,6 @@
 
 	<!--ATTRIBUTES (REMOVE FOR SIMPLICITY) -->
 	<attributelist>
-	<attribute name="exportname" get="1" set="1" type="symbol" size="1">
-		<digest>
-			Specify a unique name to write to
-		</digest>
-		<description>
-			(Specify a unique name to export to after completion of the capturing process, managed by <o>the.jit.thalamus</o>. The resulting filetype is <m>XXX</m> and can be re-exported/imported using the <m>export</m> and <m>import</m> messages, respectively.
-		Same as <at>name</at>)
-		</description>
-	</attribute>
 	<attribute name="name" get="1" set="1" type="symbol" size="1">
 		<digest>
 			Specify a unique name to write to
@@ -109,6 +100,21 @@
 			</digest>
 			<description>
 				Output the corresponding frame at the normalised position while not rendering by <o>jit.world</o>.
+				<br/>This method will only work if data has been recorded previously.
+				<br/>This method has not yet been thoroughly tested and is subject to user feedback.
+			</description>
+		</method>
+				<method name="frame">
+			<arglist>
+				<arg name="position" optional="0" type="int" />
+			</arglist>
+			<digest>
+				Jump to specific frame
+			</digest>
+			<description>
+				Output the corresponding frame at the specified position while not rendering by <o>jit.world</o>.
+				<br/>This method will only work if data has been recorded previously.
+				<br/>This method has not yet been thoroughly tested and is subject to user feedback.
 			</description>
 		</method>
 		<method name="export">
@@ -135,16 +141,13 @@
 				<br/> If an optional argument is provided (symbol), it will be attempted to read a XXX-file with this name from disk)
 			</description>
 		</method>
-		<method name="solo">
+<method name="queue">
 	<arglist />
 	<digest>
-		Toggle solo mode for operation
+		Open the core Queue Manager GUI
 	</digest>
 	<description>
-		According to the numeric argument, will toggle the object's recording/rendering behaviour in relation to other objects in the context
-		<br/>0 = use current <at>active</at> flag if no other object is running <m>@solo 1</m> or <m>@solo 2</m>, otherwise will set the object to <m>active 0</m> (bypass)
-		<br/>1 = toggle <at>active</at> operation mode to <m>1</m> (operate) along with other objects <m>@solo 1</m>, but not if any object is running <m>@solo 2</m>, in which case it will be muted
-		<br/>2 = unique operation, operate only this object. This will set all other objects' <at>active</at> flag to <m>5</m> (mute)
+		The message <m>queue</m> will open the core Queue Manager GUI in <o>the.jit.renderer~</o> to specify which instance is recording or rendering in the next step.
 	</description>
 </method>
 		<method name="unsolo">
@@ -160,11 +163,16 @@
 
 	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
 	<seealsolist>
-		<seealso name="the.jit.thalamus~"/>
-		<seealso name="the.mc.jit.amygdala~"/>
-		<seealso name="the.cerebellum"/>
-		<seealso name="the.mc.pac~"/>
-		<seealso name="the.cochlea~"/>
+		<seealso name="the.jit.renderer~"/>
+		<seealso name="the.snapshot~"/>
+		<seealso name="the.jit.poke~"/>
+		<seealso name="the.mc.sfrecord~"/>
+		<seealso name="the.mtr"/>
+		<seealso name="the.jit.mo.drive"/>
+		<seealso name="the.jit.framecheck"/>
+		<seealso name="the.jit.framecheck~"/>
+		<seealso name="the.timeline"/>
+		<seealso name="the.mc.jit.catch~"/>
 	</seealsolist>
 
 </c74object>

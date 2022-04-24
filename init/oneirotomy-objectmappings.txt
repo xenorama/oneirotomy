@@ -9,5 +9,9 @@ max objectfile the.jit.epiphysis the.jit.pinealis;
 max objectfile jit.pinealis the.jit.pinealis;
 max objectfile jit.retina the.jit.retina;
 max objectfile jit.mojo the.jit.mojo;
-max objectfile jit.circadian the.jit.circadian;
+max objectfile circadian the.circadian;
 max objectfile jit.tinnitus~ the.jit.tinnitus~;
+max objectfile the.data the.mc.data;
+
+// max objectfile the.data the.data;
+// max definesubstitution the.data the.mc.data;

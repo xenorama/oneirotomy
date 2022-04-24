@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<?xml-stylesheet href="./_c74_tut.xsl" type="text/xsl"?>
+
+<chapter name="Oneirotomy Tutorials: Table of Contents" package="Oneirotomy">
+
+<h1>
+Oneirotomy Tutorials - Table of Contents
+</h1>
+
+<h2>Tutorials on Implementation and Handling</h2>
+
+<ul>
+<li><link type="tutorial" module="Oneirotomy" name="001_rethinking-the-jitter-patch">Rethinking the Jitter-Patch</link> — How can a non-realtime be approached?</li>
+<!-- <li><link type="tutorial" module="Oneirotomy" name="002_overview">Overview</link> — Understand different types of Media Installations and their requirements</li>
+<li><link type="tutorial" module="Oneirotomy" name="003_standalone-executables">Standalone Executables</link> — Learn about the advantagse of and differences for runtime executables</li>
+<li><link type="tutorial" module="Oneirotomy" name="004_convert-your-patch">Converting your Patch</link> — Detach your Patch from the Max Environment</li>
+<li><link type="tutorial" module="Oneirotomy" name="005_remote-maintenance">Remote Maintenance</link> — Stay connected to your VPN, even with unstable network connection</li>
+<li><link type="tutorial" module="Oneirotomy" name="006_scheduling">Schedule Patch activity</link> — Specify precise date and daytime for the patch to run</li>
+<li><link type="tutorial" module="Oneirotomy" name="007_command-line">The command line</link> — Work with the <o>shell</o> external to use the command line within Max</li>
+<li><link type="tutorial" module="Oneirotomy" name="008_dynamic-presets">Pattrstorage vs. Dictionaries</link> — Methods to dynamically store, recall, read and write preset data using the <o>pattr</o>-system or <o>dict</o></li>
+<li><link type="tutorial" module="Oneirotomy" name="008_ableton">Working with Ableton and M4L</link> — Things to remember when using Max with <b>Ableton Live</b></li>
+<li><link type="tutorial" module="Oneirotomy" name="009_manage-ressources">Manage Ressources</link> — Strip the GUI and operate with tabbed Patchers</li>
+<li><link type="tutorial" module="Oneirotomy" name="010_plotting-events">Plot CPU</link> — Visualize and write continuous CPU-usage data</li>
+<li><link type="tutorial" module="Oneirotomy" name="011_screenshots">Periodic Screenshots</link> — Schedule periodic Screenshots of the entire display or a specified area</li>
+<li><link type="tutorial" module="Oneirotomy" name="011_license">Run a Max Patch without License</link> — Lockdown a patch to make it uneditable</li>
+<li><link type="tutorial" module="Oneirotomy" name="012_checklist">Checklist before your departure</link> — Everything to ensure that your installation will run</li> -->
+</ul>
+
+<h2>Vignettes</h2>
+
+<ul>
+<li><link type="vignette" module="oneirotomy" name="oneirotomy-00_introduction">Introduction: Purpose and explanation of this package</link></li>
+<li><link type="vignette" module="oneirotomy" name="oneirotomy-01_object-overview">Object Overview: Learn about available objects</link></li>
+<li><link type="vignette" module="oneirotomy" name="oneirotomy-02_implementation">Implementation: Guidelines on the implementation without altering your Jitter/MSP patch or its queue</link></li>
+<li><link type="vignette" module="oneirotomy" name="oneirotomy-03_known-limitations">Known Limitations: Among unforeseeable, individually complex strategies in the generative domain, there are known limitations in the current version</link></li>
+<li><link type="vignette" module="oneirotomy" name="oneirotomy-04_workarounds">Workarounds: How can certain limitations be bypassed or handled specifically</link></li>
+<li><link type="vignette" module="oneirotomy" name="oneirotomy-05_development">Development: Do develop further, send feedback or suggestions about improvements</link></li>
+<li><link type="vignette" module="oneirotomy" name="oneirotomy-06_feature-requests">Feature Requests: Features to be implemented in the future</link></li>
+</ul>
+
+
+</chapter>

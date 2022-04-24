@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="the.mc.data" module="max" category="Data, Timing">
+
+	<digest>
+		Capture timing-sensitive data for offline video rendering
+	</digest>
+
+	<description>
+		Written by Tim Heinze © 2020, www.xenorama.com. <br/>
+		<o>the.mc.data</o> captures any data which is subject to precise timing, or binds to objects of the jit.anim family for this purpose.
+		<br/> At its core lies a single-track <o>mtr</o> which listens to incoming data of any size and type. In the course of offline rendering all previously recorded frames are normalised as timeline along which the data is being recalled, linearly, in blocks as long as one frame in samples.
+	</description>
+
+	<discussion>
+		<o>the.jit.renderer~</o> providing a central context is required in the enviroment.
+		<br/>
+		<br/>
+		Use <o>the.mc.data</o> as a hub between continuous, timed data and the video domain quantized to the desired framerate. To maximize efficiency, it is best practise to place this object as far up in the queue as possible (i.e., immedietely after any such timing objects which cannot operate offline, like <o>line</o>, <o>when</o>, <o>clocker</o>, <o>slide</o> etc.) and as close to the video domain as necessary to use as few as possible of the objects.<br/>
+		Although it offers only one inlet, <o>the.mc.data</o> can store lists. If, for example, various gl-parameters of a <o>jit.gl.gridshape</o> or <o>jit.gl.mesh</o> are controlled by as many timed objects, all of these can be packed into  a list and routed through <o>the.mc.data</o> to be unzipped afterwards. This way, only one obejct is needed.
+	</discussion>
+
+	<!--METADATA (REMOVE FOR SIMPLICITY) -->
+	<metadatalist>
+		<metadata name="author">Tim Heinze</metadata>
+		<metadata name="tag">Xenorama</metadata>
+		<metadata name="tag">Offline Video Rendering</metadata>
+		<metadata name="tag">Data, Timing</metadata>
+	</metadatalist>
+
+	<!--INLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--OUTLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--ARGUMENTS-->
+	<objarglist>
+		<objarg name="ctx" optional="0" type="symbol" size="1" default="#0">
+			<digest>
+				Specify a valid render context for all children objects to sync to
+			</digest>
+			<description>
+				As of Version 2.0 the ctx-name must match that of a <o>jit.world</o> present in the patch. It is necessary to provide a context name for all members of the offline render family to sync and respond to.
+			</description>
+		</objarg>
+		<objarg name="number-of-channels" optional="1" type="int" size="1" default="0">
+			<digest>
+				Specify number of channels for data streams.
+			</digest>
+			<description>
+				Specify number of channels for data streams. In multi-channel mode the separate streams must be formatted in mc-compatible style, i.e. using <o>mc.target</o> or with &quot;setvalue index (1-based)&quot; prepended. Natively, and when using the <m>mctarget</m> method, this setup is established using <o>funnel</o> and <o>prepend</o>  &quot;setavlue&quot;. In single-channel mode, this argument is idle.
+			</description>
+		</objarg>
+	</objarglist>
+
+	<!--ATTRIBUTES (REMOVE FOR SIMPLICITY) -->
+	<attributelist>
+		<attribute name="active" get="1" set="1" type="int" size="1">
+			<digest>
+				Set the active flag
+			</digest>
+			<description>
+				Set the active flag. There are 5 active states available suitable for different purposes:
+				<br/>
+				<br/>0 = ignore this object and pass everything through without recording or recalling
+				<br/>1 = operate normally (default); playback, record and output during rendering
+				<br/>2 = playback and output previously recorded data normally but do not record any new data
+				<br/>3 = playback and record normally but do not output data during rendering
+				<br/>4 = record and output during rendering but never pass incoming data
+				<br/>5 = mute all activity
+				<br/>
+				<br/>When bound to object of the jit.anim family — either explicitly or by patchcords — the.mc.data automatically assumes active mode &quot;4&quot; to not output data additionally to the bound object. This is necessary since the.mc.data has to augment the object in question and cannot be placed on the patchcord to the target gl-object (otherwise no transformation commands would be output anymore).
+				<br/>Note that while recording is disabled, the automatic export upon recording completion (if a <at>name</at> is specified) is also disabled and previous files will not be overwritten.
+				<br/>Furthermore, the <at>active</at> flag is overriden by the <m>solo</m> state of the object, which can be handled using the <m>queue</m> method. In the case of the.mc.data, this active mode is &quot;0&quot; when not bound to anim-objects and &quot;5&quot; when bound, in order to prevent duplicate commands to output to the target object.
+			</description>
+		</attribute>
+		<attribute name="bindto" get="1" set="1" type="list" size="1">
+			<digest>
+				Bind to jit.anim.objects
+			</digest>
+			<description>
+				Bind to jit.anim.objects. In single-channel mode, and when a jit.anim.object is directly connected to <o>the.mc.data</o>, the latter will automatically bind to it. A <m>bang</m> may be necessary when the object in question was instantiated after <o>the.mc.data</o>. In multi-channel mode, and using mc-routing objects, the objects in question must be given a unique name to all of which <o>the.mc.data</o> can bind using the <at>bindto</at> attribute. This will set the <at>active</at> to 4 and disable the jit.anim.objects during rendering — this way all their output can be captured during recording, ignored during playback and taken over during offline rendering.
+			</description>
+		</attribute>
+		<attribute name="name" get="1" set="1" type="symbol" size="1">
+			<digest>
+				Specify a unique name to write to.
+			</digest>
+			<description>
+				Specify a unique name to export to after completion of the capturing process, managed by <o>the.jit.renderer~</o>. The resulting filetype is <m>txt</m> file and can be imported using the <m>import</m> message.
+			</description>
+		</attribute>
+		<!-- <attribute name="hot" get="1" set="1" type="int" size="1">
+		<digest>
+			Replicate latest data on every frame
+		</digest>
+		<description>
+			Replicate latest recorded data on every frame, this flag is set to '0' (off) by default. When enabled, will always record (and thus output) the latest value on every frame, regardless of any silence in between. This is useful when <o>the.mc.data</o> receives few values in the timeline and only a partial section is being rendered. When disabled, any frames which do not contain data will not yield any data during rendering either. <br/>
+			Note, that this settings needs to be activated before recording and is likely to not yield the same behaviour as the normal playback mode.
+		</description>
+	</attribute> -->
+</attributelist>
+
+	<!--MESSAGES-->
+
+	<methodlist>
+		<method name="anim_merge">
+			<arglist />
+			<digest>
+				Bindto to all jit.anim objects in the patch layer
+			</digest>
+			<description>
+				Bindto to all jit.anim objects in the patch layer.<br/>
+				Scans the patch layer and binds to all jit.anim objects it finds. This will <m>augment</m> all found objects regardless of whether they are already controlled by another instance of <o>the.mc.data</o>
+			</description>
+		</method>
+		<method name="anything">
+			<arglist>
+				<arg name="input" optional="0" type="list" />
+			</arglist>
+			<digest>
+				Store the message on the timeline
+			</digest>
+			<description>
+				Any messages or multichannel &quot;setvalue&quot; messages are stored on the timeline per frame. Recording data inbetween frames is no longer supported as with legacy <o>the.mtr</o>.
+				<br/>
+				Legacy Note: The internal <o>mtr</o> object can store any type of data it receives—other than matrices or signals—including complex lists.
+				Although <o>mtr</o> can record individual bytes of MIDI messages received from <o>midiin</o>, it stores each byte with a separate delta time, and does not format the MIDI messages the way <o>seq</o> does. If you want to record complete MIDI messages and edit them later, <o>seq</o> is better suited for the task. On the other hand, <o>mtr</o> is perfectly suited for recording sequences of numbers, lists, or symbols from virtually any object in Max: specialized MIDI objects such as <o>notein</o> or <o>pgmin</o>, user interface objects such as <link name="number" type="refpage">number box</link>, <o>slider</o>, and <o>dial</o>, or any other object.
+			</description>
+		</method>
+		<method name="bang">
+			<arglist>
+				<arg name="input" optional="0" type="list" />
+			</arglist>
+			<digest>
+				(Re-)establish binding connections to jit.anim-objects
+			</digest>
+			<description>
+				(Re-)establish binding connections to jit.anim-objects. When objects are replaced, removed or added, sending a <m>bang</m> will update the connection. This can be done globally for all objects binding to source objects (see also <o>the.jit.movie.ctrl</o>) by handling the &quot;rebuild&quot; UI button in the panel of <o>the.jit.renderer~</o>.
+			</description>
+		</method>
+		<method name="augment">
+			<arglist />
+			<digest>
+				Setup mc-compatibility
+			</digest>
+			<description>
+				Setup mc-compatibility. A combination of <m>mctarget</m> and <m>router</m> methods
+			</description>
+		</method>
+		<method name="frame">
+			<arglist>
+				<arg name="position" optional="0" type="int" />
+			</arglist>
+			<digest>
+				Jump to specific frame
+			</digest>
+			<description>
+				Output the corresponding frame at the specified position while not rendering by <o>jit.world</o>.
+				<br/>This method will only work if data has been recorded previously.
+				<br/>This method has not yet been thoroughly tested and is subject to user feedback.
+			</description>
+		</method>
+		<method name="import">
+			<arglist>
+				<arg name="index" optional="1" type="symbol" />
+			</arglist>
+			<digest>
+				Import dictionary JSON file
+			</digest>
+			<description>
+				If an <at>name</at> has previously been specified, the JSON-file will be read from the <m>dir</m> as specified by <o>the.jit.renderer~</o>.
+				<br/> If an optional argument is provided (symbol), it will be attempted to read a JSON-file with this name from disk.
+			</description>
+		</method>
+		<method name="mctarget">
+			<arglist />
+			<digest>
+				Setup mc-input-compatibility
+			</digest>
+			<description>
+				Connect a <o>funnel</o> and setvalue-method to object. An optional number of voices specifies number of sources (channels)
+			</description>
+		</method>
+		<method name="preview">
+			<arglist>
+				<arg name="position" optional="0" type="float" />
+			</arglist>
+			<digest>
+				Normalised position (0. - 1.)
+			</digest>
+			<description>
+				Output the corresponding frame at the normalised position while not rendering by <o>jit.world</o>.
+			</description>
+		</method>
+		<method name="queue">
+			<arglist />
+			<digest>
+				Open the core Queue Manager GUI
+			</digest>
+			<description>
+				The message <m>queue</m> will open the core Queue Manager GUI in <o>the.jit.renderer~</o> to specify which instance is recording or rendering in the next step.
+			</description>
+		</method>
+		<method name="router">
+			<arglist />
+			<digest>
+				Setup mc-output-compatibility
+			</digest>
+			<description>
+				Connect an <o>mc.route</o> object to outlets. An optional number of voices specifies number of targets
+			</description>
+		</method>
+		<method name="trash">
+			<arglist>
+				<arg name="total-flag" optional="1" type="anything" />
+			</arglist>
+	<digest>
+		Delete all data files from disk which have been recorded
+	</digest>
+	<description>
+		The message <m>trash</m> will delete all recorded files from disk which had previously been written in the current session by this instance.<br/>
+		This action cannot be undone and no confirmation will be demanded. The respective files are deleted permanently from disk.
+	</description>
+	</method>
+	</methodlist>
+
+	<!--EXAMPLE-->
+	<examplelist>
+		<example img="the.mc.data.png" caption="insert after timing-objects and before matrix/texture domain to record/render realtime data" />
+	</examplelist>
+
+	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
+	<seealsolist>
+		<seealso name="the.oneirotomy.setup"/>
+		<seealso name="the.jit.renderer~"/>
+		<seealso name="the.snapshot~"/>
+		<seealso name="the.timeline"/>
+		<seealso name="the.obj.init"/>
+		<seealso name="jit.anim.drive"/>
+		<seealso name="jit.anim.node"/>
+		<seealso name="jit.anim.path"/>
+		<seealso name="jit.gl.handle"/>
+		<seealso name="mtr"/>
+		<seealso name="seq"/>
+		<seealso module="jitter" name="oneirotomy-00_introduction" package="Oneirotomy" type="vignette" />
+		<seealso module="jitter" name="oneirotomy-01_object-overview" package="Oneirotomy" type="vignette" />
+		<seealso module="jitter" name="oneirotomy-02_implementation" package="Oneirotomy" type="vignette" />
+		<seealso module="jitter" name="oneirotomy-03_known-limitations" package="Oneirotomy" type="vignette" />
+	</seealsolist>
+
+</c74object>

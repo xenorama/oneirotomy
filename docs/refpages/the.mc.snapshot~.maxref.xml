@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="the.mc.snapshot~" module="jitter" category="Jitter System">
+
+	<digest>
+		Store running multichannel MSP audio on a videoframe-basis
+	</digest>
+
+	<description>
+		Written by Tim Heinze © 2020, www.xenorama.com. <br/>
+		Synchronised to a parent render context of <o>the.jit.renderer~</o>, stores realtime multichannel MSP audio to read from during an offline render process.
+		<br/>
+		Replace any <o>snapshot~</o> controlling video frames by this object.
+	</description>
+
+	<discussion>
+		<o>the.jit.renderer~</o> providing a central context is required in the enviroment.
+		<br/>
+		<br/>
+		Replace any <o>snapshot~</o> controlling video frames by this object. As opposed to <o>snapshot~</o>, it does not natively support a fixed 'interval' and the <at>active</at> flag pertains to the attribute used commonly among objects in the <link type="vignette" module="Oneirotomy" name="oneirotomy-00_introduction">Oneirotomy-package</link>. If a fixed rate was previously specified and is still desired, the resulting data from <o>snapshot~</o> can be further routed through the queue and/or finally captured by <o>the.cerebellum</o> instead.
+	</discussion>
+
+	<!--METADATA (REMOVE FOR SIMPLICITY) -->
+	<metadatalist>
+		<metadata name="author">Tim Heinze</metadata>
+		<metadata name="tag">Xenorama</metadata>
+		<metadata name="tag">Offline Video Rendering</metadata>
+		<metadata name="tag">Jitter System</metadata>
+	</metadatalist>
+
+	<!--INLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--OUTLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--ARGUMENTS-->
+	<objarglist>
+		<objarg name="ctx" optional="0" type="symbol" size="1" default="#0">
+			<digest>
+				Specify a valid render context for all children objects to sync to
+			</digest>
+			<description>
+				As of Version 2.0 the ctx-name must match that of a <o>jit.world</o> present in the patch. It is necessary to provide a context name for all members of the offline render family to sync and respond to.
+			</description>
+		</objarg>
+				<objarg name="number-of-channels" optional="0" type="int" size="1">
+			<digest>
+				Number of expected channels in multichannelsignal.
+			</digest>
+			<description>
+				Number of expected channels in multichannelsignal. The maximum number is 13 channels.
+			</description>
+		</objarg>
+				<objarg name="reporting-interval" optional="1" type="list" size="1">
+			<digest>
+				Set the reporting interval
+			</digest>
+			<description>
+				Set the reporting interval in ms or using the Max <link name="maxtime" module="core" type="vignette">time format</link> syntax. If the interval is 0 <o>snapshot~</o> will only output data when it receives a <m>bang</m> message.
+			</description>
+		</objarg>
+	</objarglist>
+
+	<!--ATTRIBUTES (REMOVE FOR SIMPLICITY) -->
+
+<attributelist>
+	<attribute name="active" get="1" set="1" type="int" size="1">
+		<digest>
+			Set the active flag
+		</digest>
+		<description>
+			Set the active flag. There are 5 active states available suitable for different purposes:
+			<br/>
+			<br/>0 = ignore this object and pass everything through without recording or recalling
+			<br/>1 = operate normally (default); playback, record and output during rendering
+			<br/>2 = playback and output previously recorded data normally but do not record any new data
+			<br/>3 = playback and record normally but do not output data during rendering
+			<br/>4 = record and output during rendering but never pass incoming data
+			<br/>5 = mute all activity
+			<br/>
+			<br/>Note that while recording is disabled, the automatic export upon recording completion (if an <at>exportname</at> is specified) is also disabled and previous files will not be overwritten.
+			<br/>Furthermore, the <at>active</at> flag is overriden by the <m>solo</m> state of the object, which can be handled using the <m>queue</m> method.
+		</description>
+	</attribute>
+	<attribute name="automatic" get="1" set="1" type="bool" size="1">
+		<digest>
+			Sync output to framerate
+		</digest>
+		<description>
+			Sync output to framerate. When enabled will output data on every frame. During recording, the fps-clock is raised to high priority and no longer bound to the actual current framerate, useful for tight timing.<br/>
+			This setting will automatically flagged when <at>interval</at> is explicity specified and the internal clock will be overriden.
+		<br/>
+		The default is 0 (disabled)
+		</description>
+</attribute>
+<attribute name="mode" get="1" set="1" type="symbol" size="1">
+	<digest>
+		Set the signal capturing mode
+	</digest>
+	<description>
+	Three modes of signal capturing are available:<br/>
+	<br/>
+	<m>snapshot</m> (default): report any incoming signal data, behaviour of <o>snapshot~</o> supporting all its native attributes as well.<br/><br/>
+	<m>peakamp</m>: report the maximum signal value since the last report, behaviour of <o>peakamp~</o>. See also the <at>signed</at> attribute relevant in this mode and note that native <o>snapshot~</o> attributes are not supported.<br/><br/>
+	<m>avg</m>: report the average (absolute) signal amplitude of the input signal, behaviour of <o>avg~</o> and likewise only supports manual or <at>automatic</at> bangs.
+	</description>
+</attribute>
+<attribute name="interval" get="1" set="1" type="atom" size="10">
+	<digest>
+		Reporting interval
+	</digest>
+	<description />
+	<attributelist>
+		<attribute name="category" get="1" set="1" type="symbol" size="1" value="Timing" />
+		<attribute name="label" get="1" set="1" type="symbol" size="1" value="Sampling Interval" />
+		<attribute name="style" get="1" set="1" type="symbol" size="1" value="time" />
+		<attribute name="units" get="1" set="1" type="atom" size="7" value="ms hh:mm:ss ticks bars.beats.units notevalues hz samples" />
+	</attributelist>
+</attribute>
+	<attribute name="signed" get="1" set="1" type="int" size="1">
+		<digest>
+			Signed mode
+		</digest>
+		<description>
+			When <at>mode</at> is 'peakamp' and the <at>signed</at> attribute is set to 1, the peak amplitude of the incoming signal in the specified interval is reported, rather than the absolute value of the peak amplitude.
+		</description>
+		<attributelist>
+			<attribute name="basic" get="1" set="1" type="int" size="1" value="1" />
+			<attribute name="label" get="1" set="1" type="symbol" size="1" value="Signed Mode" />
+			<attribute name="style" get="1" set="1" type="symbol" size="1" value="onoff" />
+		</attributelist>
+	</attribute>
+	</attributelist>
+		<!--MESSAGES-->
+
+	<methodlist>
+		<method name="bang">
+			<arglist />
+			<digest>
+				Report the input signal value
+			</digest>
+			<description />
+		</method>
+		<method name="int">
+			<arglist>
+				<arg name="internal-clock-enable-flag" optional="0" type="int" />
+			</arglist>
+			<digest>
+				Function depends on inlet
+			</digest>
+			<description>
+				In left inlet: Any non-zero value turns on interval-based reporting, <m>0</m> turns it off. Reporting is on by default if a non-zero interval was specified.
+				<br />
+				In right inlet: Set the reporting interval in ms. If the interval is 0, automatic reporting stops.
+			</description>
+		</method>
+		<method name="float">
+			<arglist>
+				<arg name="internal-clock-enable-flag" optional="0" type="float" />
+			</arglist>
+			<digest>
+				Function depends on inlet
+			</digest>
+			<description>
+				In left inlet: Any non-zero value turns on interval-based reporting, <m>0</m> turns it off. Reporting is on by default if a non-zero interval was specified.
+				<br />
+				In right inlet: Set the reporting interval in ms. If the interval is 0, automatic reporting stops.
+			</description>
+		</method>
+		<method name="list">
+			<arglist>
+				<arg name="ITM-time-list" optional="0" units="time-value" type="list" />
+			</arglist>
+			<digest>
+				Set interval in Max <link name="maxtime" module="core" type="vignette">time format</link>.
+			</digest>
+			<description />
+		</method>
+		<method name="anything">
+			<arglist>
+				<arg name="ITM-time-list" optional="0" units="time-value" type="list" />
+			</arglist>
+			<digest>
+				Set interval in Max <link name="maxtime" module="core" type="vignette">time format</link>.
+			</digest>
+			<description />
+		</method>
+		<method name="offset">
+			<arglist>
+				<arg name="sample-offset" optional="0" type="int" />
+			</arglist>
+			<digest>
+				Set sample vector offset of value reported
+			</digest>
+			<description>
+				Set the index of the sample within a signal vector that will be reported. The number is constrained between 0 (least recent, the default) and the current signal vector size minus one (most recent).
+			</description>
+		</method>
+		<method name="sampleinterval">
+			<arglist>
+				<arg name="internal-clock-interval" optional="0" units="samples" type="int" />
+			</arglist>
+			<digest>
+				Set interval in samples per sampleinterval
+			</digest>
+			<description />
+		</method>
+		<method name="signal">
+			<arglist />
+			<digest>
+				Signal to evaluate
+			</digest>
+			<description>
+				In single-channel mode, converts current signal value to a float and outputs as a float message, or during a frame-by-frame render process.
+				<br />
+				In mc mode (<o>the.mc.snapshot~</o>), left outlet outputs float message for each channel in sequence. The right outlet outputs a corresponding voice message in the format: voice channel-number.
+			</description>
+		</method>
+		<method name="start">
+			<arglist />
+			<digest>
+				Start interval-based reporting
+			</digest>
+			<description />
+		</method>
+		<method name="stop">
+			<arglist />
+			<digest>
+				Stop interval-based reporting
+			</digest>
+			<description />
+		</method>
+		<method name="trash">
+			<arglist>
+				<arg name="total-flag" optional="1" type="anything" />
+			</arglist>
+			<digest>
+				Delete all files but the latest ones from disk which have been recorded or rendered
+			</digest>
+			<description>
+			The message <m>trash</m> will delete all recorded or rendered files from disk which had previously been written in the current session, except the very last version. Essentially, it will pruge all unwanted data which may have been written accidentally or in the course of trial-and-error. <br/>If, however, the message <m>trash</m> is followed by any argument, all previous files will be deleted, including the latest one.<br/>This action cannot be undone and no confirmation will be demanded. The respective files are deleted permanently from disk.
+			</description>
+			</method>
+			<method name="trash">
+				<arglist>
+					<arg name="total-flag" optional="1" type="anything" />
+				</arglist>
+		<digest>
+			Delete all data files from disk which have been recorded
+		</digest>
+		<description>
+			The message <m>trash</m> will delete all recorded files from disk which had previously been written in the current session by this instance.<br/>
+			This action cannot be undone and no confirmation will be demanded. The respective files are deleted permanently from disk.
+		</description>
+		</method>
+	</methodlist>
+
+	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
+	<seealsolist>
+		<seealso name="mc.snapshot~"/>
+		<seealso name="mc.peakamp~"/>
+		<seealso name="mc.avg~"/>
+		<seealso name="the.jit.renderer~"/>
+		<seealso name="the.oneirotomy.setup"/>
+		<seealso name="the.jit.poke~"/>
+		<seealso name="the.snapshot~"/>
+		<seealso name="the.mc.data"/>
+		<seealso name="the.obj.init"/>
+		<seealso name="the.mc.jit.catch~"/>
+		<seealso module="jitter" name="oneirotomy-00_introduction" type="vignette" />
+		<seealso module="jitter" name="oneirotomy-01_object-overview" type="vignette" />
+	</seealsolist>
+
+</c74object>

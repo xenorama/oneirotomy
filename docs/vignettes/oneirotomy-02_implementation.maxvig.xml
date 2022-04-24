@@ -1,12 +1,31 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <?xml-stylesheet href="_c74_vig.xsl" type="text/xsl"?>
-<vignette name="Oneirotomy Implementation" package="Oneirotomy">
+<vignette name="Oneirotomy: Implementation" package="Oneirotomy">
   <metadatalist>
     <metadata name="author">Tim Georg Heinze</metadata>
     <metadata name="tag">Xenorama</metadata>
   </metadatalist>
 
   <h1>Oneirotomy Implementation: Relevant Objects to replace, capture or implement</h1>
+
+  <h2>Patch analysis and upgrade</h2>
+  <p>
+    When attempting to render a patch offline, sure enough, many implementations will have to be undertaken. When unfamiliar with the architecture of The Oneirotomy, <o>the.oneirotomy.setup</o> can be of help. It can be the first object one drops into the patch, and using the &quot;highlight&quot; method, will color all object boxes which need attention and/or replacement/augmentation. With the &quot;upgrade&quot; method, all replacement can be made automatically, while only jit.anim objects will be augmented by <o>the.mc.data</o> and <o>jit.mo.func</o> objects will get <o>the.jit.mo.drive</o> atttached. All other objects will have to be visited manually and checked as to whether and where they might need further data capture to ensure everything is ready and available when rendering commenced.<br/><br/>
+    <o>the.oneirotomy.setup</o> requires an initial context argument (that of a named or desired <o>jit.world</o>) and supports the following methods:
+  </p>
+  <ul>
+    <li><b>highlight</b>: colorize all releveant objects which may need upgrading</li>
+    <li><b>upgrade</b>: replace or augment relevant objects where necessary</li>
+    <li><b>world</b>: replace a legacy <o>jit.gl.render</o> setup with a new <o>jit.world</o> setup by the same name</li>
+    <li><b>renderer</b>: create an instance of <o>the.jit.renderer~</o> by the given context name, and <o>jit.world</o> if previously not present</li>
+    <li><b>transform</b>: perform all previous methods successively</li>
+  </ul>
+
+  <techdetail>
+  Note: <o>the.oneirotomy.setup</o> should be placed in the same patch level as the main <o>jit.world</o>, or, where the latter is meant to reside.
+</techdetail>
+
+
 
   <h2>Timing-sensitive objects</h2>
   <p>
@@ -18,37 +37,51 @@
     <li>Metro: <o>metro</o> <o>qmetro</o> <o>tempo</o> <o>transport</o></li>
   </ul>
   <p>
-    <o>the.cerebellum</o> should come into play where such data is finally translated into the video-domain, bearing in mind that bundling information can improve efficiency. Meaning, data which can be collected together, can run through one single <o>the.cerebellum</o> without introducing more of the latter than necessary.
+    <o>the.mc.data</o> should come into play where such data is finally translated into the video-domain, bearing in mind that bundling information can improve efficiency. Meaning, data which can be collected together, can run through one single <o>the.mc.data</o> without introducing more of the latter than necessary. Since it is multichannel at the core, using <o>mc.target</o> and <o>mc.route</o>, respectively, can bundle and parse automation data. Such setups can be created dynamically with the <i>augment</i> method.
   </p>
+
+<illustration><img   id="_x0000_i1001" src="images/the.mc.data-augmentation_example.png"/></illustration>
+
+<caption>
+  <i><o>the.mc.data</o> can capture any single or multichannel messages. Incase of mc, use an additional numeric argument specifying the number of channels to record/render</i>
+</caption>
 
   <h3>MIDI</h3>
   <p>
-    The raw MIDI-input will very likely be used to control audio and video content in any patch. Its raw format, however, is not that likely to yield predictable effects and objects like <o>the.cerebellum</o> can be placed farther down the chain to capture the relevant data. When using objects like <o>seq</o> to playback MIDI, these will, again, become more coarse in the chain of events and should be captured by the aforementioned object at a stage where a minimum of data suffices to produce the video-content eventually. Of course, this can be experimented with. <o>the.cerebellum</o> works with <o>mtr</o> at its core and the latter is not specifically designed to capture MIDI. C74's documentation advises the <o>seq</o> object for such purposes, once data is thinned out enough prior to generating video content, <o>the.cerebellum</o> can be used to capture it.
+    The raw MIDI-input will very likely be used to control audio and video content in any patch. Its raw format, however, is not that likely to yield predictable effects and objects like <o>the.mc.data</o> can be placed farther down the chain to capture the relevant data. When using objects like <o>seq</o> to playback MIDI, these will, again, become more coarse in the chain of events and should be captured by the aforementioned object at a stage where a minimum of data suffices to produce the video-content eventually. Of course, this can be experimented with. <o>the.mc.data</o> captures data at the target framerate and is not specifically designed to capture MIDI. C74's documentation advises the <o>seq</o> object for such purposes, once data is thinned out enough prior to generating video content, <o>the.mc.data</o> can be used to capture it.
   </p>
+
+
 
   <h2>Domain Translation Capture</h2>
   <p>
-    To capture audio and transform it into video-relevant data, there are a couple of Max/MSP/Jitter objects natively available. These work in different ways. Capturing their results requires different techniques, some of which have not proven efficient yet (as with <o>jit.catch~</o>) and therefore cannot be supported at the moment without further ado. Some objects can simply be replaced by others from the package, but do require specific arguments (see the helpfiles or reference-pages for details). Should the arguments be bogus, a notification will be sent to the Max console.
+    To capture audio and transform it into video-relevant data, there are a couple of Max/MSP/Jitter objects natively available. These work in different ways. Capturing their results requires different techniques, some of which have not yet been tested enough yet (as with <o>jit.catch~</o>) and therefore cannot be considered 100% supported at the moment without further ado. Some objects can simply be replaced by others from the package, but do require specific arguments (see the helpfiles or reference-pages for details). Should the arguments be bogus, a notification will be sent to the Max console.
   </p>
 
   <ul>
-    <li><o>snapshot~</o> — Replace by <o>the.cochlea~</o> and make sure a 'render bang' will be received at its inlet (see also the 'discussion' section in <o>the.cochlea~</o>)</li>
-    <li><o>mc.snapshot~</o> — Replace by <o>the.mc.cochlea~</o> and make sure a 'render bang' will be received at its inlet (see also the 'discussion' section in <o>the.mc.cochlea~</o>)</li>
-    <li><o>jit.poke~</o> - Replace by <o>the.mc.jit.amygdala~</o></li>
-    <li><o>jit.catch~</o> - <i>Not currently supported!</i>. See the <link type="vignette" module="Oneirotomy" name="oneirotomy-03_known-limitations">Known Limitations</link> section for development info</li>
+    <li><o>snapshot~</o> — Replace by <o>the.snapshot~</o> and make sure a 'render bang' will be received at its inlet or set to &quot;@automatic 1&quot; with optional interval setting (see also the 'discussion' section in <o>the.snapshot~</o>)</li>
+    <li><o>mc.snapshot~</o> — Replace by <o>the.mc.snapshot~</o></li>
+    <li><o>jit.poke~</o> - Replace by <o>the.jit.poke~</o></li>
+    <li><o>jit.catch~</o> - Replace by <o>the.mc.jit.catch~</o> — see the <link type="vignette" module="Oneirotomy" name="oneirotomy-03_known-limitations">Known Limitations</link> section for development info</li>
   </ul>
+
+
 
   <h3>Reverse Translation</h3>
   <p>
-    Objects accessing matrix-data (<o>jit.peek~</o>) or those using general Max messages to modulate or produce audio (<o>click~</o>) can be safely ignored in this context. The reason is that even if they translate data to signals in realtime, these will not have an effect on the video rendering queue unless they are again translated to usable data for the latter. In such cases, the likes of <o>the.cochlea~</o>, <o>the.cerebellum</o> or <o>the.mc.jit.amygdala~</o> will finally suffice. However, if the underlying matrix data is again dependent on the <o>jit.world</o> render context to run, then the <at>toggleworld</at> attribute of <o>the.jit.thalamus</o> must be disabled to keep video rendering activated during audio recording.
+    Objects accessing matrix-data (<o>jit.peek~</o>) or those using general Max messages to modulate or produce audio (<o>click~</o>) can be safely ignored in this context. The reason is that even if they translate data to signals in realtime, these will not have an effect on the video rendering queue unless they are again translated to usable data for the latter. In such cases, the likes of <o>the.snapshot~</o>, <o>the.mc.data</o> or <o>the.jit.poke~</o> will finally suffice. However, if the underlying matrix data is again dependent on the <o>jit.world</o> render context to run, then the <at>toggleworld</at> attribute of <o>the.jit.renderer~</o> must be disabled to keep video rendering activated during audio recording.
   </p>
 
   <h2>Timeline Approximation</h2>
   <p>
-    Once a fixed timeline is established by recording a performance or when the final length is known (i.e. based on an existing/pre-recorded audio file), <o>the.circadian</o> can be used to progress through the frames (at the <i>fps</i>-attribute of <o>the.jit.thalamus</o> specified <b>before</b> recording!) one by one in the course of the rendering process, or to use a normalised curve between 0. and 1. to modulate parameters along the way. It also outputs the total number of frames once as well as the current mode of operation (recording/rendering) before these actually begin. This can help setting up certain parameters/values/settings based on whether you are recording audio or rendering video.
+    Once a fixed timeline is established by recording a performance or when the final length is known (i.e. based on an existing/pre-recorded audio file), <o>the.timeline</o> can be used to progress through the frames (at the <i>fps</i>-attribute of <o>the.jit.renderer~</o> specified <b>before</b> recording!) one by one in the course of the rendering process, or to use a normalised curve between 0. and 1. to modulate parameters along the way. It also outputs the total number of frames once as well as the current mode of operation (recording/rendering) before these actually begin. This can help setting up certain parameters/values/settings based on whether you are recording audio or rendering video.
   </p>
 
-  <h2>Context Audio Recording</h2>
+  <techdetail>
+  Note: <o>the.timeline</o> should be given a unique name using the &quot;@name&quot; attribute. All timeline information is saved to disk whenever the operation mode changes, and when the patch loads, the object will attempt to load a valid file going by its own name. Should no name have been specified, the.timeline will open an empty set of automation lanes.
+</techdetail>
+
+  <!-- <h2>Context Audio Recording</h2>
   <p>
     While capturing audio data, <o>the.mc.pac~</o> can be used to record any multichannel-signal it receives at the specified length to a buffer~, or without fixed length to disk. This can later serve as the soundtrack to the rendered video or image sequence.
   </p>
@@ -56,7 +89,7 @@
   <h2>Framecheck and Post-Pro Prep</h2>
   <p>
     The final video can be instantly checked and monitored frame-by-frame using <o>the.jit.pinealis</o> in conjunction with <o>the.jit.tinnitus~</o>. These two objects are not dependent on binding to a context and can also be used to monitor any video and audio in parallel, regardless, of what has been recorded.
-  </p>
+  </p> -->
   <br/>
   Previous: <b><link type="vignette" module="Oneirotomy" name="oneirotomy-01_object-overview">Object Overview</link></b>
   <br/><br/>
@@ -66,7 +99,7 @@
 
   <seealsolist>
 		<!-- <seealso name="timing_events_topic" module="topics" type="vignette" />	-->
-    <seealso name="the.jit.thalamus" />
+    <seealso name="the.jit.renderer~" />
   </seealsolist>
 
 </vignette>

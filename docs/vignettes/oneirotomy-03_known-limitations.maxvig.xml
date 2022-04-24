@@ -17,22 +17,70 @@
 
   <h2>Only <o>jit.world</o> contexts supported, no <o>jit.gl.render</o> (yet)</h2>
   <p>
-  <o>the.jit.thalamus</o> has to be in touch with a <o>jit.world</o> to access all necessary information from it and impose the user's desired settings as well. This is currently not possible with <o>jit.gl.render</o> given that the former accesses information which is available in an optimized way in <o>jit.world</o>. In a future update, however, this could be possible via an additional attribute to <o>the.jit.thalamus</o> or advice for additional patching to support it.
+  <o>the.jit.renderer~</o> has to be bound to a <o>jit.world</o> by the same name to access all necessary information from it and impose the user's desired settings as well. This is currently not possible with <o>jit.gl.render</o> given that the former accesses information which is available in an optimized way in <o>jit.world</o>. In a future update, however, this could be possible via an additional attribute to <o>the.jit.renderer~</o> or advice for additional patching to support it, for now, please use the &quot;world&quot; method on <o>the.oneirotomy.setup</o> to upgrade legacy render setups.
+  </p>
+
+  <h2>Vizzie Modules use many hidden setups incompatible with non-realtime rendering</h2>
+  <p>
+    Well, one has to rebuild these modules to be compatbiel with Oneirotomy…… replacing/augmenting all timing objects. <o>delay</o> or <o>qmetro</o> objects all need to be captured somewhere down the line.
   </p>
 
   <h2>Audio to Video Translation using <o>jit.catch~</o></h2>
   <p>
-    <o>jit.catch~</o> <i>transforms MSP signals into a stream of Jitter matrices</i>. While similar results may be achieved using <o>jit.poke~</o>—which can be replaced by <o>the.mc.jit.amygdala~</o> to support offline rendering in this package—, it functions and behaves quite differently. Unlike <o>jit.poke~</o> it captures a stream of MSP samples and upon receiving a <m>bang</m> will write those into a new Jitter matrix. To record such progressions in a fashion that can replace <o>jit.catch~</o> reliably, including its different <i>modes</i>, the entire stream needs to be captured, successively. When the length of the final video or audio-performance to create the video, is unknown, <o>jit.concat</o> will have to be used to accumulate the matrix data, infinitely. Sure enough, and depending on the complexity of audio being processed at the same time, we may experience dropouts and memory leaks in the process. Furthermore, when operating <i>@mode 0</i>. the dimensions of the matrix may vary and its variyng states must not overwrite larger matrices as well as need to be replicated during rendering without ever leaving the matrix-domain, preferrably.
-    <br/>Similar approaches were taken initially to work with <o>jit.poke~</o> or <o>jit.mo.func</o>, but were later replaced by logic working with <o>jit.matrixset</o> for the former and a <i>speed control</i> method (using <o>the.jit.mojo</o>) for the latter. <o>jit.catch~</o>, however, is currently not nateivly supported, yet… 
+    <o>jit.catch~</o> <i>transforms MSP signals into a stream of Jitter matrices</i>. While similar results may be achieved using <o>jit.poke~</o>—which can be replaced by <o>the.jit.poke~</o> to support offline rendering in this package—, it functions and behaves quite differently. Unlike <o>jit.poke~</o> it captures a stream of MSP samples and upon receiving a <m>bang</m> will write those into a new Jitter matrix. To record such progressions in a fashion that can replace <o>jit.catch~</o> reliably, including its different <i>modes</i>, the entire stream needs to be captured, successively. Sure enough, and depending on the complexity of audio being processed at the same time, we may experience dropouts and memory leaks in the process. Such artefcts can be tweaked using the <at>concapture</at> attribute, specifying how large the individual matrix blocks are, and thus, how often these blocks have to be saved to disk. Furthermore, when operating <i>@mode 0</i>. the dimensions of the matrix may vary and its variyng states must not overwrite larger matrices as well as need to be replicated during rendering without ever leaving the matrix-domain, preferrably.
+    <br/>Similar approaches were taken initially to work with <o>jit.poke~</o> or <o>jit.mo.func</o>, but were later replaced by logic working with <o>jit.matrixset</o> for the former and a <i>speed control</i> method (using <o>the.jit.mo.drive</o>) for the latter. <o>jit.catch~</o>, however, is currently still in beta…
     <br/>
     <br/>
-    An abstraction called <o>the.mc.jit.mnemonic~</o> can meanwhile be used to replace a <o>jit.catch~</o> object. It has not ben thoroughly tested yet and operation <at>mode</at> 0 is currently not supported. A second argument for the number of audio channels is required, even in single-channel mode (1 in that case). Reference and helpfiles do exist, however, not in much detail.
+    An abstraction called <o>the.mc.jit.catch~</o> can meanwhile be used to replace a <o>jit.catch~</o> object.
     <br/>Feedback and suggestions welcome.
   </p>
 
     <h2>Timed GL-objects requiring <o>jit.world</o> to be enabled</h2>
   <p>
     The use of <o>jit.anim.drive</o> in video contexts, for example, yields quick and intuitive control, as well as aesthetic motion to GL-objects. In a context, where <o>jit.world</o> is disabled, these and related objects will not output any useful data. Their output needs to be manually reproduced, using Max messages at the desired framerate, for example.
+  </p>
+
+    <h2>Frame Jumps</h2>
+  <p>
+    A <m>frame</m> method has been implemented. As it stands, this may be confusing and/or may yield unwanted results at the given frame which demand extrapolation from the viewer. Given that the foundation to the video is likely to be <i>generative</i>, i.e. based on evolving, accumulating data and audio, the frame progression would have to take place linearly, one after the other for mutations to take shape in the desired way. Jumping frames will recall data at arbitrary points in the timeline and all the developments inbetween are obviously skipped, while previous frames are not purged from the rendering. One will need to be aware of that. To check whether certain mutations take place at the same time or in short progression etc., this feature will be of merit. The operation mode of <o>the.jit.renderer~</o> is set back to '0' and will have to be retrieved to '1' manually for realtime playback.
+  </p>
+
+  <h2>Different rendering dimensions may yield different, or even missing results</h2>
+  <p>
+    Using the <at>dim</at> of <o>the.jit.renderer~</o>, the output dimensions of the rendered video can be scaled to taste. This is useful when working at lower dimensions but rendering in hiQ. However, one must bear in mind that changing these for the final rendering will cause gl-objects to behave differently. If the aspect ratio is not identical to the realtime scaling, transformations may turn out differently. Likewise, drawing at higher resolution may require proportional adjustments in certain parameters, i.e. resolutions of matrices may have to be adjusted in parallel, resolutions of a <o>jit.gl.mesh</o> may have to be adjusted, etc. <br/>
+    <o>the.timeline</o> will output a '1' from its fourth outlet <i>before</i> rendering commences and hence can be used to adjust settings accordingly.
+  </p>
+
+
+    <h2>Movie playback and resampling</h2>
+    <p>
+      Correct movie playback per frame requires many tweaks and calls to the <o>jit.movie</o> object which haven't fully been implemented, and/or understood perfectly with regards to individual patches and usecases.
+      <br/>However, <o>the.jit.movie.ctrl</o> is an object that can bind to either <o>jit.movie</o> or <o>jit.movie~</o> objects and control their offline playback during rendering when connected to their dump outlets. Note that by default, all movies are loaded into RAM in this case, this feature can be deactivated with the <m>loadram</m> setting.
+    </p>
+
+    <h2>Camera input</h2>
+    <p>
+      To make use of <o>jit.grab</o> in non-realtime contexts, the video stream would have to be recorded as video beforehand to later be used in offline scenarios. This feature has been attempted, yet it requires a separate recording engine than the one native to <o>the.jit.renderer~</o> and the timing of the incoming and writtten frames is inaccurate, despite in high schedulder priority during recording. This leads to &quot;slower&quot; recordings and is thus not supported yet.
+    </p>
+    <!-- <illustration><img   id="_x0000_i1003" src="images/jit.anim.path_example.png"/></illustration> -->
+
+    <!-- <caption>
+  		<i>Use <o>the.mc.data</o> @active 4 to record data from <o>jit.anim.path</o></i>
+  	</caption> -->
+
+    <!-- <techdetail>
+    	<b>framedelay</b>: <o>the.mc.data</o> captures all data it receives during recording into an internal <o>mtr</o> object. During rendering, however,—and obviously at a lower rate due to the <i>fps</i> setting—the data accumulated inbetween frames is being spilled before the next frame is rendered. To ensure all data can be output before the next frame is being rendered, it is advised to set <o>the.jit.renderer~</o>' <at>framedelay</at> setting to at least <m>1</m> frame. This will ensure that the next frame will not be rendered until the internal data is back up to date.<br/>
+      <b>toggleworld</b>: For <o>the.mc.data</o> to capture data output by a world-bound gl-object such as the <o>jit.anim.path</o>, the world rendering context must be running during recording and thus <o>the.jit.renderer~</o>' <at>toggleworld</at> setting must be disabled to keep <o>jit.world</o> running.
+    </techdetail> -->
+  <!-- <illustration><img   id="_x0000_i1006" src="images/change-attrs-during-rendering.png"/></illustration>
+
+  <caption>
+		<i>The fourth outlet of <o>jit.renderer~</o> can be used to adjust params depending on whether we are rendering, or not. Here, the <at>point_size</at> of a <o>jit.gl.mesh</o> is increased when rendering at higher dimensions</i>
+	</caption> -->
+
+      <h2>Allow a few bogus frames at begining of sequence</h2>
+  <p>
+    It has occasionally been observed, that up to 5 frames at the beginning of the sequence were not part of the desired video, were either black or values were not yet applied. This will be dealt with in the course of its development, for now, however, it is best practise to allow a few corrupt frames at the beginning. Furthermore, <o>the.timeline</o> outputs the current frame, starting out at 0, but these frames may have to be shifted slightly (using <o>+</o> or <o>-</o> operators) to match the exact timing. <br/> Most very likely, the first frame will be black or unusable!
   </p>
 
     <h2>Os</h2>
@@ -51,7 +99,7 @@
 
   <seealsolist>
 		<!-- <seealso name="timing_events_topic" module="topics" type="vignette" />	-->
-    <seealso name="the.jit.thalamus" />
+    <seealso name="the.jit.renderer~" />
   </seealsolist>
 
 </vignette>

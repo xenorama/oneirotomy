@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<?xml-stylesheet href="./_c74_tut.xsl" type="text/xsl"?>
+
+<chapter name="Oneirotomy Tutorials: Rethinking the Jitter-Patch" package="Oneirotomy">
+
+<setdocpatch name="Rethinking the Jitter-Patch" patch="001_rethinking-the-jitter-patch.maxpat"/>
+<next name="002_the.jit.thalamus">Introducing the Thalamus</next>
+<parent name="000_oneirotomy-tutorials">Oneirotomy Tutorials</parent>
+
+<indexinfo category="Non-Realtime Rendering" title="Rethinking the Jitter-Patch">How can a non-realtime be approached?</indexinfo>
+
+<h1>Tutorial 1: Rethinking the Jitter-Patch</h1>
+
+<h2>Jitter is Realtime</h2>
+
+<p>When working in Jitter, we compose objects to render content in realtime, based on audio, timing or input sources, or on a fixed timeline only.</p>
+<p>
+Since most of the patches one comes up with are designed to generate audio and visuals on the fly, it isn't as straight forward a matter to create a neat video with all the realtime content on the basis of a single click. In Max there is no mode to <i>decelerate</i> the audio engine for everything to be captured at slower speed, or separate from timing in general. Rendering video directly from a patch can be done natively using <o>jit.record</o> or <o>jit.vcr~</o>, however, should the scheduler experience overload or the CPU has too much to handle at once, the renderer of choice may not compete and the video will contain unwanted frames, lags or dropouts — same in the audio domain when the scheduler is not running in its favour.
+<br/>Parameters determining whether the final video will match one's vision could be one of the following:
+</p>
+
+<ul>
+  <li>A lot of audio processing with scheduler in audio interrupt</li>
+  <li>A lot of necessary matrix-texture conversion</li>
+  <li>Generally, a lot of CPU-based  matrix-processing</li>
+  <li>A lot of sensitive timing</li>
+</ul>
+<p>
+To render our realtime patches offline—i.e., with idle DSP and no relevant clock running in realtime—all hubs at which domains are converted will need to be hijacked and recorded, then paired with the render-frames of the specified framerate and video-length.
+<br/>Within a single domain—audio, data or video—every stream, or queue, can remain untouched. The ports at which one domain converts to another are those of interest.
+<br/>It will not necessarily be straight forward or obvious where such conversions take place in an individual patch. However, there are a limited number of objects to remember which perform such conversions and knowing one's patch well enough, as well as understanding its stream of data will make it a lot easier to record the necessary frames. Bear in mind that video operates at a much slower rate than does audio and hence we will only need to <i>render</i> what is actually visible in the end—at the same time, video content can be dependent and building upon accumulated data inbetween frames which may, or may not have a massive impact on the result.
+</p>
+<!-- <p>
+Open the tutorial patch.
+<br/>The boxes in different colours highlight sections of an audiovisual patch where conversions are taking place.
+<br/>Activate <o>jit.world</o> to start the renderer. Nothing will happen.
+</p>
+<p>
+Since the patch is entirely based on audio and timing, we will have to activate DSP and begin the metronome to start the <o>transport</o>. Click the two <o>toggle</o> elements in the green box to do so.
+<br/>
+A metronome will start playing and in the <o>jit.pwindow</o> we can see a faint light moving at 97bpm along a grid of 7/8 signature x 4 rows. The data produced by the <o>transport</o> object is translated into signals and further used to populate a jit_matrix named <i>space</i> using <o>jit.poke~</o>.
+<br/>Change the <at>tempo</at> attribute of <o>transport</o>, the visual sequencer will follow suit.
+</p>
+
+<p>
+Next, enable the <i>grid</i>, which translatse the audible signal into a stream of jitter matrices using <o>jit.catch~</o>. >out will see slightly varying white bars across the sequencer, reflecting the captured sound of the metronome.
+<br/>
+</p> -->
+<p>
+  When using the Oneirotomy package and beginning to familiarize with its offline rendering system, one should start thinking of the Jitter patch in two different scenarios:
+  <ul>
+    <li><b>Realtime</b>: Everything can be scaled down to support realtime performance, which enables smooth recording of all necessary data/signals</li>
+    <li><b>Non-Realtime</b>: Everything can be scaled up to desired output formats, dimensions, resolutions — recalling recorded data frame by frame</li>
+  </ul>
+</p>
+<p>
+  <o>the.jit.renderer~</o> toggles between four modes of operation:
+  <ul>
+    <li><b>0:</b> Manual frame recall (after recording has taken place or using <o>the.timeline</o>), essentially <i>Rendering</i> mode without rendering to disk</li>
+    <li><b>1:</b> Regular Playback</li>
+    <li><b>2:</b> Record (Data/Audio/Domain translations)</li>
+    <li><b>3:</b> Render Video frame-by-frame to disk</li>
+    <li><b>4:</b> Capture current video stream in realtime to disk (expect little…)</li>
+  </ul>
+</p>
+
+<seealsolist>
+  <seealso name="the.jit.thalamus"/>
+</seealsolist>
+
+</chapter>

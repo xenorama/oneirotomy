@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="the.obj.init" module="jitter" category="Data, Timing">
+
+	<digest>
+		Switch object attributes as per offline rendering modes of <o>the.jit.renderer~</o>
+	</digest>
+
+	<description>
+		Written by Tim Heinze © 2020, www.xenorama.com. <br/>
+		<o>the.obj.init</o> switches a named or attached (GL) object's attributes according to current offline rendering mode.
+		<br/>When attempting to render Jitter content in non-realtime at higher resolutions or other adaptable settings, these can be toggled automtically depending on playback or rendering mode. Sending messages to inlets or outlets of dedicated GL-objects is also supported (i.e. 'sendinput').
+	</description>
+
+	<discussion>
+		<o>the.jit.renderer~</o> providing a central context is required in the enviroment.
+		<br/>
+		<br/>Often, when attempting to render Jitter content in non-realtime, adjusting the dimenion of <o>jit.world</o> may lead to changed aesthetics of the environment due to different resolutions. In these cases, all scene objects may need to be adapted in their settings. <o>the.obj.init</o> provides a means to do this automatically. All settings are saved as a separate dictionary to the directory of the patch.
+	<br/>Furthermore, this object can be used to downscale resoltuions during playback for more efficiency in realtime mode, allowing more precise timing when recording data and sound sources.
+	</discussion>
+
+	<!--METADATA (REMOVE FOR SIMPLICITY) -->
+	<metadatalist>
+		<metadata name="author">Tim Heinze</metadata>
+		<metadata name="tag">Xenorama</metadata>
+		<metadata name="tag">Offline Video Rendering</metadata>
+		<metadata name="tag">Data, Jitter</metadata>
+	</metadatalist>
+
+	<!--INLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--OUTLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--ARGUMENTS-->
+	<objarglist>
+		<objarg name="ctx" optional="0" type="symbol" size="1" default="#0">
+			<digest>
+				Specify a valid render context for all children objects to sync to
+			</digest>
+			<description>
+				As of Version 2.0 the ctx-name must match that of a <o>jit.world</o> present in the patch. It is necessary to provide a context name for all members of the offline render family to sync and respond to.
+			</description>
+		</objarg>
+		<objarg name="gl-object-name" optional="1" type="symbol" size="1">
+			<digest>
+				Specify a named gl-object to bind to.
+			</digest>
+			<description>
+				Any object with identical <at>name</at> attribute will be controlled by <o>the.obj.init</o>. If no second argument is provided, all settings are output from the leftmost outlet instead, allowing for control of multiple objects with identical attributes.
+			</description>
+		</objarg>
+		<objarg name="init-flag" optional="1" type="bool" size="1">
+			<digest>
+				Specify which setting to initialise to upon load
+			</digest>
+			<description>
+				Specify which setting to initialise to upon load. If a named gl-object is specified using the <ar>name</ar> argument, this object can be initialised to &quot;0&quot; (playback/recording) or &quot;1&quot; (rendering) upon load. While all attributes can be hard-coded to the object box, messages to inlets and outlets have to be sent after patcher load to take effect.
+			</description>
+		</objarg>
+	</objarglist>
+
+	<!--ATTRIBUTES (REMOVE FOR SIMPLICITY) -->
+	<attributelist>
+	<attribute name="(object-variable)" get="1" set="1" type="anything" size="1">
+		<digest>
+			Specify any attribute an attached or linked object understands
+		</digest>
+		<description>
+			Specify any attribute an attached or linked object understands. This could be  &quot;@dim "128 128 0" "2048 2048 0"&quot; for a named <o>jit.gl.texture</o> object. Attribute values pertaining to realtime and rendering need to be put into symbol quotes, respectively. This nway the respective texture will be set to dimensions of 128x128 when playing back or recording, and 2048x2048 when rendering.
+		<br/>When changing texture dimensions of the texture continuously controlling objects like <o>jit.gl.bfg</o> mgiht call for use of different filter settings in the latter object. Since these filter settings cannot be accessed as attributes, they need to be sent as messages to <o>jit.gl.bfg</o>. This is done using methods like &quot;sendinput filter none&quot; or &quot;sendoutput filter linear&quot;. This messages can be sent using <o>the.obj.init</o> by simply adding an attribute like so: &quot;@sendoutput "filter none" "filter linear"&quot;. Texture filtering will henceforth be toggled between &quot;none&quot; and &quot;linear&quot; in playback and rendering mode, respectively (for all outlets of <o>jit.gl.bfg</o>).<br/>
+		Any of these settings can be sent to the middle and right inlets as well, specifying &quot;playback&quot; and &quot;rendering&quot; settings accordingly.
+		</description>
+	</attribute>
+	<attribute name="name" get="1" set="1" type="symbol" size="1">
+		<digest>
+			Specify a unique name to write to.
+		</digest>
+		<description>
+			Specify a unique name to export to after completion of the capturing process, managed by <o>the.jit.renderer~</o>. The resulting filetype is <m>txt</m> file and can be imported using the <m>import</m> message.
+		</description>
+	</attribute>
+	<attribute name="raw" get="1" set="1" type="anything" size="1">
+		<digest>
+			Specify any raw data to initialise to
+		</digest>
+		<description>
+			Specify any raw data to initialise to. Such raw data can be an integer to reset a timer or progressive transformation (like <o>accum</o>, for example) and will be output from the middle outlet whenever the operation mode changes. If no <at>raw</at> data is provided, a &quot;bang&quot; is output from the middle outlet upon mode changes instead.
+		</description>
+	</attribute>
+	<attribute name="sync_dim" get="1" set="1" type="bool" size="1">
+		<digest>
+			Inherit dimensions from <o>jit.world</o> per oepration mode
+		</digest>
+		<description>
+			Inherit dimensions from <o>jit.world</o> per oepration mode. Useful for <o>jit.gl.texture</o> and following gl-objects rendering at <m>transform_reset 2</m> (to maximum rendering window size), thus inheriting the specified dimensions whenever the operation mode switched from playback/recording to offline rendering and vice versa. Controlled objects will automatically update their dimensions accordingly.
+		</description>
+	</attribute>
+</attributelist>
+
+	<!--MESSAGES-->
+
+	<methodlist>
+		<method name="bang">
+			<arglist />
+			<digest>
+				Update and send dictionary data out right outlet
+			</digest>
+			<description>
+				In left inlet: Update and send dictionary data out right outlet. This will re-scane the environment for the named object, if provided, and output all settings as dictionary from the dump outlet.<br/>
+				In middle inlet: Capture current &quot;dim&quot; attribute from named gl-object and save for &quot;playback&quot; mode
+				In right inlet: Capture current &quot;dim&quot; attribute from named gl-object and save for &quot;rendering&quot; mode
+			</description>
+		</method>
+		<method name="int">
+			<arglist />
+			<digest>
+				Toggle attribute switch
+			</digest>
+			<description>
+				Toggle attribute switch. This immitates the operation mode toggle received from <o>the.jit.renderer~</o>, effectively switching between specified attributes for the attached or named object without affecting rendering modes globally.
+			</description>
+		</method>
+
+	</methodlist>
+
+	<!--EXAMPLE-->
+	<!-- <examplelist>
+		<example img="the.mtr.png" caption="insert after timing-objects and before matrix/texture domain to record/render realtime data" />
+	</examplelist> -->
+
+	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
+	<seealsolist>
+		<seealso name="the.jit.renderer~"/>
+		<seealso name="the.oneirotomy.setup"/>
+		<seealso name="the.jit.poke~"/>
+		<seealso name="the.jit.mo.drive"/>
+		<seealso name="the.jit.movie.ctrl"/>
+		<seealso name="the.timeline"/>
+		<seealso name="the.snapshot~"/>
+		<seealso name="the.mc.data"/>
+		<seealso name="the.mc.jit.catch~"/>
+		<seealso module="jitter" name="oneirotomy-00_introduction" type="vignette" />
+		<seealso module="jitter" name="oneirotomy-01_object-overview" type="vignette" />
+		</seealsolist>
+
+</c74object>

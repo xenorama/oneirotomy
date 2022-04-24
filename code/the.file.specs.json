@@ -1,0 +1,32 @@
+{
+	"matrix" : 	{
+		"png" : [ "importmovie", "exportimage", "jit_matrix" ],
+		"tiff" : [ "importmovie", "exportimage", "jit_matrix" ],
+		"jxf" : [ "read", "write", "jit_matrix" ]
+	}
+,
+	"funbuff" : 	{
+		"pat" : [ "read", "write","paste" ]
+	}
+,
+	"dict" : 	{
+		"json" : [ "read", "write", "dictionary", "bang" ]
+	}
+,
+	"coll" : 	{
+		"txt" : [ "read", "write", "refer" ]
+	}
+,
+	"buffer" : 	{
+		"aif" : [ "importreplace", "write", "set" ],
+		"wav" : [ "importreplace", "write", "set" ],
+		"aiff" : [ "importreplace", "write", "set" ],
+		"wave" : [ "importreplace", "write", "set" ]
+	}
+,
+	"text" : 	{
+		"txt" : [ "read", "write", "read", "dump" ]
+	}
+,
+	"items" : [ "matrix", "funbuff", "dict", "coll", "buffer", "text" ]
+}
