@@ -167,3 +167,8 @@ function world_func(data){
     output_dict();
   }
 }
+
+function renderer_freepeer(){
+  renderer.bound = undefined;
+  print("'"+ctx+"' has been removed")
+}

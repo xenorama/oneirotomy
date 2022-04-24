@@ -223,12 +223,12 @@ const handlers = {
 				const toFile = expandTilde(args[1]);
 				await copyFile(fromFile, toFile, fs.constants.COPYFILE_EXCL);
 				await unlink(fromFile);
-				maxAPI.post(`mv: ${fromFile} to ${toFile}`);
+				// maxAPI.post(`mv: ${fromFile} to ${toFile}`);
 			} else {
 				maxAPI.post("The mv command needs exactly two arguments!");
 			}
 		} catch (e) {
-			maxAPI.post("Error " + e.message);
+			// maxAPI.post("Error " + e.message);
 		}
 	},
 

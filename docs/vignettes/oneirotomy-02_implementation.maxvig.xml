@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <?xml-stylesheet href="_c74_vig.xsl" type="text/xsl"?>
-<vignette name="Oneirotomy Implementation" package="Oneirotomy">
+<vignette name="Oneirotomy: Implementation" package="Oneirotomy">
   <metadatalist>
     <metadata name="author">Tim Georg Heinze</metadata>
     <metadata name="tag">Xenorama</metadata>
@@ -55,14 +55,14 @@
 
   <h2>Domain Translation Capture</h2>
   <p>
-    To capture audio and transform it into video-relevant data, there are a couple of Max/MSP/Jitter objects natively available. These work in different ways. Capturing their results requires different techniques, some of which have not proven efficient yet (as with <o>jit.catch~</o>) and therefore cannot be supported at the moment without further ado. Some objects can simply be replaced by others from the package, but do require specific arguments (see the helpfiles or reference-pages for details). Should the arguments be bogus, a notification will be sent to the Max console.
+    To capture audio and transform it into video-relevant data, there are a couple of Max/MSP/Jitter objects natively available. These work in different ways. Capturing their results requires different techniques, some of which have not yet been tested enough yet (as with <o>jit.catch~</o>) and therefore cannot be considered 100% supported at the moment without further ado. Some objects can simply be replaced by others from the package, but do require specific arguments (see the helpfiles or reference-pages for details). Should the arguments be bogus, a notification will be sent to the Max console.
   </p>
 
   <ul>
     <li><o>snapshot~</o> — Replace by <o>the.snapshot~</o> and make sure a 'render bang' will be received at its inlet or set to &quot;@automatic 1&quot; with optional interval setting (see also the 'discussion' section in <o>the.snapshot~</o>)</li>
     <li><o>mc.snapshot~</o> — Replace by <o>the.mc.snapshot~</o></li>
     <li><o>jit.poke~</o> - Replace by <o>the.jit.poke~</o></li>
-    <li><o>jit.catch~</o> - Can be replaced by <o>the.mc.jit.catch~</o> but is <i>not set fully supported (W.I.P.)!</i>. See the <link type="vignette" module="Oneirotomy" name="oneirotomy-03_known-limitations">Known Limitations</link> section for development info</li>
+    <li><o>jit.catch~</o> - Replace by <o>the.mc.jit.catch~</o> — see the <link type="vignette" module="Oneirotomy" name="oneirotomy-03_known-limitations">Known Limitations</link> section for development info</li>
   </ul>
 
 

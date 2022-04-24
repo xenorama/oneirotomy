@@ -56,21 +56,20 @@
 		<i>Attach to <o>jit.mo.func</o> to control the <at>speed</at> attribute manually using its <m>phase</m> attribute while <o>jit.world</o> is disabled (as  when rendering in non-realtime)</i>
 	</caption>
 
-  <h2>Replace <o>jit.catch~</o> by <o>the.mc.jit.catch~</o> (not officially supported though)</h2>
+  <h2>Replace <o>jit.catch~</o> by <o>the.mc.jit.catch~</o> (beta)</h2>
  <p>
-    An abstraction called <o>the.mc.jit.catch~</o> can meanwhile be used to replace a <o>jit.catch~</o> object. It has not ben thoroughly tested yet and operation <at>mode</at> 0 is currently not supported. A second argument for the number of audio channels is required, even in single-channel mode (1 in that case). Reference and helpfiles do exist, however, not in much detail.
-    <br/>Note also, that since it is an abstraction, using <o>attrui</o> to change object attributes is not supported by Max, and they have to be replaced by message-boxes to change <o>jit.catch~</o> attributes. For the same reason why <m>mode 0</m> is not supported, the <at>framesize</at> attribute cannot be changed while recording.
+    An abstraction called <o>the.mc.jit.catch~</o> can meanwhile be used to replace a <o>jit.catch~</o> object. It has not ben thoroughly tested yet and switching <m>mode</m>, <m>framesize</m> etc. during the video recording process will require some beta testing.
+    <br/>Note also, that since it is an abstraction, using <o>attrui</o> to change object attributes is not supported by Max, and they have to be replaced by message-boxes to change <o>jit.catch~</o> attributes.
     <br/>Feedback and suggestions welcome.
   </p>
 
 <illustration><img   id="_x0000_i1005" src="images/the.mc.jit.catch~_example.png"/></illustration>
 
   <caption>
-		<i>Replacing <o>jit.catch~</o>. Functionality is not quite supported yet, attributes have to be sent as Max messages.</i>
+		<i>Replacing <o>jit.catch~</o>. Functionality is BETA.</i>
 	</caption>
   <techdetail>
   	To record matrix data output by <o>the.mc.jit.catch~</o>, every frame of MSP audio—represented by a single-dimensional matrix—is accumulated into one large <m>jit_matrix</m> using <o>jit.concat</o>. When recording or playing back long audio sequences, this may tackle available memory or cause leaks. At least, is hasn't been throughly tested.
-    <br/>A similar methodology to that used by <o>the.jit.poke~</o> (recording blocks of temporary matrices to later concatenate them) is of course thinkable, but as long as mode 0 is not supported, the optimization of this method will not be pursued.
   </techdetail>
 
   <br/>

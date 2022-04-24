@@ -186,7 +186,7 @@ ATTRIBUES
     function get_toggleworld() { return toggleworld };
 
   // DEACTIVATE DSP during recording
-  var toggledsp = 0;
+  var toggledsp = 1;
     declareattribute("toggledsp","get_toggledsp","set_toggledsp",0);
     function set_toggledsp(tw) { toggledsp = tw; world_perform.replace("render::toggledsp",toggledsp) }; set_toggledsp.local = 1;
     function get_toggledsp() { return toggledsp };

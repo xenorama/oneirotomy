@@ -546,10 +546,11 @@
 					<arg name="total-flag" optional="1" type="anything" />
 				</arglist>
 		<digest>
-			Delete all files but the latest ones from disk which have been recorded or rendered
+			Delete all data files from disk which have been recorded
 		</digest>
 		<description>
-		The message <m>trash</m> will delete all recorded or rendered files from disk which had previously been written in the current session, except the very last versions written by its related instances. Essentially, it will pruge all unwanted data which may have been written accidentally or in the course of trial-and-error. <br/>If, however, the message <m>trash</m> is followed by any argument, all previous files will be deleted, including the latest one. <br/>This action cannot be undone and no confirmation will be demanded. The respective files are deleted permanently from disk.
+			Delete all data files from disk which have been recorded. The message <m>trash</m> will delete all recorded files from disk which had previously been written in the current session. <br/>If the message <m>trash</m> is followed by any argument, rendered movie andsoundtrack files are too removed, i.e. everything.<br/>
+			This action cannot be undone and no confirmation will be demanded. The respective files are deleted permanently from disk.
 		</description>
 		</method>
 

@@ -1,7 +1,7 @@
 // max.clearmaxwindow();
 autowatch = 1;
 inlets = 3;
-outlets = 2;
+outlets = 4;
 
 var ctx = jsarguments[1];
 renderer = new Global(ctx+"_world");
@@ -51,15 +51,26 @@ function name(n){
 
 
 function read(){
-  outlet(0,commands.read,filename);
+  outlet(2,commands.read);
+  outlet(0,"read",filename);
   if (commands.dump) outlet(0,commands.dump);
 }
 
-function write() {
-  if (awrite && sname !== "") {
+function write(w,x,y,z) { // filename, obj type, file type, reference name
+  if (w && inlet == 2) {
+    if (arguments.length == 4) {
+      outlet(0,"temp",specs.get(x).get(y)[2],z) // commands.populate
+      // outlet(0,commands.populate,x)
+    }
+    outlet(0,"temp",specs.get(x).get(y)[1],settings.get("render::dir")+ctx+"_"+w+"."+y)
+    outlet(3,settings.get("render::dir")+ctx+"_"+w+"."+y)
+  }
+  else if (awrite && sname !== "") {
     outlet(0,commands.write,settings.get("render::dir")+filename);
+    outlet(3,settings.get("render::dir")+filename);
     // post("directory",settings.get("dir"),'\n')
   }
+  // else if (inlet == 1) outlet(0,commands.write,settings.get("render::dir")+filename);
 }
 
 function op_mode(o){
@@ -81,8 +92,11 @@ function bang(){
     commands = {
       read: obj_specs[0],
       write: obj_specs[1],
-      dump: obj_specs[2]
+      populate: obj_specs[2],
+      dump: obj_specs[3]
     }
+    outlet(2,commands.read);
+    // post(commands.write)
   }
   // if (inlet == 1 && awrite == 0) write()
 }

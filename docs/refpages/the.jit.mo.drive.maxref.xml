@@ -98,15 +98,18 @@
 				<br/> The speed is set in Hz, analogous to the same <o>jit.mo.func</o> attribute.
 			</description>
 		</method>
-		<method name="queue">
-			<arglist />
-			<digest>
-				Open the core Queue Manager GUI
-			</digest>
-			<description>
-				The message <m>queue</m> will open the core Queue Manager GUI in <o>the.jit.renderer~</o> to specify which instance is recording or rendering in the next step.
-			</description>
-		</method>
+		<method name="trash">
+			<arglist>
+				<arg name="total-flag" optional="1" type="anything" />
+			</arglist>
+	<digest>
+		Delete all data files from disk which have been recorded
+	</digest>
+	<description>
+		The message <m>trash</m> will delete all recorded files from disk which had previously been written in the current session by this instance.<br/>
+		This action cannot be undone and no confirmation will be demanded. The respective files are deleted permanently from disk.
+	</description>
+	</method>
 	</methodlist>
 
 	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->

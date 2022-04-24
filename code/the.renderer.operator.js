@@ -20,6 +20,7 @@ var percent = 0;
 var progress = 0.;
 var snapshot_index = 0;
 var bogus_frames = 0;
+var img_seq_files = [];
 var merge_bg = this.patcher.getattr("locked_bgcolor");
 // post("locked_bgcolor",merge_bg)
 
@@ -128,6 +129,7 @@ function op_mode(m){
     world.setattr("dim",dim);
     messnamed(ctx+"_the.jit.rec.mode",3)
     messnamed(ctx+"_the.jit.rec.video",1)
+    img_seq_files = [];
 
       if (hide_window == 1) {
         world.setattr("visible",0);
@@ -195,12 +197,14 @@ function op_mode(m){
     messnamed(ctx+"_the.jit.rec.mode",1)
     if (recording) {
       messnamed(ctx+"_the.jit.rec.audio",0)
+      messnamed(ctx+"_dsp.rec",1)
       recording = 0;
     }
     messnamed(ctx+"_od/ai",overdrive_user,audio_interrupt_user);
   }
   else if (mode == 2){
     if (toggleworld == 1) world.setattr("enable",0);
+    messnamed(ctx+"_dsp.rec",2,toggledsp)
     messnamed(ctx+"_od/ai",overdrive,audio_interrupt);
     messnamed(ctx+"_the.jit.rec.audio",1)
     messnamed(ctx+"_sfrecord",dir+movie_name+"."+audio_type[0]);
@@ -307,6 +311,10 @@ function render_bang(){
       if (container == "mov" && autoopen == 1) messnamed(ctx+"_openfile","file://"+dir+movie_name+".mov");
       else if (container == "img_seq" && autoopen == 1) messnamed(ctx+"_openfile","file://"+dir+movie_name+"_"+frameNumPad(0)+"."+codec);
       if (autoreveal == 1) messnamed(ctx+"_opendir","file://"+dir);
+
+      if (container == "mov") messnamed(ctx+"_generated.movs",ctx,dir+movie_name+".mov");
+      else { for (i in img_seq_files) messnamed(ctx+"_generated.movs",ctx,img_seq_files[i]); }
+      img_seq_files = [];
     }
   }
   else if (mode == 4) {
@@ -332,7 +340,9 @@ function export_image(){
   }
   else {
     if (frame_current < framecount) {
-      imat.exportimage(dir+movie_name+"_"+frameNumPad(frame_current),codec)
+      var pict_name = dir+movie_name+"_"+frameNumPad(frame_current);
+      imat.exportimage(pict_name,codec)
+      img_seq_files.push(pict_name+"."+codec)
       output_mat(imat.name)
     }
   }

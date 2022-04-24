@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <?xml-stylesheet href="_c74_vig.xsl" type="text/xsl"?>
-<vignette name="Oneirotomy Object Functional Overview" package="Oneirotomy">
+<vignette name="Oneirotomy: Object Functional Overview" package="Oneirotomy">
   <metadatalist>
     <metadata name="author">Tim Georg Heinze</metadata>
     <metadata name="tag">Xenorama</metadata>

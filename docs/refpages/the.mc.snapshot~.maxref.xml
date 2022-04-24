@@ -241,17 +241,18 @@
 			The message <m>trash</m> will delete all recorded or rendered files from disk which had previously been written in the current session, except the very last version. Essentially, it will pruge all unwanted data which may have been written accidentally or in the course of trial-and-error. <br/>If, however, the message <m>trash</m> is followed by any argument, all previous files will be deleted, including the latest one.<br/>This action cannot be undone and no confirmation will be demanded. The respective files are deleted permanently from disk.
 			</description>
 			</method>
-<method name="trash">
-			<arglist>
-				<arg name="total-flag" optional="1" type="anything" />
-			</arglist>
-	<digest>
-		Delete all files but the latest ones from disk which have been recorded or rendered
-	</digest>
-	<description>
-	The message <m>trash</m> will delete all recorded or rendered files from disk which had previously been written in the current session, except the very last version. Essentially, it will pruge all unwanted data which may have been written accidentally or in the course of trial-and-error. <br/>If, however, the message <m>trash</m> is followed by any argument, all previous files will be deleted, including the latest one.<br/>This action cannot be undone and no confirmation will be demanded. The respective files are deleted permanently from disk.
-	</description>
-	</method>
+			<method name="trash">
+				<arglist>
+					<arg name="total-flag" optional="1" type="anything" />
+				</arglist>
+		<digest>
+			Delete all data files from disk which have been recorded
+		</digest>
+		<description>
+			The message <m>trash</m> will delete all recorded files from disk which had previously been written in the current session by this instance.<br/>
+			This action cannot be undone and no confirmation will be demanded. The respective files are deleted permanently from disk.
+		</description>
+		</method>
 	</methodlist>
 
 	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
