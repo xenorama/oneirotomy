@@ -2,7 +2,8 @@
 	"matrix" : 	{
 		"png" : [ "importmovie", "exportimage", "jit_matrix" ],
 		"tiff" : [ "importmovie", "exportimage", "jit_matrix" ],
-		"jxf" : [ "read", "write", "jit_matrix" ]
+		"jxf" : [ "read", "write", "jit_matrix" ],
+		"mov" : [ "read", "write", "jit_matrix" ]
 	}
 ,
 	"funbuff" : 	{

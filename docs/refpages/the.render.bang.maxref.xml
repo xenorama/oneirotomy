@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="the.render.bang" module="max" category="Data, Timing">
+
+	<digest>
+		Replace a jit.world's render bang at high priority during recording for offline rendering
+	</digest>
+
+	<description>
+		Written by Tim Heinze © 2020, www.xenorama.com. <br/>
+		While recording generative data for offline rendering purposes, <o>the.render.bang</o> can replace bangs not output by a disabled <o>jit.world</o>. By default, the interval syncs to the target framerate in high priority thread and can be deferred with the <at>defer</at> flag nonetheless. In <at>automatic</at> mode, all bangs are produced by <o>the.render.bang</o> itself, bypassing all true render bangs by jit.world.
+		<br/>See the <at>toggleworld</at> listing in <o>the.jit.renderer~</o>.
+	</description>
+
+	<discussion>
+		<o>the.jit.renderer~</o> providing a central context is required in the enviroment.
+		<br/>
+		<br/>
+		This object comes into play when recordings of complex, and intense Jitter setups need step-by-step recording of timeline data while disabling jit.world for higher recording performance. <o>the.render.bang</o> then immitates jit.world's render bang behaviour in high priority (deferrable).
+	</discussion>
+
+	<!--METADATA (REMOVE FOR SIMPLICITY) -->
+	<metadatalist>
+		<metadata name="author">Tim Heinze</metadata>
+		<metadata name="tag">Xenorama</metadata>
+		<metadata name="tag">Offline Video Rendering</metadata>
+		<metadata name="tag">Data, Timing</metadata>
+	</metadatalist>
+
+	<!--INLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--OUTLETS (REMOVE FOR SIMPLICITY) -->
+
+	<!--ARGUMENTS-->
+	<objarglist>
+		<objarg name="ctx" optional="0" type="symbol" size="1" default="#0">
+			<digest>
+				Specify a valid render context for all children objects to sync to
+			</digest>
+			<description>
+				As of Version 2.0 the ctx-name must match that of a <o>jit.world</o> present in the patch. It is necessary to provide a context name for all members of the offline render family to sync and respond to.
+			</description>
+		</objarg>
+	</objarglist>
+
+	<!--ATTRIBUTES (REMOVE FOR SIMPLICITY) -->
+	<attributelist>
+		<attribute name="active" get="1" set="1" type="int" size="1">
+			<digest>
+				Set the active flag
+			</digest>
+			<description>
+				Set the active flag. There are 5 active states available suitable for different purposes:
+				<br/>
+				<br/>0 = ignore this object and pass everything through without recording or recalling
+				<br/>1 = operate normally (default); playback, record and output during rendering
+				<br/>2 = playback and output previously recorded data normally but do not record any new data
+				<br/>3 = playback and record normally but do not output data during rendering
+				<br/>4 = record and output during rendering but never pass incoming data
+				<br/>5 = mute all activity
+				<br/>
+				<br/>When bound to object of the jit.anim family — either explicitly or by patchcords — the.render.bang automatically assumes active mode &quot;4&quot; to not output data additionally to the bound object. This is necessary since the.render.bang has to augment the object in question and cannot be placed on the patchcord to the target gl-object (otherwise no transformation commands would be output anymore).
+				<br/>Note that while recording is disabled, the automatic export upon recording completion (if a <at>name</at> is specified) is also disabled and previous files will not be overwritten.
+				<br/>Furthermore, the <at>active</at> flag is overriden by the <m>solo</m> state of the object, which can be handled using the <m>queue</m> method. In the case of the.render.bang, this active mode is &quot;0&quot; when not bound to anim-objects and &quot;5&quot; when bound, in order to prevent duplicate commands to output to the target object.
+			</description>
+		</attribute>
+		<attribute name="automatic" get="1" set="1" type="bool" size="1">
+			<digest>
+				Replace all incoming render bangs by internal metronome
+			</digest>
+			<description>
+				Replace all incoming render bangs by internal metronome at all times. When muted as per <at>active</at> flag, no bangs are produced, however.
+			</description>
+		</attribute>
+		<attribute name="defer" get="1" set="1" type="bool" size="1">
+			<digest>
+				Keep render bangs in low priority thread
+			</digest>
+			<description>
+				Keep artificial render bangs in low priority thread nonetheless.
+			</description>
+		</attribute>
+		<attribute name="name" get="1" set="1" type="symbol" size="1">
+			<digest>
+				Specify a unique name as identifier in the queue
+			</digest>
+			<description>
+				Specify a unique name as identifier in the queue. This listing is relevant only for the <m>queue</m> table in <o>the.jit.renderer~</o>.
+			</description>
+		</attribute>
+		<attribute name="send" get="1" set="1" type="symbol" size="1">
+			<digest>
+				Specify a named receive port for render bangs
+			</digest>
+			<description>
+				Specify a named receive port for render bangs.
+			</description>
+		</attribute>
+</attributelist>
+
+	<!--MESSAGES-->
+
+	<methodlist>
+		<method name="bang">
+			<arglist>
+				<arg name="input" optional="0" type="list" />
+			</arglist>
+			<digest>
+				Expected render bang to pass through
+			</digest>
+			<description>
+				Expected render bang is passed through during playback and rendering. While recording, the.render.bang replaces these bangs, regardless of whether jit.world is disabled or enabled.<br/>
+				Any <m>bang</m> received is directly passed through to the second outlet.
+			</description>
+		</method>
+	</methodlist>
+
+	<!--EXAMPLE-->
+	<examplelist>
+		<example img="the.render.bang.png" caption="insert after timing-objects and before matrix/texture domain to record/render realtime data" />
+	</examplelist>
+
+	<!--SEEALSO (REMOVE FOR SIMPLICITY) -->
+	<seealsolist>
+		<seealso name="the.oneirotomy.setup"/>
+		<seealso name="the.jit.renderer~"/>
+		<seealso name="the.snapshot~"/>
+		<seealso name="the.timeline"/>
+		<seealso name="the.obj.init"/>
+		<seealso name="the.mc.data"/>
+		<seealso name="metro"/>
+		<seealso name="mtr"/>
+		<seealso name="seq"/>
+		<seealso module="jitter" name="oneirotomy-00_introduction" package="Oneirotomy" type="vignette" />
+		<seealso module="jitter" name="oneirotomy-01_object-overview" package="Oneirotomy" type="vignette" />
+		<seealso module="jitter" name="oneirotomy-02_implementation" package="Oneirotomy" type="vignette" />
+		<seealso module="jitter" name="oneirotomy-03_known-limitations" package="Oneirotomy" type="vignette" />
+	</seealsolist>
+
+</c74object>
