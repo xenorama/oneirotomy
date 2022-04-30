@@ -20057,16 +20057,9 @@
 				"implicit" : 1
 			}
 , 			{
-				"name" : "the.helpargs.js",
-				"bootpath" : "~/Documents/Max 8/Xenorama/XEN_Ablage",
-				"patcherrelativepath" : "../../../Xenorama/XEN_Ablage",
-				"type" : "TEXT",
-				"implicit" : 1
-			}
-, 			{
 				"name" : "the.helpattrs.js",
-				"bootpath" : "~/Documents/Max 8/Packages/the-abstractions/the-max/the-rgb-patch",
-				"patcherrelativepath" : "../../the-abstractions/the-max/the-rgb-patch",
+				"bootpath" : "~/Documents/Max 8/Packages/the.oneirotomy/code",
+				"patcherrelativepath" : "../code",
 				"type" : "TEXT",
 				"implicit" : 1
 			}

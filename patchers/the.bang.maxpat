@@ -208,7 +208,7 @@
 , 			{
 				"box" : 				{
 					"border" : 0,
-					"filename" : "the.helpargs.js",
+					"filename" : "helpargs.js",
 					"id" : "obj-79",
 					"ignoreclick" : 1,
 					"jsarguments" : [ "the.bang" ],
@@ -217,7 +217,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 731.0, 235.0, 100.0, 39.0 ],
+					"patching_rect" : [ 572.0, 58.0, 100.0, 39.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 572.0, 58.0, 100.0, 39.0 ]
 				}
@@ -289,7 +289,6 @@
 									"bgcolor" : [ 0.768627, 0.658824, 0.580392, 1.0 ],
 									"color" : [ 0.458824, 0.733333, 0.690196, 1.0 ],
 									"id" : "obj-25",
-									"linecount" : 3,
 									"maxclass" : "newobj",
 									"numinlets" : 0,
 									"numoutlets" : 1,
@@ -6597,7 +6596,7 @@
 					"patching_rect" : [ 701.5, 368.208331227302551, 610.999966025352478, 50.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 5.0, 194.0, 545.0, 50.0 ],
-					"text" : "name: 1467_bangs"
+					"text" : "name: #0_bangs"
 				}
 
 			}
@@ -6743,7 +6742,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 843.0, 235.0, 113.925994873046875, 54.0 ],
+					"patching_rect" : [ 572.0, 120.0, 113.925994873046875, 54.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 572.0, 120.0, 113.925994873046875, 54.0 ]
 				}
@@ -6771,7 +6770,7 @@
 				"box" : 				{
 					"comment" : "the.mtr: (anything) data through; output of captured data during offline rendering",
 					"id" : "obj-208",
-					"index" : 1,
+					"index" : 0,
 					"maxclass" : "outlet",
 					"numinlets" : 1,
 					"numoutlets" : 0,
@@ -6785,11 +6784,11 @@
 				"box" : 				{
 					"comment" : "the.mtr: (anything) data to record; patcher attribute and command messages",
 					"id" : "obj-209",
-					"index" : 1,
+					"index" : 0,
 					"maxclass" : "inlet",
 					"numinlets" : 0,
 					"numoutlets" : 1,
-					"outlettype" : [ "bang" ],
+					"outlettype" : [ "" ],
 					"patching_rect" : [ 31.0, 235.0, 30.0, 30.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 8.0, 434.0, 30.0, 30.0 ]
@@ -7030,6 +7029,69 @@
 
 			}
  ],
+		"dependency_cache" : [ 			{
+				"name" : "helpargs.js",
+				"bootpath" : "C74:/help/resources",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "helpdetails.js",
+				"bootpath" : "C74:/help/resources",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "the.active.box.js",
+				"bootpath" : "~/Documents/Max 8/Packages/the.oneirotomy/code",
+				"patcherrelativepath" : "../code",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "the.crosstalk.maxpat",
+				"bootpath" : "~/Documents/Max 8/Packages/the.oneirotomy/patchers",
+				"patcherrelativepath" : ".",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "the.file.handler.js",
+				"bootpath" : "~/Documents/Max 8/Packages/the.oneirotomy/code",
+				"patcherrelativepath" : "../code",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "the.helpattrs.js",
+				"bootpath" : "~/Documents/Max 8/Packages/the.oneirotomy/code",
+				"patcherrelativepath" : "../code",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "the.obj.binder.js",
+				"bootpath" : "~/Documents/Max 8/Packages/the.oneirotomy/code",
+				"patcherrelativepath" : "../code",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "the.patcher.js",
+				"bootpath" : "~/Documents/Max 8/Packages/the-package/code/max",
+				"patcherrelativepath" : "../../the-package/code/max",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "the.render.settings.maxpat",
+				"bootpath" : "~/Documents/Max 8/Packages/the.oneirotomy/patchers",
+				"patcherrelativepath" : ".",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+ ],
+		"autosave" : 0,
 		"styles" : [ 			{
 				"name" : "AudioStatus_Menu",
 				"default" : 				{
