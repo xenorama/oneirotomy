@@ -19,7 +19,8 @@ var snapshot_active = 0;
 var percent = 0;
 var progress = 0.;
 var snapshot_index = 0;
-var bogus_frames = 0;
+// var bogus_frames = 0;
+var ignore_frames = 0;
 var img_seq_files = [];
 var merge_bg = this.patcher.getattr("locked_bgcolor");
 // post("locked_bgcolor",merge_bg)
@@ -130,6 +131,7 @@ function op_mode(m){
     messnamed(ctx+"_the.jit.rec.mode",3)
     messnamed(ctx+"_the.jit.rec.video",1)
     img_seq_files = [];
+    ignore_frames = bogus_frames;
 
       if (hide_window == 1) {
         world.setattr("visible",0);
@@ -254,10 +256,12 @@ function post_prep(){
 function start_render(){
   // post("start rendering, loadingram.objects ==",loadingram.objects,'\n')
   if (loadingram.objects == 0){
-    frame_current = -bogus_frames;
-    messnamed(ctx+"_current.frame",frame_current)
+    frame_current = 0;
+    // frame_current = -bogus_frames;
+    // messnamed(ctx+"_current.frame",frame_current)
     post("rendering.\n")
-    world.message("bang");
+    render_bang()
+    // world.message("bang");
     rendering = 1;
   }
 }
@@ -282,7 +286,8 @@ function render_bang(){
   if (mode == 3){
     if (capture !== undefined) asynctex.jit_gl_texture(capture);
     // if (frame_current < (framecount + bogus_frames)){
-    if (frame_current < framecount){
+    if (frame_current <= (framecount+1)){
+      // post(frame_current,'\n')
       world.message("bang");
       if (frame_current < 0) {
         messnamed(ctx+"_the.jit.prerender.bang")
@@ -291,12 +296,28 @@ function render_bang(){
         if (frame_current == 0 && capture !== undefined && capture_notification == 0) tex_info.enable = 0;
         render_bang();
       }
+      else if (ignore_frames > 0){
+        post("ignoring frames",ignore_frames,'\n')
+        outlet(1,frame_current-1);
+        messnamed(ctx+"_current.frame",frame_current-1)
+        outlet(3,"time_ms",time_ms*frame_current/framecount);
+        world.message("bang")
+        messnamed(ctx+"_ignore.countdown","Ø -"+ignore_frames);
+        ignore_frames--;
+        delay(render_bang,300);
+      }
+      else if (ignore_frames == 0) {
+        frame_current = 1;
+        messnamed(ctx+"_current.frame",frame_current-1)
+        messnamed(ctx+"_ignore.countdown","pause");
+        ignore_frames = -1;
+      }
       else {
-        export_image()
-        outlet(1,frame_current);
-        messnamed(ctx+"_current.frame",frame_current)
+        outlet(1,frame_current-1);
+        messnamed(ctx+"_current.frame",frame_current-1)
         frame_current++;
         outlet(3,"time_ms",time_ms*frame_current/framecount);
+        export_image()
       }
     }
     else {
@@ -339,8 +360,8 @@ function export_image(){
     output_mat(fbmat.name)
   }
   else {
-    if (frame_current < framecount) {
-      var pict_name = dir+movie_name+"_"+frameNumPad(frame_current);
+    if (frame_current <= (framecount+1)) {
+      var pict_name = dir+movie_name+"_"+frameNumPad(frame_current-2);
       imat.exportimage(pict_name,codec)
       img_seq_files.push(pict_name+"."+codec)
       output_mat(imat.name)

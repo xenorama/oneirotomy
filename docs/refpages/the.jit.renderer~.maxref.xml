@@ -115,6 +115,15 @@
 			Open the directory upon render completion automatically
 			</description>
 		</attribute>
+		<attribute name="bogus_frames" get="1" set="1" type="int" size="1">
+			<digest>
+				Number of frames to ignore at beginning
+			</digest>
+			<description>
+				Number of frames to ignore at beginning. Often, when changing dimensions or other jit.world settings textures are being reloaded and images get skewed. When this attribute is set to any value above zero, as many frames will be ignored at beginning of sequence, allowing settings to adapt before a clean render process can start. <br/>
+				Note that frame incrementation does not take place until the actual rendering process begins, however, on-time initialisation routines will take place at the very first frame when used with <o>the.obj.init</o> since this is the purpose of delaying render beginning. To initialise settings at the exact beginning of the rendering process, <o>the.timeline</o> can be used. In the latter case — and while not yet rendering — a frame idnex of -1 is being output from its leftmost outlet, once rendering begins, frame incrementation starts at 0.
+			</description>
+		</attribute>
 		<attribute name="capture" get="1" set="1" type="symbol" size="1">
 			<digest>
 				Capture named jit_gl_texture instead of jit.world

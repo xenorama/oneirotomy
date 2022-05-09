@@ -413,6 +413,12 @@ ATTRIBUES
       function set_ae(tw) { ae = tw; world_perform.replace("render::ae",ae) }; set_ae.local = 1;
       function get_ae() { return ae };
 
+    // Ignore leading frames
+    var bogus_frames = 0;
+      declareattribute("bogus_frames","get_bogus_frames","set_bogus_frames",0);
+      function set_bogus_frames(tw) { bogus_frames = tw; world_perform.replace("render::bogus_frames",bogus_frames) }; set_bogus_frames.local = 1;
+      function get_bogus_frames() { return bogus_frames };
+
 
 /*
 TIMELINE SETTINGS

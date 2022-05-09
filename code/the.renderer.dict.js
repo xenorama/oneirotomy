@@ -45,6 +45,7 @@ function update_dict(){
     replace("render::timeline::preview",timeline_preview); gCTX.timeline_preview = timeline_preview;
     replace("render::cntrlr",cntrlr); gCTX.cntrlr = cntrlr;
     replace("render::ae",ae); gCTX.ae = ae;
+    replace("render::bogus_frames",bogus_frames); gCTX.bogus_framesae = bogus_frames;
   }
 }
 
@@ -88,6 +89,7 @@ function reapply_settings(u){
     timeline_preview = world_perform.get("render::timeline::preview"); gCTX.timeline_preview = timeline_preview;
     cntrlr = world_perform.get("render::cntrlr"); gCTX.cntrlr = cntrlr;
     ae = world_perform.get("render::ae"); gCTX.ae = ae;
+    bogus_frames = world_perform.get("render::bogus_frames"); gCTX.bogus_frames = bogus_frames;
     output_dict();
     dict_from_pattr.freepeer();
   }

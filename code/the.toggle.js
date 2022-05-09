@@ -16,7 +16,7 @@ var line_width = 0.1
 rd -= line_width;
 
 var patch = this.patcher;
-var offcolour = patch.getattr("accentcolor")
+var offcolour = patch.getattr("elementcolor")
 // var oncolour = patch.getattr("textcolor");
 var oncolour = patch.getattr("color");
 declareattribute("oncolour",null,null,"set_oncolour")
@@ -105,10 +105,15 @@ function msg_float(v)
 {
 	val = Math.min(Math.max(0,v),1);
 	notifyclients();
-	bang();
+	output();
 }
 
-function bang()
+function bang(){
+	val = 1-val;
+	output();
+}
+
+function output()
 {
 	mgraphics.redraw();
 	refresh();
