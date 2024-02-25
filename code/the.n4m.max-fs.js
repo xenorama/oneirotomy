@@ -207,8 +207,10 @@ const handlers = {
 				const fromFile = expandTilde(args[0]);
 				const toFile = expandTilde(args[1]);
 				await copyFile(fromFile, toFile, fs.constants.COPYFILE_EXCL);
-				maxAPI.post(`cp: ${fromFile} to ${toFile}`);
-			} else {
+				maxAPI.outlet("next")
+				// maxAPI.post(`cp: ${fromFile} to ${toFile}`);
+			}
+			else {
 				maxAPI.post("The cp command needs exactly two arguments!");
 			}
 		} catch (e) {

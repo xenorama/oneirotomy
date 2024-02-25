@@ -1,0 +1,13 @@
+{
+	"messages" : 	{
+		"render" : 		{
+			"sendoutput" : [ "filter", "linear" ]
+		}
+,
+		"realtime" : 		{
+			"sendoutput" : [ "filter", "none" ]
+		}
+
+	}
+
+}

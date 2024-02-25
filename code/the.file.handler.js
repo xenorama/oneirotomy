@@ -27,10 +27,10 @@ function export(n){
   if (!n) write();
   else if (n == 0) awrite = 0;
   else if (n == 1) awrite = 1;
-  else {
-    sname(n);
-    write();
-  }
+  // else {
+  //   sname(n);
+  //   write();
+  // }
 }
 
 function import(n){
@@ -46,7 +46,8 @@ function import(n){
 function name(n){
   if (n && n !== inherited_identifier && inherited_identifier !== undefined) sname = n;
   filename = ctx+"_"+sname+"."+type
-  if (aread) read();
+  read();
+  // if (aread) read();
 }
 
 
@@ -57,6 +58,7 @@ function read(){
 }
 
 function write(w,x,y,z) { // filename, obj type, file type, reference name
+  post(awrite,sname,inlet,'\n')
   if (w && inlet == 2) {
     if (arguments.length == 4) {
       outlet(0,"temp",specs.get(x).get(y)[2],z) // commands.populate
@@ -65,7 +67,8 @@ function write(w,x,y,z) { // filename, obj type, file type, reference name
     outlet(0,"temp",specs.get(x).get(y)[1],settings.get("render::dir")+ctx+"_"+w+"."+y)
     outlet(3,settings.get("render::dir")+ctx+"_"+w+"."+y)
   }
-  else if (awrite && sname !== "") {
+  else if (sname !== "") {
+  // else if (awrite && sname !== "") {
     outlet(0,commands.write,settings.get("render::dir")+filename);
     outlet(3,settings.get("render::dir")+filename);
     // post("directory",settings.get("dir"),'\n')
@@ -109,6 +112,7 @@ function filetype(t){
 
 function autowrite(a){
   awrite = a;
+  post(a,awrite);
 }
 function autoread(a){
   aread = a;

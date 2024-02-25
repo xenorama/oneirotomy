@@ -247,6 +247,7 @@
 		<seealso module="jitter" name="oneirotomy-01_object-overview" package="Oneirotomy" type="vignette" />
 		<seealso module="jitter" name="oneirotomy-02_implementation" package="Oneirotomy" type="vignette" />
 		<seealso module="jitter" name="oneirotomy-03_known-limitations" package="Oneirotomy" type="vignette" />
+		<seealso module="jitter" name="oneirotomy-04_workarounds" package="Oneirotomy" type="vignette" />
 	</seealsolist>
 
 </c74object>

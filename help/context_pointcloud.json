@@ -1,0 +1,13 @@
+{
+	"attributes" : 	{
+		"render" : 		{
+			"point_size" : [ 3 ]
+		}
+,
+		"realtime" : 		{
+			"point_size" : [ 10 ]
+		}
+
+	}
+
+}

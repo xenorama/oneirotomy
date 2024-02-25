@@ -1,0 +1,13 @@
+{
+	"attributes" : 	{
+		"render" : 		{
+			"dim" : [ 256, 256 ]
+		}
+,
+		"realtime" : 		{
+			"dim" : [ 12, 12, 0 ]
+		}
+
+	}
+
+}

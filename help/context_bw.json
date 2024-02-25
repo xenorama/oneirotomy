@@ -1,0 +1,15 @@
+{
+	"attributes" : 	{
+		"render" : 		{
+			"gen" : [ "brcosa" ],
+			"brightness" : [ 0.6 ]
+		}
+,
+		"realtime" : 		{
+			"gen" : [ "rgb2luma" ],
+			"brightness" : [ 0 ]
+		}
+
+	}
+
+}

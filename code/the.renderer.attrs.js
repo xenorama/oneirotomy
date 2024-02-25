@@ -94,7 +94,7 @@ ATTRIBUES
     function get_dim() { return dim };
 
   // TARGET FRAMERATE
-  var fps = 60;
+  var fps = 25;
     declareattribute("fps","get_fps","set_fps",0);
     function set_fps(f) {
       if (arguments.length) fps = f;

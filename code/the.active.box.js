@@ -14,7 +14,7 @@ outlets = 4;
 */
 
 var thisbox;
-var env = this.patcher.parentpatcher.parentpatcher;
+var env = this.patcher.parentpatcher.parentpatcher || this.patcher.parentpatcher || this.patcher;
 var def = {
   bgcolor: env.getattr("bgcolor"),
   color: env.getattr("accentcolor"),
