@@ -3,14 +3,14 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 8,
-			"minor" : 5,
-			"revision" : 2,
+			"minor" : 6,
+			"revision" : 0,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 166.0, 340.0, 644.0, 589.0 ],
+		"rect" : [ 886.0, 335.0, 644.0, 589.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -38,8 +38,32 @@
 		"style" : "",
 		"subpatcher_template" : "Default Max 7",
 		"assistshowspatchername" : 0,
-		"title" : "jit.gl.terrain~",
+		"title" : "jit.gl.thing~",
 		"boxes" : [ 			{
+				"box" : 				{
+					"fontname" : "Lato",
+					"fontsize" : 23.0,
+					"hidden" : 1,
+					"hint" : "When jit.world is visible during rendering (currently necessary) and a designated texture is being rendered, a text notification will be displayed on the main rendering window throughout the rendering process to remind us that we're not rendering what we're looking at.",
+					"id" : "obj-33",
+					"maxclass" : "textbutton",
+					"mode" : 1,
+					"numinlets" : 1,
+					"numoutlets" : 3,
+					"outlettype" : [ "", "", "int" ],
+					"parameter_enable" : 0,
+					"patching_rect" : [ 253.0, 1375.0, 76.0, 33.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 501.794817262543575, 108.0, 119.229007633587798, 105.0 ],
+					"text" : "record",
+					"textcolor" : [ 0.666666666666667, 0.588235294117647, 0.415686274509804, 1.0 ],
+					"texton" : "record",
+					"truncate" : 0,
+					"varname" : "record"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"fontname" : "Lato",
 					"fontsize" : 23.0,
@@ -61,30 +85,6 @@
 					"textoncolor" : [ 0.831372549019608, 0.294117647058824, 0.294117647058824, 1.0 ],
 					"truncate" : 0,
 					"varname" : "render"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"fontname" : "Lato",
-					"fontsize" : 23.0,
-					"hidden" : 1,
-					"hint" : "When jit.world is visible during rendering (currently necessary) and a designated texture is being rendered, a text notification will be displayed on the main rendering window throughout the rendering process to remind us that we're not rendering what we're looking at.",
-					"id" : "obj-33",
-					"maxclass" : "textbutton",
-					"mode" : 1,
-					"numinlets" : 1,
-					"numoutlets" : 3,
-					"outlettype" : [ "", "", "int" ],
-					"parameter_enable" : 0,
-					"patching_rect" : [ 253.0, 1375.0, 76.0, 33.0 ],
-					"presentation" : 1,
-					"presentation_rect" : [ 501.794817262543575, 108.0, 119.229007633587798, 105.0 ],
-					"text" : "record",
-					"textcolor" : [ 0.666666666666667, 0.588235294117647, 0.415686274509804, 1.0 ],
-					"texton" : "record",
-					"truncate" : 0,
-					"varname" : "record"
 				}
 
 			}
@@ -397,7 +397,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 4128.33333333333303, 1916.493853777647018, 89.0, 22.0 ],
+					"patching_rect" : [ 4128.33333333333303, 1916.493853777647018, 95.0, 22.0 ],
 					"text" : "r #0_getargs",
 					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
@@ -410,11 +410,12 @@
 					"id" : "obj-119",
 					"maxclass" : "newobj",
 					"numinlets" : 2,
-					"numoutlets" : 4,
-					"outlettype" : [ "dictionary", "", "", "" ],
+					"numoutlets" : 5,
+					"outlettype" : [ "dictionary", "", "", "", "" ],
 					"patching_rect" : [ 4128.33333333333303, 1979.0, 122.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"embed" : 0,
+						"legacy" : 1,
 						"parameter_enable" : 0,
 						"parameter_mappable" : 0
 					}
@@ -432,7 +433,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 3548.102078515291396, 1216.493853777647018, 91.0, 22.0 ],
+					"patching_rect" : [ 3548.102078515291396, 1216.493853777647018, 97.0, 22.0 ],
 					"text" : "s #0_getargs",
 					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
@@ -951,8 +952,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 5,
-							"revision" : 2,
+							"minor" : 6,
+							"revision" : 0,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1140,7 +1141,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 917.5, 501.0, 75.0, 22.0 ],
+									"patching_rect" : [ 917.5, 501.0, 81.0, 22.0 ],
 									"text" : "s #2_toJS",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -1267,7 +1268,7 @@
 									"patching_rect" : [ 3277.0, 1314.0, 152.0, 21.0 ],
 									"presentation" : 1,
 									"presentation_rect" : [ 178.047649792262746, 320.5, 160.0, 21.0 ],
-									"text" : "dim: 1920 × 1200"
+									"text" : "dim: array × u552004471"
 								}
 
 							}
@@ -1466,14 +1467,14 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "offcolor", "elementcolor" ], [ "fontname", "Lato" ], [ "off_alpha", 0.66 ], [ "outline", 2 ], [ "textcolor", "bgcolor" ], [ "layout", 1 ], [ "hovercolor", "accentcolor" ], [ "bg_alpha", 0.24 ], [ "orientation", 1 ], [ "oncolor", "color" ], [ "bg_width", 0 ], [ "width", 43 ], [ "blob_size", 0.67 ], [ "multi_line", 0 ], [ "justification", 0 ], [ "fontsize", 12 ] ],
+									"embedstate" : [ [ "oncolour", 1.0, 0.71, 0.196, 1.0 ] ],
 									"filename" : "the.toggle.js",
 									"hint" : "Enable quantized and continuous display of successfully rendered frames in the.timeline and queue manager",
 									"id" : "obj-7",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 3002.33333333333394, 1346.5, 54.0, 22.0 ],
 									"presentation" : 1,
@@ -1549,8 +1550,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 5,
-											"revision" : 2,
+											"minor" : 6,
+											"revision" : 0,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -1737,7 +1738,7 @@
 													"bgcolor" : [ 0.768627, 0.658824, 0.580392, 1.0 ],
 													"color" : [ 0.458824, 0.733333, 0.690196, 1.0 ],
 													"id" : "obj-222",
-													"linecount" : 3,
+													"linecount" : 2,
 													"maxclass" : "newobj",
 													"numinlets" : 0,
 													"numoutlets" : 1,
@@ -8248,21 +8249,21 @@
 									"patching_rect" : [ 1945.5, 855.0, 171.0, 21.0 ],
 									"presentation" : 1,
 									"presentation_rect" : [ 178.047649792262746, 71.349999999999994, 171.0, 21.0 ],
-									"text" : "remaining: 00:14:03"
+									"text" : "remaining: 00:01:27"
 								}
 
 							}
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "offcolor", "elementcolor" ], [ "fontname", "Lato" ], [ "off_alpha", 0.66 ], [ "outline", 2 ], [ "textcolor", "bgcolor" ], [ "layout", 1 ], [ "hovercolor", "accentcolor" ], [ "bg_alpha", 0.24 ], [ "orientation", 1 ], [ "oncolor", "color" ], [ "bg_width", 0 ], [ "width", 43 ], [ "blob_size", 0.67 ], [ "multi_line", 0 ], [ "justification", 0 ], [ "fontsize", 12 ] ],
+									"embedstate" : [ [ "oncolour", 1.0, 0.71, 0.196, 1.0 ] ],
 									"filename" : "the.toggle.js",
 									"hint" : "Will establish a physical connection between jit.world's texture output and the.jit.renderer~, even remotely. Its usecase and merits are pretty much unknown… initially implemented to ensure render bang triggers occur only after successfu ltexture output.",
 									"id" : "obj-301",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 1645.666666666666515, 1328.5, 54.0, 22.0 ],
 									"presentation" : 1,
@@ -8308,7 +8309,7 @@
 									"numinlets" : 0,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 1103.0, 1135.0, 101.0, 22.0 ],
+									"patching_rect" : [ 1103.0, 1135.0, 107.0, 22.0 ],
 									"text" : "r #2_parse.dict",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -8321,9 +8322,13 @@
 									"id" : "obj-553",
 									"maxclass" : "newobj",
 									"numinlets" : 1,
-									"numoutlets" : 10,
-									"outlettype" : [ "", "", "", "", "", "", "", "", "", "" ],
+									"numoutlets" : 11,
+									"outlettype" : [ "", "", "", "", "", "", "", "", "", "", "" ],
 									"patching_rect" : [ 1103.0, 1182.0, 2461.000000000001819, 22.0 ],
+									"saved_object_attributes" : 									{
+										"legacy" : 0
+									}
+,
 									"text" : "dict.unpack capture: capture_notification: realtime_texture_input: output_matrix: hide_window: autoreveal: autoopen: timeline: dim: bogus_frames:",
 									"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 								}
@@ -8402,9 +8407,13 @@
 									"id" : "obj-412",
 									"maxclass" : "newobj",
 									"numinlets" : 1,
-									"numoutlets" : 1,
-									"outlettype" : [ "" ],
+									"numoutlets" : 2,
+									"outlettype" : [ "", "" ],
 									"patching_rect" : [ 3002.33333333333394, 1235.5, 117.0, 22.0 ],
+									"saved_object_attributes" : 									{
+										"legacy" : 0
+									}
+,
 									"text" : "dict.unpack preview:",
 									"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 								}
@@ -8721,14 +8730,14 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "offcolor", "elementcolor" ], [ "fontname", "Lato" ], [ "off_alpha", 0.66 ], [ "outline", 2 ], [ "textcolor", "bgcolor" ], [ "layout", 1 ], [ "hovercolor", "accentcolor" ], [ "bg_alpha", 0.24 ], [ "orientation", 1 ], [ "oncolor", "color" ], [ "bg_width", 0 ], [ "width", 43 ], [ "blob_size", 0.67 ], [ "multi_line", 0 ], [ "justification", 0 ], [ "fontsize", 12 ] ],
+									"embedstate" : [ [ "oncolour", 1.0, 0.71, 0.196, 1.0 ] ],
 									"filename" : "the.toggle.js",
 									"hint" : "View renderer in full resolution or hide. When hidden and output_matrix is flagged, the display box previews the rendered frame",
 									"id" : "obj-149",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 2188.33333333333303, 1328.5, 54.0, 22.0 ],
 									"presentation" : 1,
@@ -8763,14 +8772,14 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "offcolor", "elementcolor" ], [ "fontname", "Lato" ], [ "off_alpha", 0.66 ], [ "outline", 2 ], [ "textcolor", "bgcolor" ], [ "layout", 1 ], [ "hovercolor", "accentcolor" ], [ "bg_alpha", 0.24 ], [ "orientation", 1 ], [ "oncolor", "color" ], [ "bg_width", 0 ], [ "width", 43 ], [ "blob_size", 0.67 ], [ "multi_line", 0 ], [ "justification", 0 ], [ "fontsize", 12 ] ],
+									"embedstate" : [ [ "oncolour", 1.0, 0.71, 0.196, 1.0 ] ],
 									"filename" : "the.toggle.js",
 									"hint" : "Preview and output rendered/written jit_matrix from the leftmost outlet",
 									"id" : "obj-84",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 1917.0, 1328.5, 54.0, 22.0 ],
 									"presentation" : 1,
@@ -8822,7 +8831,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 1103.0, 1585.0, 97.0, 22.0 ],
+									"patching_rect" : [ 1103.0, 1585.0, 102.0, 22.0 ],
 									"text" : "s #2_renderer",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -8885,14 +8894,14 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "offcolor", "elementcolor" ], [ "fontname", "Lato" ], [ "off_alpha", 0.66 ], [ "outline", 2 ], [ "textcolor", "bgcolor" ], [ "layout", 1 ], [ "hovercolor", "accentcolor" ], [ "bg_alpha", 0.24 ], [ "orientation", 1 ], [ "oncolor", "color" ], [ "bg_width", 0 ], [ "width", 43 ], [ "blob_size", 0.67 ], [ "multi_line", 0 ], [ "justification", 0 ], [ "fontsize", 12 ] ],
+									"embedstate" : [ [ "oncolour", 1.0, 0.71, 0.196, 1.0 ] ],
 									"filename" : "the.toggle.js",
 									"hint" : "Open the movie file after rendering has completed. Incase of image sequences this flag is ignored.",
 									"id" : "obj-117",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 2731.0, 1328.5, 54.0, 22.0 ],
 									"presentation" : 1,
@@ -8927,14 +8936,14 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "offcolor", "elementcolor" ], [ "fontname", "Lato" ], [ "off_alpha", 0.66 ], [ "outline", 2 ], [ "textcolor", "bgcolor" ], [ "layout", 1 ], [ "hovercolor", "accentcolor" ], [ "bg_alpha", 0.24 ], [ "orientation", 1 ], [ "oncolor", "color" ], [ "bg_width", 0 ], [ "width", 43 ], [ "blob_size", 0.67 ], [ "multi_line", 0 ], [ "justification", 0 ], [ "fontsize", 12 ] ],
+									"embedstate" : [ [ "oncolour", 1.0, 0.71, 0.196, 1.0 ] ],
 									"filename" : "the.toggle.js",
 									"hint" : "Open the destination folder after rendering has completed.",
 									"id" : "obj-87",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 2459.66666666666697, 1328.5, 54.0, 22.0 ],
 									"presentation" : 1,
@@ -8945,14 +8954,14 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "offcolor", "elementcolor" ], [ "fontname", "Lato" ], [ "off_alpha", 0.66 ], [ "outline", 2 ], [ "textcolor", "bgcolor" ], [ "layout", 1 ], [ "hovercolor", "accentcolor" ], [ "bg_alpha", 0.24 ], [ "orientation", 1 ], [ "oncolor", "color" ], [ "bg_width", 0 ], [ "width", 43 ], [ "blob_size", 0.67 ], [ "multi_line", 0 ], [ "justification", 0 ], [ "fontsize", 12 ] ],
+									"embedstate" : [ [ "oncolour", 1.0, 0.71, 0.196, 1.0 ] ],
 									"filename" : "the.toggle.js",
 									"hint" : "When jit.world is visible during rendering and a designated texture is being rendered, a text notification will be displayed on the main rendering window throughout the rendering process to remind us that we're not rendering what we're looking at.",
 									"id" : "obj-81",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 1374.333333333333485, 1334.0, 54.0, 22.0 ],
 									"presentation" : 1,
@@ -8982,7 +8991,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 65.0, 370.0, 97.0, 22.0 ],
+									"patching_rect" : [ 65.0, 370.0, 102.0, 22.0 ],
 									"text" : "s #2_renderer",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -9042,7 +9051,7 @@
 									"numinlets" : 0,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 107.0, 177.0, 101.0, 22.0 ],
+									"patching_rect" : [ 107.0, 177.0, 107.0, 22.0 ],
 									"text" : "r #2_parse.dict",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -9055,9 +9064,13 @@
 									"id" : "obj-571",
 									"maxclass" : "newobj",
 									"numinlets" : 1,
-									"numoutlets" : 1,
-									"outlettype" : [ "" ],
+									"numoutlets" : 2,
+									"outlettype" : [ "", "" ],
 									"patching_rect" : [ 107.0, 224.0, 135.0, 22.0 ],
+									"saved_object_attributes" : 									{
+										"legacy" : 0
+									}
+,
 									"text" : "dict.unpack framedelay:",
 									"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 								}
@@ -9254,8 +9267,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 5,
-											"revision" : 2,
+											"minor" : 6,
+											"revision" : 0,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -9667,7 +9680,7 @@
 									"presentation_rect" : [ 351.047649792262746, 144.5, 118.0, 163.0 ],
 									"setminmax" : [ 0.0, 120.0 ],
 									"setstyle" : 3,
-									"slidercolor" : [ 0.944138714927913, 0.039102899550461, 0.2, 1.0 ]
+									"slidercolor" : [ 0.2, 0.693857919990151, 0.2, 1.0 ]
 								}
 
 							}
@@ -9681,7 +9694,6 @@
 									"numoutlets" : 3,
 									"outlettype" : [ "", "", "" ],
 									"patching_rect" : [ 553.5, 298.0, 181.0, 22.0 ],
-									"restore" : [ 0 ],
 									"saved_object_attributes" : 									{
 										"parameter_enable" : 0,
 										"parameter_mappable" : 0
@@ -9733,7 +9745,7 @@
 									"patching_rect" : [ 445.0, 1438.0, 167.0, 21.0 ],
 									"presentation" : 1,
 									"presentation_rect" : [ 178.047649792262746, 27.75, 162.0, 21.0 ],
-									"text" : "progress: 00:00:00"
+									"text" : "progress: 00:00:06"
 								}
 
 							}
@@ -9857,14 +9869,14 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "offcolor", "elementcolor" ], [ "fontname", "Lato" ], [ "off_alpha", 0.66 ], [ "outline", 2 ], [ "textcolor", "bgcolor" ], [ "layout", 1 ], [ "hovercolor", "accentcolor" ], [ "bg_alpha", 0.24 ], [ "orientation", 1 ], [ "oncolor", "color" ], [ "bg_width", 0 ], [ "width", 43 ], [ "blob_size", 0.67 ], [ "multi_line", 0 ], [ "justification", 0 ], [ "fontsize", 12 ] ],
+									"embedstate" : [ [ "oncolour", 1.0, 0.71, 0.196, 1.0 ] ],
 									"filename" : "the.toggle.js",
 									"hint" : "When jit.world is visible during rendering, this flag ensures that the renderer and its gui will be visible on top of the rendering window according to transparency setting.",
 									"id" : "obj-182",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 634.5, 345.0, 54.0, 22.0 ],
 									"presentation" : 1,
@@ -9958,8 +9970,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 5,
-											"revision" : 2,
+											"minor" : 6,
+											"revision" : 0,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -16429,7 +16441,7 @@
 									"patching_rect" : [ 392.0, 1166.0, 262.0, 22.0 ],
 									"presentation" : 1,
 									"presentation_rect" : [ 174.047649792262746, 116.549999999999997, 170.0, 22.0 ],
-									"size" : 3375.0,
+									"size" : 1200.0,
 									"thickness" : 25.0
 								}
 
@@ -16443,7 +16455,7 @@
 									"numinlets" : 0,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 295.0, 55.0, 82.0, 22.0 ],
+									"patching_rect" : [ 295.0, 55.0, 88.0, 22.0 ],
 									"text" : "r #2_pause",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -16483,7 +16495,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 180.5, 1521.0, 75.0, 22.0 ],
+									"patching_rect" : [ 180.5, 1521.0, 81.0, 22.0 ],
 									"text" : "s #2_toJS",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -23576,8 +23588,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 5,
-							"revision" : 2,
+							"minor" : 6,
+							"revision" : 0,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -23749,11 +23761,12 @@
 									"id" : "obj-8",
 									"maxclass" : "newobj",
 									"numinlets" : 2,
-									"numoutlets" : 4,
-									"outlettype" : [ "dictionary", "", "", "" ],
+									"numoutlets" : 5,
+									"outlettype" : [ "dictionary", "", "", "", "" ],
 									"patching_rect" : [ 720.0, 174.5, 128.0, 22.0 ],
 									"saved_object_attributes" : 									{
 										"embed" : 0,
+										"legacy" : 1,
 										"parameter_enable" : 0,
 										"parameter_mappable" : 0
 									}
@@ -23780,14 +23793,14 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "offcolor", "elementcolor" ], [ "fontname", "Lato" ], [ "off_alpha", 0.66 ], [ "outline", 2 ], [ "textcolor", "bgcolor" ], [ "layout", 1 ], [ "hovercolor", "accentcolor" ], [ "bg_alpha", 0.24 ], [ "orientation", 1 ], [ "oncolor", "color" ], [ "bg_width", 0 ], [ "width", 43 ], [ "blob_size", 0.67 ], [ "multi_line", 0 ], [ "justification", 0 ], [ "fontsize", 12 ] ],
+									"embedstate" : [ [ "oncolour", 1.0, 0.71, 0.196, 1.0 ] ],
 									"filename" : "the.toggle.js",
 									"hint" : "Enable quantized and continuous display of successfully rendered frames in the.timeline and queue manager",
 									"id" : "obj-7",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 451.0, 392.5, 54.0, 22.0 ],
 									"presentation" : 1,
@@ -23819,7 +23832,7 @@
 									"numinlets" : 0,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 193.0, 138.0, 101.0, 22.0 ],
+									"patching_rect" : [ 193.0, 138.0, 107.0, 22.0 ],
 									"text" : "r #2_parse.dict",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -23832,9 +23845,13 @@
 									"id" : "obj-553",
 									"maxclass" : "newobj",
 									"numinlets" : 1,
-									"numoutlets" : 1,
-									"outlettype" : [ "" ],
+									"numoutlets" : 2,
+									"outlettype" : [ "", "" ],
 									"patching_rect" : [ 193.0, 185.0, 117.0, 22.0 ],
+									"saved_object_attributes" : 									{
+										"legacy" : 0
+									}
+,
 									"text" : "dict.unpack timeline:",
 									"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 								}
@@ -23871,9 +23888,13 @@
 									"id" : "obj-412",
 									"maxclass" : "newobj",
 									"numinlets" : 1,
-									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"numoutlets" : 3,
+									"outlettype" : [ "", "", "" ],
 									"patching_rect" : [ 193.0, 242.5, 277.0, 22.0 ],
+									"saved_object_attributes" : 									{
+										"legacy" : 0
+									}
+,
 									"text" : "dict.unpack handling: preview:",
 									"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 								}
@@ -23943,7 +23964,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 193.0, 588.0, 97.0, 22.0 ],
+									"patching_rect" : [ 193.0, 588.0, 102.0, 22.0 ],
 									"text" : "s #2_renderer",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -29978,8 +29999,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 5,
-							"revision" : 2,
+							"minor" : 6,
+							"revision" : 0,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -30147,7 +30168,6 @@
 					"embed" : 1,
 					"enablehscroll" : 0,
 					"enablevscroll" : 0,
-					"hidden" : 1,
 					"id" : "obj-74",
 					"lockeddragscroll" : 0,
 					"lockedsize" : 0,
@@ -30160,8 +30180,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 5,
-							"revision" : 2,
+							"minor" : 6,
+							"revision" : 0,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -30215,7 +30235,7 @@
 									"maxclass" : "inlet",
 									"numinlets" : 0,
 									"numoutlets" : 1,
-									"outlettype" : [ "bang" ],
+									"outlettype" : [ "" ],
 									"patching_rect" : [ 1667.295555555554529, 441.622588724771504, 30.0, 30.0 ]
 								}
 
@@ -30247,8 +30267,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 5,
-											"revision" : 2,
+											"minor" : 6,
+											"revision" : 0,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -30283,6 +30303,30 @@
 										"subpatcher_template" : "Default Max 7",
 										"assistshowspatchername" : 0,
 										"boxes" : [ 											{
+												"box" : 												{
+													"id" : "obj-3",
+													"maxclass" : "newobj",
+													"numinlets" : 2,
+													"numoutlets" : 1,
+													"outlettype" : [ "" ],
+													"patching_rect" : [ 1025.375000000000227, 904.0, 66.0, 22.0 ],
+													"text" : "string.tolist"
+												}
+
+											}
+, 											{
+												"box" : 												{
+													"id" : "obj-2",
+													"maxclass" : "newobj",
+													"numinlets" : 2,
+													"numoutlets" : 2,
+													"outlettype" : [ "", "" ],
+													"patching_rect" : [ 1025.375000000000227, 872.0, 94.0, 22.0 ],
+													"text" : "routepass string"
+												}
+
+											}
+, 											{
 												"box" : 												{
 													"comment" : "",
 													"id" : "obj-59",
@@ -30404,7 +30448,7 @@
 													"numinlets" : 0,
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
-													"patching_rect" : [ 1195.0, 885.0, 121.0, 22.0 ],
+													"patching_rect" : [ 1195.0, 885.0, 126.0, 22.0 ],
 													"text" : "r #2_get.mc.chans",
 													"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 												}
@@ -30418,7 +30462,7 @@
 													"maxclass" : "newobj",
 													"numinlets" : 1,
 													"numoutlets" : 0,
-													"patching_rect" : [ 1195.0, 995.0, 135.0, 22.0 ],
+													"patching_rect" : [ 1195.0, 995.0, 141.0, 22.0 ],
 													"text" : "s #2_mc.patch.chans",
 													"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 												}
@@ -30798,9 +30842,13 @@
 													"id" : "obj-23",
 													"maxclass" : "newobj",
 													"numinlets" : 1,
-													"numoutlets" : 4,
-													"outlettype" : [ "", "", "", "" ],
+													"numoutlets" : 5,
+													"outlettype" : [ "", "", "", "", "" ],
 													"patching_rect" : [ 770.375000000000341, 125.0, 273.999999999999886, 22.0 ],
+													"saved_object_attributes" : 													{
+														"legacy" : 0
+													}
+,
 													"text" : "dict.unpack source: chans: active: samptype:",
 													"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 												}
@@ -30885,9 +30933,13 @@
 													"id" : "obj-9",
 													"maxclass" : "newobj",
 													"numinlets" : 1,
-													"numoutlets" : 2,
-													"outlettype" : [ "", "" ],
+													"numoutlets" : 3,
+													"outlettype" : [ "", "", "" ],
 													"patching_rect" : [ 770.375000000000341, 90.0, 632.999999999999886, 22.0 ],
+													"saved_object_attributes" : 													{
+														"legacy" : 0
+													}
+,
 													"text" : "dict.unpack audio_record: framecount:",
 													"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 												}
@@ -30932,8 +30984,8 @@
 													"numinlets" : 2,
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
-													"patching_rect" : [ 31.0, 407.0, 263.0, 49.0 ],
-													"text" : "\"Macintosh HD:/Users/Oni/Projekte/Xenorama/XEN_Cloud/XENcloud/23-05_BWF_Brixen-Waterlight-Festival/BWF_03_WORK/BWF_03__OUT-VISUAL/BWF_FFT-TERRAIN/bwf.fft.3125-6500.pads+fx.wav\""
+													"patching_rect" : [ 31.0, 407.0, 175.0, 89.0 ],
+													"text" : "\"Macintosh HD:/Users/Oni/Documents/Max 8/Packages/the.oneirotomy.patches/2024-02-25_function-visuals/thing_movie.wav\""
 												}
 
 											}
@@ -30962,8 +31014,8 @@
 														"fileversion" : 1,
 														"appversion" : 														{
 															"major" : 8,
-															"minor" : 5,
-															"revision" : 2,
+															"minor" : 6,
+															"revision" : 0,
 															"architecture" : "x64",
 															"modernui" : 1
 														}
@@ -31370,7 +31422,7 @@
 													"numinlets" : 2,
 													"numoutlets" : 1,
 													"outlettype" : [ "multichannelsignal" ],
-													"patching_rect" : [ 1176.23863638847115, 774.5, 400.0, 0.0 ],
+													"patching_rect" : [ 1176.23863638847115, 774.5, 400.0, 22.0 ],
 													"text" : "mc.pack~ 2",
 													"varname" : "breakout"
 												}
@@ -31385,7 +31437,7 @@
 													"numinlets" : 1,
 													"numoutlets" : 1,
 													"outlettype" : [ "signal" ],
-													"patching_rect" : [ 785.14393944360927, 1025.0, 120.0, 0.0 ],
+													"patching_rect" : [ 785.14393944360927, 1025.0, 120.0, 22.0 ],
 													"text" : "mc.sfrecord~ 2",
 													"varname" : "recorder"
 												}
@@ -31400,7 +31452,7 @@
 													"numinlets" : 1,
 													"numoutlets" : 2,
 													"outlettype" : [ "signal", "signal" ],
-													"patching_rect" : [ 1176.23863638847115, 733.5, 400.0, 0.0 ],
+													"patching_rect" : [ 1176.23863638847115, 733.5, 400.0, 22.0 ],
 													"text" : "adoutput~ 1 2",
 													"varname" : "adoutputs"
 												}
@@ -31530,7 +31582,7 @@
 													"numinlets" : 0,
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
-													"patching_rect" : [ 522.0, 74.833325356245041, 107.0, 35.0 ],
+													"patching_rect" : [ 522.0, 74.833325356245041, 107.0, 22.0 ],
 													"text" : "r #1_adrecord",
 													"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 												}
@@ -31799,6 +31851,20 @@
 											}
 , 											{
 												"patchline" : 												{
+													"destination" : [ "obj-3", 0 ],
+													"source" : [ "obj-2", 0 ]
+												}
+
+											}
+, 											{
+												"patchline" : 												{
+													"destination" : [ "obj-51", 0 ],
+													"source" : [ "obj-2", 1 ]
+												}
+
+											}
+, 											{
+												"patchline" : 												{
 													"destination" : [ "obj-55", 0 ],
 													"order" : 1,
 													"source" : [ "obj-20", 0 ]
@@ -31830,15 +31896,15 @@
 											}
 , 											{
 												"patchline" : 												{
-													"destination" : [ "obj-45", 1 ],
-													"source" : [ "obj-23", 2 ]
+													"destination" : [ "obj-2", 0 ],
+													"source" : [ "obj-23", 3 ]
 												}
 
 											}
 , 											{
 												"patchline" : 												{
-													"destination" : [ "obj-51", 0 ],
-													"source" : [ "obj-23", 3 ]
+													"destination" : [ "obj-45", 1 ],
+													"source" : [ "obj-23", 2 ]
 												}
 
 											}
@@ -31920,6 +31986,13 @@
 												"patchline" : 												{
 													"destination" : [ "obj-49", 0 ],
 													"source" : [ "obj-29", 1 ]
+												}
+
+											}
+, 											{
+												"patchline" : 												{
+													"destination" : [ "obj-51", 0 ],
+													"source" : [ "obj-3", 0 ]
 												}
 
 											}
@@ -32028,7 +32101,7 @@
 , 											{
 												"patchline" : 												{
 													"destination" : [ "obj-15", 1 ],
-													"midpoints" : [ 450.5, 380.91666267812252, 284.5, 380.91666267812252 ],
+													"midpoints" : [ 450.5, 380.91666267812252, 196.5, 380.91666267812252 ],
 													"order" : 2,
 													"source" : [ "obj-385", 0 ]
 												}
@@ -38571,7 +38644,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 1791.0, 491.605591000000004, 97.0, 22.0 ],
+									"patching_rect" : [ 1791.0, 491.605591000000004, 102.0, 22.0 ],
 									"text" : "s #2_renderer",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -38668,7 +38741,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 2488.777777777777374, 613.0, 75.0, 22.0 ],
+									"patching_rect" : [ 2488.777777777777374, 613.0, 81.0, 22.0 ],
 									"text" : "s #2_toJS",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -38819,15 +38892,14 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "offcolor", "elementcolor" ], [ "fontname", "Lato" ], [ "off_alpha", 0.66 ], [ "outline", 2 ], [ "textcolor", "bgcolor" ], [ "layout", 1 ], [ "hovercolor", "accentcolor" ], [ "bg_alpha", 0.24 ], [ "orientation", 1 ], [ "oncolor", "color" ], [ "bg_width", 0 ], [ "width", 43 ], [ "blob_size", 0.67 ], [ "multi_line", 0 ], [ "justification", 0 ], [ "fontsize", 12 ] ],
+									"embedstate" : [ [ "oncolour", 1.0, 0.71, 0.196, 1.0 ] ],
 									"filename" : "the.toggle.js",
-									"hidden" : 1,
 									"hint" : "Audio Interrupt (Takeover) in realtime",
 									"id" : "obj-428",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 2605.277777777777374, 470.0, 43.0, 23.0 ],
 									"presentation" : 1,
@@ -38838,14 +38910,14 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "offcolor", "elementcolor" ], [ "fontname", "Lato" ], [ "off_alpha", 0.66 ], [ "outline", 2 ], [ "textcolor", "bgcolor" ], [ "layout", 1 ], [ "hovercolor", "accentcolor" ], [ "bg_alpha", 0.24 ], [ "orientation", 1 ], [ "oncolor", "color" ], [ "bg_width", 0 ], [ "width", 43 ], [ "blob_size", 0.67 ], [ "multi_line", 0 ], [ "justification", 0 ], [ "fontsize", 12 ] ],
+									"embedstate" : [ [ "oncolour", 1.0, 0.71, 0.196, 1.0 ] ],
 									"filename" : "the.toggle.js",
 									"hint" : "Overdrive in realtime",
 									"id" : "obj-429",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 2488.777777777777374, 328.0, 43.0, 22.0 ],
 									"presentation" : 1,
@@ -38934,15 +39006,15 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "offcolor", "elementcolor" ], [ "fontname", "Lato" ], [ "off_alpha", 0.66 ], [ "outline", 2 ], [ "textcolor", "bgcolor" ], [ "layout", 1 ], [ "hovercolor", "accentcolor" ], [ "bg_alpha", 0.24 ], [ "orientation", 1 ], [ "oncolor", "color" ], [ "bg_width", 0 ], [ "width", 43 ], [ "blob_size", 0.67 ], [ "multi_line", 0 ], [ "justification", 0 ], [ "fontsize", 12 ] ],
+									"embedstate" : [ [ "oncolour", 1.0, 0.71, 0.196, 1.0 ] ],
 									"filename" : "the.toggle.js",
 									"hidden" : 1,
 									"hint" : "Audio Interrupt (Takeover) during recording",
 									"id" : "obj-384",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 2107.555555555555657, 302.394408999999996, 54.0, 23.0 ],
 									"presentation" : 1,
@@ -38953,14 +39025,14 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "offcolor", "elementcolor" ], [ "fontname", "Lato" ], [ "off_alpha", 0.66 ], [ "outline", 2 ], [ "textcolor", "bgcolor" ], [ "layout", 1 ], [ "hovercolor", "accentcolor" ], [ "bg_alpha", 0.24 ], [ "orientation", 1 ], [ "oncolor", "color" ], [ "bg_width", 0 ], [ "width", 43 ], [ "blob_size", 0.67 ], [ "multi_line", 0 ], [ "justification", 0 ], [ "fontsize", 12 ] ],
+									"embedstate" : [ [ "oncolour", 1.0, 0.71, 0.196, 1.0 ] ],
 									"filename" : "the.toggle.js",
 									"hint" : "Overdrive during recording",
 									"id" : "obj-361",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 1791.0, 302.394408999999996, 43.0, 22.0 ],
 									"presentation" : 1,
@@ -38975,9 +39047,13 @@
 									"id" : "obj-2",
 									"maxclass" : "newobj",
 									"numinlets" : 1,
-									"numoutlets" : 3,
-									"outlettype" : [ "", "", "" ],
+									"numoutlets" : 4,
+									"outlettype" : [ "", "", "", "" ],
 									"patching_rect" : [ 494.388915999999881, 109.0, 1847.0, 22.0 ],
+									"saved_object_attributes" : 									{
+										"legacy" : 0
+									}
+,
 									"text" : "dict.unpack audio_record: overdrive: audio_interrupt:",
 									"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 								}
@@ -39466,7 +39542,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 1424.79555555555271, 1565.605591000000004, 123.0, 22.0 ],
+									"patching_rect" : [ 1424.79555555555271, 1565.605591000000004, 128.0, 22.0 ],
 									"text" : "s #2_get.mc.chans",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -39481,7 +39557,7 @@
 									"numinlets" : 0,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 925.295555555554529, 363.0, 133.0, 22.0 ],
+									"patching_rect" : [ 925.295555555554529, 363.0, 139.0, 22.0 ],
 									"text" : "r #2_mc.patch.chans",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -39670,14 +39746,14 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "offcolor", "elementcolor" ], [ "fontname", "Lato" ], [ "off_alpha", 0.66 ], [ "outline", 2 ], [ "textcolor", "bgcolor" ], [ "layout", 1 ], [ "hovercolor", "accentcolor" ], [ "bg_alpha", 0.24 ], [ "orientation", 1 ], [ "oncolor", "color" ], [ "bg_width", 0 ], [ "width", 43 ], [ "blob_size", 0.67 ], [ "multi_line", 0 ], [ "justification", 0 ], [ "fontsize", 12 ] ],
+									"embedstate" : [ [ "oncolour", 1.0, 0.71, 0.196, 1.0 ] ],
 									"filename" : "the.toggle.js",
 									"hint" : "Preview realtime audio waveform during recording",
 									"id" : "obj-370",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 212.295555555554529, 1566.916269839683537, 43.0, 22.0 ],
 									"presentation" : 1,
@@ -39693,9 +39769,13 @@
 									"id" : "obj-362",
 									"maxclass" : "newobj",
 									"numinlets" : 1,
-									"numoutlets" : 3,
-									"outlettype" : [ "", "", "" ],
+									"numoutlets" : 4,
+									"outlettype" : [ "", "", "", "" ],
 									"patching_rect" : [ 494.388888888887777, 196.0, 746.999999999999091, 22.0 ],
+									"saved_object_attributes" : 									{
+										"legacy" : 0
+									}
+,
 									"text" : "dict.unpack chans: source: active:",
 									"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 								}
@@ -39858,14 +39938,14 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "offcolor", "elementcolor" ], [ "fontname", "Lato" ], [ "off_alpha", 0.66 ], [ "outline", 2 ], [ "textcolor", "bgcolor" ], [ "layout", 1 ], [ "hovercolor", "accentcolor" ], [ "bg_alpha", 0.24 ], [ "orientation", 1 ], [ "oncolor", "color" ], [ "bg_width", 0 ], [ "width", 43 ], [ "blob_size", 0.67 ], [ "multi_line", 0 ], [ "justification", 0 ], [ "fontsize", 12 ] ],
+									"embedstate" : [ [ "oncolour", 1.0, 0.71, 0.196, 1.0 ] ],
 									"filename" : "the.toggle.js",
 									"hint" : "Record audio driver output from Max with selected audio channels as per hardware support. Whenever 'Recording' mode is toggled, audio will be recorded to disk with as many numbers of channels.",
 									"id" : "obj-324",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 592.295555555554529, 1116.605591000000004, 43.0, 22.0 ],
 									"presentation" : 1,
@@ -39981,7 +40061,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 1254.295555555554529, 1489.605591000000004, 97.0, 22.0 ],
+									"patching_rect" : [ 1254.295555555554529, 1489.605591000000004, 102.0, 22.0 ],
 									"text" : "s #2_renderer",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -40215,7 +40295,7 @@
 									"numinlets" : 1,
 									"numoutlets" : 1,
 									"offcolor" : [ 0.349019607843137, 0.349019607843137, 0.349019607843137, 0.0 ],
-									"oncolor" : [ 1.0, 0.71, 0.196, 1.0 ],
+									"oncolor" : [ 1.0, 1.0, 0.71, 0.196 ],
 									"orientation" : 2,
 									"outlettype" : [ "float" ],
 									"patching_rect" : [ 2023.228103578090668, 907.071595550457005, 82.0, 73.0 ],
@@ -40227,7 +40307,7 @@
 , 							{
 								"box" : 								{
 									"activebgcolor" : [ 0.156862745098039, 0.156862745098039, 0.156862745098039, 0.04 ],
-									"activelinecolor" : [ 1.0, 0.71, 0.196, 1.0 ],
+									"activelinecolor" : [ 1.0, 1.0, 0.71, 0.196 ],
 									"id" : "obj-496",
 									"maxclass" : "live.scope~",
 									"numinlets" : 2,
@@ -40246,7 +40326,7 @@
 									"background" : 1,
 									"bgcolor" : [ 0.2, 0.2, 0.2, 0.0 ],
 									"border" : 1,
-									"bordercolor" : [ 1.0, 0.71, 0.196, 1.0 ],
+									"bordercolor" : [ 1.0, 1.0, 0.71, 0.196 ],
 									"id" : "obj-46",
 									"maxclass" : "panel",
 									"mode" : 0,
@@ -40269,7 +40349,7 @@
 									"numinlets" : 0,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 494.388915999999881, 40.0, 101.0, 22.0 ],
+									"patching_rect" : [ 494.388915999999881, 40.0, 107.0, 22.0 ],
 									"text" : "r #2_parse.dict",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -47860,8 +47940,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 5,
-							"revision" : 2,
+							"minor" : 6,
+							"revision" : 0,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -47902,9 +47982,13 @@
 									"id" : "obj-6",
 									"maxclass" : "newobj",
 									"numinlets" : 1,
-									"numoutlets" : 1,
-									"outlettype" : [ "" ],
+									"numoutlets" : 2,
+									"outlettype" : [ "", "" ],
 									"patching_rect" : [ 2215.888888888887777, 79.0, 107.0, 22.0 ],
+									"saved_object_attributes" : 									{
+										"legacy" : 0
+									}
+,
 									"text" : "dict.unpack active:",
 									"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 								}
@@ -47995,8 +48079,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 5,
-											"revision" : 2,
+											"minor" : 6,
+											"revision" : 0,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -48154,7 +48238,7 @@
 													"bgcolor" : [ 0.768627, 0.658824, 0.580392, 1.0 ],
 													"color" : [ 0.458824, 0.733333, 0.690196, 1.0 ],
 													"id" : "obj-222",
-													"linecount" : 3,
+													"linecount" : 2,
 													"maxclass" : "newobj",
 													"numinlets" : 0,
 													"numoutlets" : 1,
@@ -54619,7 +54703,7 @@
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 2251.5, 314.0, 167.0, 21.0 ],
-									"text" : "elapsed: 00:14:07"
+									"text" : "elapsed: 00:00:20"
 								}
 
 							}
@@ -54631,7 +54715,7 @@
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 2450.5, 314.0, 171.0, 21.0 ],
-									"text" : "estimated remainder: 00:14:03"
+									"text" : "estimated remainder: 00:01:27"
 								}
 
 							}
@@ -54698,7 +54782,7 @@
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 184.5, 1076.0, 167.0, 21.0 ],
-									"text" : "progress: 00:00:00"
+									"text" : "progress: 02:13:20"
 								}
 
 							}
@@ -54867,7 +54951,7 @@
 									"patching_rect" : [ 129.5, 802.0, 262.0, 22.0 ],
 									"presentation" : 1,
 									"presentation_rect" : [ 3.523824896131487, 112.5, 264.999999999999886, 15.0 ],
-									"size" : 3375.0,
+									"size" : 1200.0,
 									"thickness" : 25.0
 								}
 
@@ -54893,7 +54977,7 @@
 									"numinlets" : 0,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 0.0, 0.0, 101.0, 22.0 ],
+									"patching_rect" : [ 0.0, 0.0, 107.0, 22.0 ],
 									"text" : "r #2_parse.dict",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -54906,9 +54990,13 @@
 									"id" : "obj-561",
 									"maxclass" : "newobj",
 									"numinlets" : 1,
-									"numoutlets" : 8,
-									"outlettype" : [ "", "", "", "", "", "", "", "" ],
+									"numoutlets" : 9,
+									"outlettype" : [ "", "", "", "", "", "", "", "", "" ],
 									"patching_rect" : [ 0.0, 47.0, 2234.888888888887777, 22.0 ],
+									"saved_object_attributes" : 									{
+										"legacy" : 0
+									}
+,
 									"text" : "dict.unpack sr: toggleworld: toggledsp: length_from_buffer: length_from_movie: overdrive: audio_interrupt: audio_record:",
 									"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 								}
@@ -54946,7 +55034,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 96.0, 441.5, 97.0, 22.0 ],
+									"patching_rect" : [ 96.0, 441.5, 102.0, 22.0 ],
 									"text" : "s #2_renderer",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -54979,14 +55067,14 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "offcolor", "elementcolor" ], [ "fontname", "Lato" ], [ "off_alpha", 0.66 ], [ "outline", 2 ], [ "textcolor", "bgcolor" ], [ "layout", 1 ], [ "hovercolor", "accentcolor" ], [ "bg_alpha", 0.24 ], [ "orientation", 1 ], [ "oncolor", "color" ], [ "bg_width", 0 ], [ "width", 43 ], [ "blob_size", 0.67 ], [ "multi_line", 0 ], [ "justification", 0 ], [ "fontsize", 12 ] ],
+									"embedstate" : [ [ "oncolour", 1.0, 0.71, 0.196, 1.0 ] ],
 									"filename" : "the.toggle.js",
 									"hint" : "Make sure DSP is running during rendering. Unflag this setting when no audio is used in the setup/scene.",
 									"id" : "obj-85",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 633.111111111111313, 199.394408999999996, 54.0, 22.0 ],
 									"presentation" : 1,
@@ -54997,14 +55085,14 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "offcolor", "elementcolor" ], [ "fontname", "Lato" ], [ "off_alpha", 0.66 ], [ "outline", 2 ], [ "textcolor", "bgcolor" ], [ "layout", 1 ], [ "hovercolor", "accentcolor" ], [ "bg_alpha", 0.24 ], [ "orientation", 1 ], [ "oncolor", "color" ], [ "bg_width", 0 ], [ "width", 43 ], [ "blob_size", 0.67 ], [ "multi_line", 0 ], [ "justification", 0 ], [ "fontsize", 12 ] ],
+									"embedstate" : [ [ "oncolour", 1.0, 0.71, 0.196, 1.0 ] ],
 									"filename" : "the.toggle.js",
 									"hint" : "Toggle jit.world off during recording. While this is decativated for efficiency reasons since timing is crucial during recording, it can be necessary to keep jit.world running. This is true when objects of the jit.anim.family are in use or Jitter content is influencing relevant timing or audio content.",
 									"id" : "obj-83",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 316.555555555555657, 199.394408999999996, 54.0, 22.0 ],
 									"presentation" : 1,
@@ -61112,7 +61200,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 3446.841662812233153, 1216.493853777647018, 84.0, 22.0 ],
+					"patching_rect" : [ 3446.841662812233153, 1216.493853777647018, 90.0, 22.0 ],
 					"text" : "s #0_pause",
 					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
@@ -61228,8 +61316,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 5,
-							"revision" : 2,
+							"minor" : 6,
+							"revision" : 0,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -61413,13 +61501,13 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "offcolor", "elementcolor" ], [ "fontname", "Lato" ], [ "off_alpha", 0.66 ], [ "outline", 2 ], [ "textcolor", "bgcolor" ], [ "layout", 1 ], [ "hovercolor", "accentcolor" ], [ "bg_alpha", 0.24 ], [ "orientation", 1 ], [ "oncolor", "color" ], [ "bg_width", 0 ], [ "width", 43 ], [ "blob_size", 0.67 ], [ "multi_line", 0 ], [ "justification", 0 ], [ "fontsize", 12 ] ],
+									"embedstate" : [ [ "oncolour", 1.0, 0.71, 0.196, 1.0 ] ],
 									"filename" : "the.toggle.js",
 									"id" : "obj-2",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 2283.33333333333394, 712.5, 43.0, 22.0 ],
 									"presentation" : 1,
@@ -61451,7 +61539,7 @@
 									"numinlets" : 0,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 2025.33333333333394, 458.0, 101.0, 22.0 ],
+									"patching_rect" : [ 2025.33333333333394, 458.0, 107.0, 22.0 ],
 									"text" : "r #2_parse.dict",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -61464,9 +61552,13 @@
 									"id" : "obj-553",
 									"maxclass" : "newobj",
 									"numinlets" : 1,
-									"numoutlets" : 1,
-									"outlettype" : [ "" ],
+									"numoutlets" : 2,
+									"outlettype" : [ "", "" ],
 									"patching_rect" : [ 2025.33333333333394, 505.0, 117.0, 22.0 ],
+									"saved_object_attributes" : 									{
+										"legacy" : 0
+									}
+,
 									"text" : "dict.unpack timeline:",
 									"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 								}
@@ -61503,9 +61595,13 @@
 									"id" : "obj-412",
 									"maxclass" : "newobj",
 									"numinlets" : 1,
-									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"numoutlets" : 3,
+									"outlettype" : [ "", "", "" ],
 									"patching_rect" : [ 2025.33333333333394, 562.5, 277.0, 22.0 ],
+									"saved_object_attributes" : 									{
+										"legacy" : 0
+									}
+,
 									"text" : "dict.unpack handling: preview:",
 									"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 								}
@@ -61575,7 +61671,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 2025.33333333333394, 908.0, 97.0, 22.0 ],
+									"patching_rect" : [ 2025.33333333333394, 908.0, 102.0, 22.0 ],
 									"text" : "s #2_renderer",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -61640,7 +61736,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 3047.0, 326.0, 67.0, 35.0 ],
+									"patching_rect" : [ 3047.0, 326.0, 73.0, 35.0 ],
 									"text" : "s #2_toJS",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -61959,7 +62055,7 @@
 									"numinlets" : 0,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 17.5, 660.5, 100.0, 22.0 ],
+									"patching_rect" : [ 17.5, 660.5, 106.0, 22.0 ],
 									"text" : "r #2_matrix.viz",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -61974,7 +62070,7 @@
 									"numinlets" : 0,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 396.5, 0.0, 101.0, 22.0 ],
+									"patching_rect" : [ 396.5, 0.0, 107.0, 22.0 ],
 									"text" : "r #2_parse.dict",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -61987,9 +62083,13 @@
 									"id" : "obj-517",
 									"maxclass" : "newobj",
 									"numinlets" : 1,
-									"numoutlets" : 9,
-									"outlettype" : [ "", "", "", "", "", "", "", "", "" ],
+									"numoutlets" : 10,
+									"outlettype" : [ "", "", "", "", "", "", "", "", "", "" ],
 									"patching_rect" : [ 396.5, 47.0, 2493.28571428571513, 22.0 ],
+									"saved_object_attributes" : 									{
+										"legacy" : 0
+									}
+,
 									"text" : "dict.unpack dim: container: codec: fps: framecount: hhmmss: ms: samples: length_from_movie:",
 									"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 								}
@@ -62050,8 +62150,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 5,
-											"revision" : 2,
+											"minor" : 6,
+											"revision" : 0,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -62167,8 +62267,8 @@
 														"fileversion" : 1,
 														"appversion" : 														{
 															"major" : 8,
-															"minor" : 5,
-															"revision" : 2,
+															"minor" : 6,
+															"revision" : 0,
 															"architecture" : "x64",
 															"modernui" : 1
 														}
@@ -62344,8 +62444,8 @@
 														"fileversion" : 1,
 														"appversion" : 														{
 															"major" : 8,
-															"minor" : 5,
-															"revision" : 2,
+															"minor" : 6,
+															"revision" : 0,
 															"architecture" : "x64",
 															"modernui" : 1
 														}
@@ -62758,8 +62858,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 5,
-											"revision" : 2,
+											"minor" : 6,
+											"revision" : 0,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -62905,11 +63005,12 @@
 													"id" : "obj-263",
 													"maxclass" : "newobj",
 													"numinlets" : 2,
-													"numoutlets" : 4,
-													"outlettype" : [ "dictionary", "", "", "" ],
+													"numoutlets" : 5,
+													"outlettype" : [ "dictionary", "", "", "", "" ],
 													"patching_rect" : [ 50.0, 247.416603326797485, 210.0, 22.0 ],
 													"saved_object_attributes" : 													{
 														"embed" : 1,
+														"legacy" : 1,
 														"parameter_enable" : 0,
 														"parameter_mappable" : 0
 													}
@@ -62946,8 +63047,8 @@
 														"fileversion" : 1,
 														"appversion" : 														{
 															"major" : 8,
-															"minor" : 5,
-															"revision" : 2,
+															"minor" : 6,
+															"revision" : 0,
 															"architecture" : "x64",
 															"modernui" : 1
 														}
@@ -63501,7 +63602,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 1764.642857142856883, 631.0, 67.0, 35.0 ],
+									"patching_rect" : [ 1764.642857142856883, 631.0, 73.0, 35.0 ],
 									"text" : "s #2_toJS",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -63514,7 +63615,7 @@
 									"hint" : "Number of frames to render. This updates along with all other length and framerate settings and updates those likewise.",
 									"id" : "obj-119",
 									"maxclass" : "number",
-									"maximum" : 3374,
+									"maximum" : 1199,
 									"minimum" : -1,
 									"numinlets" : 1,
 									"numoutlets" : 2,
@@ -63692,7 +63793,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 2561.5, 496.0, 97.0, 22.0 ],
+									"patching_rect" : [ 2561.5, 496.0, 102.0, 22.0 ],
 									"text" : "s #2_renderer",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -63781,7 +63882,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 479.5, 983.5, 97.0, 22.0 ],
+									"patching_rect" : [ 479.5, 983.5, 102.0, 22.0 ],
 									"text" : "s #2_renderer",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -64614,7 +64715,7 @@
 , 							{
 								"patchline" : 								{
 									"destination" : [ "obj-173", 0 ],
-									"midpoints" : [ 1643.142857142857565, 106.0, 1774.142857142856883, 106.0 ],
+									"midpoints" : [ 1505.682539682539982, 106.0, 1774.142857142856883, 106.0 ],
 									"order" : 0,
 									"source" : [ "obj-517", 4 ]
 								}
@@ -70835,6 +70936,7 @@
 					"embed" : 1,
 					"enablehscroll" : 0,
 					"enablevscroll" : 0,
+					"hidden" : 1,
 					"id" : "obj-445",
 					"lockeddragscroll" : 0,
 					"lockedsize" : 0,
@@ -70846,8 +70948,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 5,
-							"revision" : 2,
+							"minor" : 6,
+							"revision" : 0,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -71046,8 +71148,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 5,
-											"revision" : 2,
+											"minor" : 6,
+											"revision" : 0,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -71086,6 +71188,7 @@
 													"bgcolor" : [ 0.768627, 0.658824, 0.580392, 1.0 ],
 													"color" : [ 0.458824, 0.733333, 0.690196, 1.0 ],
 													"id" : "obj-125",
+													"linecount" : 2,
 													"maxclass" : "newobj",
 													"numinlets" : 0,
 													"numoutlets" : 1,
@@ -71101,6 +71204,7 @@
 													"bgcolor" : [ 0.713726, 0.87451, 0.831373, 1.0 ],
 													"color" : [ 0.768627, 0.521569, 0.392157, 1.0 ],
 													"id" : "obj-124",
+													"linecount" : 2,
 													"maxclass" : "newobj",
 													"numinlets" : 1,
 													"numoutlets" : 0,
@@ -72327,6 +72431,7 @@
 													"bgcolor" : [ 0.713726, 0.87451, 0.831373, 1.0 ],
 													"color" : [ 0.768627, 0.521569, 0.392157, 1.0 ],
 													"id" : "obj-19",
+													"linecount" : 2,
 													"maxclass" : "newobj",
 													"numinlets" : 1,
 													"numoutlets" : 0,
@@ -72540,6 +72645,7 @@
 													"bgcolor" : [ 0.768627, 0.658824, 0.580392, 1.0 ],
 													"color" : [ 0.458824, 0.733333, 0.690196, 1.0 ],
 													"id" : "obj-484",
+													"linecount" : 2,
 													"maxclass" : "newobj",
 													"numinlets" : 0,
 													"numoutlets" : 1,
@@ -72564,8 +72670,6 @@
 													"saved_object_attributes" : 													{
 														"autostart" : 0,
 														"defer" : 0,
-														"node_bin_path" : "",
-														"npm_bin_path" : "",
 														"watch" : 0
 													}
 ,
@@ -79453,7 +79557,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 600.050000000000182, 837.0, 75.0, 22.0 ],
+									"patching_rect" : [ 600.050000000000182, 837.0, 81.0, 22.0 ],
 									"text" : "s #2_toJS",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -79498,9 +79602,13 @@
 									"id" : "obj-382",
 									"maxclass" : "newobj",
 									"numinlets" : 1,
-									"numoutlets" : 1,
-									"outlettype" : [ "" ],
+									"numoutlets" : 2,
+									"outlettype" : [ "", "" ],
 									"patching_rect" : [ 99.0, 718.0, 111.0, 22.0 ],
+									"saved_object_attributes" : 									{
+										"legacy" : 0
+									}
+,
 									"text" : "dict.unpack render:",
 									"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 								}
@@ -79540,9 +79648,13 @@
 									"id" : "obj-364",
 									"maxclass" : "newobj",
 									"numinlets" : 1,
-									"numoutlets" : 1,
-									"outlettype" : [ "" ],
+									"numoutlets" : 2,
+									"outlettype" : [ "", "" ],
 									"patching_rect" : [ 99.0, 756.0, 89.0, 22.0 ],
+									"saved_object_attributes" : 									{
+										"legacy" : 0
+									}
+,
 									"text" : "dict.unpack dir:",
 									"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 								}
@@ -79555,11 +79667,12 @@
 									"id" : "obj-360",
 									"maxclass" : "newobj",
 									"numinlets" : 2,
-									"numoutlets" : 4,
-									"outlettype" : [ "dictionary", "", "", "" ],
+									"numoutlets" : 5,
+									"outlettype" : [ "dictionary", "", "", "", "" ],
 									"patching_rect" : [ 99.0, 676.0, 122.0, 22.0 ],
 									"saved_object_attributes" : 									{
 										"embed" : 0,
+										"legacy" : 1,
 										"parameter_enable" : 0,
 										"parameter_mappable" : 0
 									}
@@ -79723,7 +79836,7 @@
 									"numinlets" : 0,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 513.333174705505371, 1228.0, 83.0, 22.0 ],
+									"patching_rect" : [ 513.333174705505371, 1228.0, 88.0, 22.0 ],
 									"text" : "r #2_import",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -79738,7 +79851,7 @@
 									"numinlets" : 0,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 488.0, 343.0, 101.0, 22.0 ],
+									"patching_rect" : [ 488.0, 343.0, 107.0, 22.0 ],
 									"text" : "r #2_parse.dict",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -79793,9 +79906,13 @@
 									"id" : "obj-511",
 									"maxclass" : "newobj",
 									"numinlets" : 1,
-									"numoutlets" : 3,
-									"outlettype" : [ "", "", "" ],
+									"numoutlets" : 4,
+									"outlettype" : [ "", "", "", "" ],
 									"patching_rect" : [ 488.0, 409.0, 1160.0, 22.0 ],
+									"saved_object_attributes" : 									{
+										"legacy" : 0
+									}
+,
 									"text" : "dict.unpack ctx: dir: filename:",
 									"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 								}
@@ -79863,7 +79980,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 1,
-									"outlettype" : [ "terrain_settings.json" ],
+									"outlettype" : [ "thing_settings.json" ],
 									"patching_rect" : [ 631.0, 1349.0, 132.0, 22.0 ],
 									"text" : "t #1_settings.json",
 									"textcolor" : [ 0.921569, 0.917647, 0.933333, 1.0 ]
@@ -79922,7 +80039,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 2,
-									"outlettype" : [ "", "terrain" ],
+									"outlettype" : [ "", "thing" ],
 									"patching_rect" : [ 631.0, 1192.0, 193.0, 22.0 ],
 									"text" : "t s #1",
 									"textcolor" : [ 0.921569, 0.917647, 0.933333, 1.0 ]
@@ -79975,11 +80092,12 @@
 									"id" : "obj-481",
 									"maxclass" : "newobj",
 									"numinlets" : 2,
-									"numoutlets" : 4,
-									"outlettype" : [ "dictionary", "", "", "" ],
+									"numoutlets" : 5,
+									"outlettype" : [ "dictionary", "", "", "", "" ],
 									"patching_rect" : [ 597.33333333333303, 1107.0, 122.0, 22.0 ],
 									"saved_object_attributes" : 									{
 										"embed" : 0,
+										"legacy" : 1,
 										"parameter_enable" : 0,
 										"parameter_mappable" : 0
 									}
@@ -80027,7 +80145,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 828.0, 1579.5, 75.0, 22.0 ],
+									"patching_rect" : [ 828.0, 1579.5, 81.0, 22.0 ],
 									"text" : "s #2_toJS",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -80052,11 +80170,12 @@
 									"id" : "obj-467",
 									"maxclass" : "newobj",
 									"numinlets" : 2,
-									"numoutlets" : 4,
-									"outlettype" : [ "dictionary", "", "", "" ],
+									"numoutlets" : 5,
+									"outlettype" : [ "dictionary", "", "", "", "" ],
 									"patching_rect" : [ 828.0, 1507.5, 122.0, 22.0 ],
 									"saved_object_attributes" : 									{
 										"embed" : 0,
+										"legacy" : 1,
 										"parameter_enable" : 0,
 										"parameter_mappable" : 0
 									}
@@ -80085,11 +80204,12 @@
 									"id" : "obj-465",
 									"maxclass" : "newobj",
 									"numinlets" : 2,
-									"numoutlets" : 4,
-									"outlettype" : [ "dictionary", "", "", "" ],
+									"numoutlets" : 5,
+									"outlettype" : [ "dictionary", "", "", "", "" ],
 									"patching_rect" : [ 175.0, 637.0, 122.0, 22.0 ],
 									"saved_object_attributes" : 									{
 										"embed" : 0,
+										"legacy" : 1,
 										"parameter_enable" : 0,
 										"parameter_mappable" : 0
 									}
@@ -80146,7 +80266,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 973.75, 953.0, 97.0, 22.0 ],
+									"patching_rect" : [ 973.75, 953.0, 102.0, 22.0 ],
 									"text" : "s #2_renderer",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -80472,7 +80592,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 1336.0, 1068.5, 97.0, 22.0 ],
+									"patching_rect" : [ 1336.0, 1068.5, 102.0, 22.0 ],
 									"text" : "s #2_renderer",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -80498,7 +80618,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 1629.0, 664.0, 97.0, 22.0 ],
+									"patching_rect" : [ 1629.0, 664.0, 102.0, 22.0 ],
 									"text" : "s #2_renderer",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -80534,7 +80654,7 @@
 									"hint" : "folder to which movie will be rendered. Defaults to the folder the toplevel patch resides in.",
 									"id" : "obj-108",
 									"keymode" : 1,
-									"linecount" : 6,
+									"linecount" : 5,
 									"maxclass" : "textedit",
 									"numinlets" : 1,
 									"numoutlets" : 4,
@@ -80542,10 +80662,10 @@
 									"parameter_enable" : 0,
 									"patching_rect" : [ 1336.0, 839.5, 186.0, 64.0 ],
 									"presentation" : 1,
-									"presentation_linecount" : 6,
+									"presentation_linecount" : 4,
 									"presentation_rect" : [ 113.523824896131373, 33.0, 222.0, 64.0 ],
 									"rounded" : 1.0,
-									"text" : "Macintosh HD:/Users/Oni/Projekte/Xenorama/XEN_Cloud/XENcloud/23-05_BWF_Brixen-Waterlight-Festival/BWF_03_WORK/BWF_03__OUT-VISUAL/BWF_FFT-TERRAIN/",
+									"text" : "Macintosh HD:/Users/Oni/Documents/Max 8/Packages/the.oneirotomy.patches/2024-02-25_function-visuals/",
 									"textcolor" : [ 1.0, 0.9843137264, 0.870588243, 1.0 ]
 								}
 
@@ -80579,7 +80699,7 @@
 									"presentation" : 1,
 									"presentation_rect" : [ 113.523824896131373, 0.5, 272.0, 26.0 ],
 									"rounded" : 1.0,
-									"text" : "bwf.fft.3125-6500.pads+fx",
+									"text" : "string",
 									"textcolor" : [ 1.0, 0.9843137264, 0.870588243, 1.0 ]
 								}
 
@@ -81112,7 +81232,7 @@
 , 							{
 								"patchline" : 								{
 									"destination" : [ "obj-193", 0 ],
-									"midpoints" : [ 1638.5, 490.5, 1699.5, 490.5 ],
+									"midpoints" : [ 1258.166666666666515, 490.5, 1699.5, 490.5 ],
 									"order" : 0,
 									"source" : [ "obj-511", 2 ]
 								}
@@ -81130,7 +81250,7 @@
 , 							{
 								"patchline" : 								{
 									"destination" : [ "obj-4", 0 ],
-									"midpoints" : [ 1068.0, 490.5, 1345.5, 490.5 ],
+									"midpoints" : [ 877.833333333333258, 490.5, 1345.5, 490.5 ],
 									"order" : 0,
 									"source" : [ "obj-511", 1 ]
 								}
@@ -81147,7 +81267,7 @@
 , 							{
 								"patchline" : 								{
 									"destination" : [ "obj-444", 0 ],
-									"midpoints" : [ 1068.0, 449.5, 289.5, 449.5 ],
+									"midpoints" : [ 877.833333333333258, 449.5, 289.5, 449.5 ],
 									"order" : 2,
 									"source" : [ "obj-511", 1 ]
 								}
@@ -87134,7 +87254,6 @@
 					"embed" : 1,
 					"enablehscroll" : 0,
 					"enablevscroll" : 0,
-					"hidden" : 1,
 					"id" : "obj-457",
 					"lockeddragscroll" : 0,
 					"lockedsize" : 0,
@@ -87146,8 +87265,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 5,
-							"revision" : 2,
+							"minor" : 6,
+							"revision" : 0,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -87596,7 +87715,7 @@
 									"numinlets" : 0,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 839.0, 66.5, 101.0, 22.0 ],
+									"patching_rect" : [ 839.0, 66.5, 107.0, 22.0 ],
 									"text" : "r #2_parse.dict",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -87609,9 +87728,13 @@
 									"id" : "obj-553",
 									"maxclass" : "newobj",
 									"numinlets" : 1,
-									"numoutlets" : 1,
-									"outlettype" : [ "" ],
+									"numoutlets" : 2,
+									"outlettype" : [ "", "" ],
 									"patching_rect" : [ 839.0, 113.5, 117.0, 22.0 ],
+									"saved_object_attributes" : 									{
+										"legacy" : 0
+									}
+,
 									"text" : "dict.unpack timeline:",
 									"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 								}
@@ -87624,9 +87747,13 @@
 									"id" : "obj-412",
 									"maxclass" : "newobj",
 									"numinlets" : 1,
-									"numoutlets" : 1,
-									"outlettype" : [ "" ],
+									"numoutlets" : 2,
+									"outlettype" : [ "", "" ],
 									"patching_rect" : [ 839.0, 171.0, 121.0, 22.0 ],
+									"saved_object_attributes" : 									{
+										"legacy" : 0
+									}
+,
 									"text" : "dict.unpack handling:",
 									"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 								}
@@ -87696,7 +87823,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 835.0, 371.5, 97.0, 22.0 ],
+									"patching_rect" : [ 835.0, 371.5, 102.0, 22.0 ],
 									"text" : "s #2_renderer",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -87783,7 +87910,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 2606.5, 936.438934923091892, 97.0, 22.0 ],
+									"patching_rect" : [ 2606.5, 936.438934923091892, 102.0, 22.0 ],
 									"text" : "s #2_renderer",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -87808,9 +87935,13 @@
 									"id" : "obj-362",
 									"maxclass" : "newobj",
 									"numinlets" : 1,
-									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"numoutlets" : 3,
+									"outlettype" : [ "", "", "" ],
 									"patching_rect" : [ 2566.0, 660.0, 318.0, 22.0 ],
+									"saved_object_attributes" : 									{
+										"legacy" : 0
+									}
+,
 									"text" : "dict.unpack filetype: samptype:",
 									"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 								}
@@ -87915,7 +88046,7 @@
 									"numinlets" : 0,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 2776.428571428571558, 154.0, 101.0, 22.0 ],
+									"patching_rect" : [ 2776.428571428571558, 154.0, 107.0, 22.0 ],
 									"text" : "r #2_parse.dict",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -87928,9 +88059,13 @@
 									"id" : "obj-517",
 									"maxclass" : "newobj",
 									"numinlets" : 1,
-									"numoutlets" : 3,
-									"outlettype" : [ "", "", "" ],
+									"numoutlets" : 4,
+									"outlettype" : [ "", "", "", "" ],
 									"patching_rect" : [ 2776.428571428571558, 225.0, 195.0, 22.0 ],
+									"saved_object_attributes" : 									{
+										"legacy" : 0
+									}
+,
 									"text" : "dict.unpack hhmmss: ms: samples:",
 									"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 								}
@@ -87970,7 +88105,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 3395.0, 585.0, 97.0, 22.0 ],
+									"patching_rect" : [ 3395.0, 585.0, 102.0, 22.0 ],
 									"text" : "s #2_renderer",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -88218,7 +88353,7 @@
 									"numinlets" : 0,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 351.0, 525.0, 101.0, 22.0 ],
+									"patching_rect" : [ 351.0, 525.0, 107.0, 22.0 ],
 									"text" : "r #2_parse.dict",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -88231,9 +88366,13 @@
 									"id" : "obj-561",
 									"maxclass" : "newobj",
 									"numinlets" : 1,
-									"numoutlets" : 8,
-									"outlettype" : [ "", "", "", "", "", "", "", "" ],
+									"numoutlets" : 9,
+									"outlettype" : [ "", "", "", "", "", "", "", "", "" ],
 									"patching_rect" : [ 351.0, 572.0, 2234.888888888887777, 22.0 ],
+									"saved_object_attributes" : 									{
+										"legacy" : 0
+									}
+,
 									"text" : "dict.unpack sr: ae: toggledsp: length_from_buffer: length_from_movie: overdrive: audio_interrupt: audio_record:",
 									"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 								}
@@ -88262,8 +88401,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 5,
-											"revision" : 2,
+											"minor" : 6,
+											"revision" : 0,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -88479,7 +88618,7 @@
 								"box" : 								{
 									"fontname" : "Lato",
 									"id" : "obj-316",
-									"items" : 44100,
+									"items" : [ 44100, ",", 48000, ",", 88200, ",", 96000 ],
 									"maxclass" : "umenu",
 									"numinlets" : 1,
 									"numoutlets" : 3,
@@ -88633,6 +88772,7 @@
 									"presentation" : 1,
 									"presentation_rect" : [ 176.118957896131406, 57.5, 180.904866896131352, 24.0 ],
 									"rounded" : 1.0,
+									"text" : "string",
 									"textcolor" : [ 1.0, 0.9843137264, 0.870588243, 1.0 ]
 								}
 
@@ -88669,7 +88809,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 447.0, 966.5, 97.0, 22.0 ],
+									"patching_rect" : [ 447.0, 966.5, 102.0, 22.0 ],
 									"text" : "s #2_renderer",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -88690,14 +88830,14 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "offcolor", "elementcolor" ], [ "fontname", "Lato" ], [ "off_alpha", 0.66 ], [ "outline", 2 ], [ "textcolor", "bgcolor" ], [ "layout", 1 ], [ "hovercolor", "accentcolor" ], [ "bg_alpha", 0.24 ], [ "orientation", 1 ], [ "oncolor", "color" ], [ "bg_width", 0 ], [ "width", 43 ], [ "blob_size", 0.67 ], [ "multi_line", 0 ], [ "justification", 0 ], [ "fontsize", 12 ] ],
+									"embedstate" : [ [ "oncolour", 1.0, 0.71, 0.196, 1.0 ] ],
 									"filename" : "the.toggle.js",
 									"hint" : "Make sure DSP is running during rendering. Unflag this setting when no audio is used in the setup/scene.",
 									"id" : "obj-85",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 984.111111111111313, 724.394408999999996, 43.0, 22.0 ],
 									"presentation" : 1,
@@ -88727,7 +88867,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 667.555555555555429, 1520.0, 97.0, 22.0 ],
+									"patching_rect" : [ 667.555555555555429, 1520.0, 102.0, 22.0 ],
 									"text" : "s #2_renderer",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
@@ -88775,14 +88915,14 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "offcolor", "elementcolor" ], [ "fontname", "Lato" ], [ "off_alpha", 0.66 ], [ "outline", 2 ], [ "textcolor", "bgcolor" ], [ "layout", 1 ], [ "hovercolor", "accentcolor" ], [ "bg_alpha", 0.24 ], [ "orientation", 1 ], [ "oncolor", "color" ], [ "bg_width", 0 ], [ "width", 43 ], [ "blob_size", 0.67 ], [ "multi_line", 0 ], [ "justification", 0 ], [ "fontsize", 12 ] ],
+									"embedstate" : [ [ "oncolour", 1.0, 0.71, 0.196, 1.0 ] ],
 									"filename" : "the.toggle.js",
 									"hint" : "Open the destination folder after rendering has completed.",
 									"id" : "obj-562",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 667.555555555555429, 1324.5, 43.0, 22.0 ],
 									"presentation" : 1,
@@ -89588,7 +89728,7 @@
 , 							{
 								"patchline" : 								{
 									"destination" : [ "obj-362", 0 ],
-									"midpoints" : [ 2576.388888888887777, 633.5, 2575.5, 633.5 ],
+									"midpoints" : [ 2299.402777777776919, 633.5, 2575.5, 633.5 ],
 									"source" : [ "obj-561", 7 ]
 								}
 
@@ -89604,7 +89744,7 @@
 , 							{
 								"patchline" : 								{
 									"destination" : [ "obj-566", 0 ],
-									"midpoints" : [ 677.055555555555429, 1214.75, 863.16666666666606, 1214.75 ],
+									"midpoints" : [ 637.486111111110972, 1214.75, 863.16666666666606, 1214.75 ],
 									"order" : 0,
 									"source" : [ "obj-561", 1 ]
 								}
@@ -95667,9 +95807,13 @@
 					"id" : "obj-382",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
+					"numoutlets" : 2,
+					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 2531.0, 3288.0, 111.0, 22.0 ],
+					"saved_object_attributes" : 					{
+						"legacy" : 0
+					}
+,
 					"text" : "dict.unpack render:",
 					"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 				}
@@ -95709,9 +95853,13 @@
 					"id" : "obj-364",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
+					"numoutlets" : 2,
+					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 2531.0, 3326.0, 89.0, 22.0 ],
+					"saved_object_attributes" : 					{
+						"legacy" : 0
+					}
+,
 					"text" : "dict.unpack dir:",
 					"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 				}
@@ -95724,11 +95872,12 @@
 					"id" : "obj-360",
 					"maxclass" : "newobj",
 					"numinlets" : 2,
-					"numoutlets" : 4,
-					"outlettype" : [ "dictionary", "", "", "" ],
+					"numoutlets" : 5,
+					"outlettype" : [ "dictionary", "", "", "", "" ],
 					"patching_rect" : [ 2531.0, 3246.0, 122.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"embed" : 0,
+						"legacy" : 1,
 						"parameter_enable" : 0,
 						"parameter_mappable" : 0
 					}
@@ -95922,7 +96071,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 3863.333174705505371, 1171.0, 83.0, 22.0 ],
+					"patching_rect" : [ 3863.333174705505371, 1171.0, 88.0, 22.0 ],
 					"text" : "r #0_import",
 					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
@@ -95936,7 +96085,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 3392.58124710917491, 1310.740780666470528, 85.0, 22.0 ],
+					"patching_rect" : [ 3392.58124710917491, 1310.740780666470528, 90.0, 22.0 ],
 					"text" : "s #0_import",
 					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
@@ -96169,7 +96318,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 920.899999999999636, 2372.5, 75.0, 22.0 ],
+					"patching_rect" : [ 920.899999999999636, 2372.5, 81.0, 22.0 ],
 					"text" : "s #0_toJS",
 					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
@@ -96183,7 +96332,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 3649.362494218349639, 1380.29439993600181, 75.0, 22.0 ],
+					"patching_rect" : [ 3649.362494218349639, 1380.29439993600181, 81.0, 22.0 ],
 					"text" : "s #0_toJS",
 					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
@@ -96232,7 +96381,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 1040.5, 1747.0, 102.0, 22.0 ],
+					"patching_rect" : [ 1040.5, 1747.0, 108.0, 22.0 ],
 					"text" : "s #0_matrix.viz",
 					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
@@ -96247,7 +96396,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 2920.0, 2913.0, 101.0, 22.0 ],
+					"patching_rect" : [ 2920.0, 2913.0, 107.0, 22.0 ],
 					"text" : "r #0_parse.dict",
 					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
@@ -96292,7 +96441,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 1564.66666666666697, 1939.0, 103.0, 22.0 ],
+					"patching_rect" : [ 1564.66666666666697, 1939.0, 109.0, 22.0 ],
 					"text" : "s #0_parse.dict",
 					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
@@ -96305,9 +96454,13 @@
 					"id" : "obj-511",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
-					"numoutlets" : 3,
-					"outlettype" : [ "", "", "" ],
+					"numoutlets" : 4,
+					"outlettype" : [ "", "", "", "" ],
 					"patching_rect" : [ 2920.0, 2979.0, 177.0, 22.0 ],
+					"saved_object_attributes" : 					{
+						"legacy" : 0
+					}
+,
 					"text" : "dict.unpack ctx: dir: filename:",
 					"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 				}
@@ -96388,7 +96541,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 1,
-					"outlettype" : [ "terrain_settings.json" ],
+					"outlettype" : [ "thing_settings.json" ],
 					"patching_rect" : [ 3981.0, 1292.0, 132.0, 22.0 ],
 					"text" : "t #1_settings.json",
 					"textcolor" : [ 0.921569, 0.917647, 0.933333, 1.0 ]
@@ -96447,7 +96600,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 2,
-					"outlettype" : [ "", "terrain" ],
+					"outlettype" : [ "", "thing" ],
 					"patching_rect" : [ 3981.0, 1135.0, 193.0, 22.0 ],
 					"text" : "t s #1",
 					"textcolor" : [ 0.921569, 0.917647, 0.933333, 1.0 ]
@@ -96478,8 +96631,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 4239.0, 1260.0, 1087.0, 35.0 ],
-					"text" : "\"Macintosh HD:/Users/Oni/Projekte/Xenorama/XEN_Cloud/XENcloud/23-05_BWF_Brixen-Waterlight-Festival/BWF_03_WORK/BWF_03_MAXMSP/BWF_03_PROJECTS/bwf.fft.terrain/patchers/terrain_settings.json\""
+					"patching_rect" : [ 4239.0, 1260.0, 691.0, 35.0 ],
+					"text" : "\"Macintosh HD:/Users/Oni/Documents/Max 8/Packages/the.oneirotomy.patches/2024-02-25_function-visuals/thing_settings.json\""
 				}
 
 			}
@@ -96502,11 +96655,12 @@
 					"id" : "obj-481",
 					"maxclass" : "newobj",
 					"numinlets" : 2,
-					"numoutlets" : 4,
-					"outlettype" : [ "dictionary", "", "", "" ],
+					"numoutlets" : 5,
+					"outlettype" : [ "dictionary", "", "", "", "" ],
 					"patching_rect" : [ 3947.33333333333303, 1050.0, 122.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"embed" : 0,
+						"legacy" : 1,
 						"parameter_enable" : 0,
 						"parameter_mappable" : 0
 					}
@@ -96554,7 +96708,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 4178.0, 1522.5, 75.0, 22.0 ],
+					"patching_rect" : [ 4178.0, 1522.5, 81.0, 22.0 ],
 					"text" : "s #0_toJS",
 					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
@@ -96579,11 +96733,12 @@
 					"id" : "obj-467",
 					"maxclass" : "newobj",
 					"numinlets" : 2,
-					"numoutlets" : 4,
-					"outlettype" : [ "dictionary", "", "", "" ],
+					"numoutlets" : 5,
+					"outlettype" : [ "dictionary", "", "", "", "" ],
 					"patching_rect" : [ 4178.0, 1450.5, 122.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"embed" : 0,
+						"legacy" : 1,
 						"parameter_enable" : 0,
 						"parameter_mappable" : 0
 					}
@@ -96612,11 +96767,12 @@
 					"id" : "obj-465",
 					"maxclass" : "newobj",
 					"numinlets" : 2,
-					"numoutlets" : 4,
-					"outlettype" : [ "dictionary", "", "", "" ],
+					"numoutlets" : 5,
+					"outlettype" : [ "dictionary", "", "", "", "" ],
 					"patching_rect" : [ 2607.0, 3207.0, 122.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"embed" : 0,
+						"legacy" : 1,
 						"parameter_enable" : 0,
 						"parameter_mappable" : 0
 					}
@@ -96745,8 +96901,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 5,
-							"revision" : 2,
+							"minor" : 6,
+							"revision" : 0,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -96916,7 +97072,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 2678.0, 1203.0, 75.0, 22.0 ],
+					"patching_rect" : [ 2678.0, 1203.0, 81.0, 22.0 ],
 					"text" : "s #0_toJS",
 					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
@@ -96931,7 +97087,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 690.0, 1397.0, 73.0, 22.0 ],
+					"patching_rect" : [ 690.0, 1397.0, 79.0, 22.0 ],
 					"text" : "r #0_toJS",
 					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
@@ -96959,9 +97115,13 @@
 					"id" : "obj-314",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
+					"numoutlets" : 2,
+					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 1564.66666666666697, 1816.0, 111.0, 22.0 ],
+					"saved_object_attributes" : 					{
+						"legacy" : 0
+					}
+,
 					"text" : "dict.unpack render:",
 					"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 				}
@@ -97009,21 +97169,21 @@
 					"patching_rect" : [ 1564.66666666666697, 1751.0, 144.0, 22.0 ],
 					"restore" : [ 						{
 							"render" : 							{
-								"ctx" : "terrain",
-								"dir" : "Macintosh HD:/Users/Oni/Projekte/Xenorama/XEN_Cloud/XENcloud/23-05_BWF_Brixen-Waterlight-Festival/BWF_03_WORK/BWF_03__OUT-VISUAL/BWF_FFT-TERRAIN/",
-								"filename" : "bwf.fft.3125-6500.pads+fx",
+								"ctx" : "thing",
+								"dir" : "Macintosh HD:/Users/Oni/Documents/Max 8/Packages/the.oneirotomy.patches/2024-02-25_function-visuals/",
+								"filename" : "thing_movie",
 								"dim" : [ 1920, 1200 ],
 								"container" : "mov",
 								"codec" : "jpeg",
-								"fps" : 25,
-								"framecount" : 3375,
-								"hhmmss" : [ 0, 2, 15 ],
-								"ms" : 135000,
-								"samples" : 5953500,
-								"samples/frame" : 1764,
+								"fps" : 60,
+								"framecount" : 1200,
+								"hhmmss" : [ 0, 0, 20 ],
+								"ms" : 20000,
+								"samples" : 882000,
+								"samples/frame" : 735,
 								"overdrive" : 0,
 								"audio_interrupt" : 0,
-								"length_from_buffer" : "",
+								"length_from_buffer" : "sound",
 								"length_from_movie" : "",
 								"sr" : 44100,
 								"audio_record" : 								{
@@ -97035,9 +97195,9 @@
 								}
 ,
 								"hide_window" : 1,
-								"framedelay" : 250,
+								"framedelay" : 10,
 								"capture" : "",
-								"capture_notification" : 0,
+								"capture_notification" : 1,
 								"output_matrix" : 1,
 								"toggleworld" : 1,
 								"toggledsp" : 1,
@@ -97050,51 +97210,50 @@
 ,
 								"cntrlr" : 0,
 								"ae" : 1,
-								"bogus_frames" : 0,
-								"realtime_texture_input" : 0
+								"bogus_frames" : 0
 							}
 ,
 							"world" : 							{
 								"auto_handle" : 0,
 								"border" : 1,
-								"capture" : 0,
-								"dim" : [ 1920, 1200 ],
-								"displaylink" : 0,
+								"capture" : 1,
+								"dim" : [ 640, 360 ],
+								"displaylink" : 1,
 								"drawbang" : "prerender",
-								"drawto" : "u260005592",
-								"enable" : 1,
+								"drawto" : "u129000588",
+								"enable" : 0,
 								"enable_cornerpin" : 0,
-								"erase_color" : [ 0.200000002980232, 0.200000002980232, 0.200000002980232, 1 ],
+								"erase_color" : [ 0.0, 0.0, 0.0, 1.0 ],
 								"esc_fullscreen" : 1,
-								"floating" : 0,
-								"fps" : 25,
-								"fsaa" : 0,
-								"fsmenubar" : 1,
+								"floating" : 1,
+								"fps" : 58.823528289794922,
+								"fsaa" : 1,
+								"fsmenubar" : 0,
 								"fullscreen" : 0,
-								"interval" : 40,
+								"interval" : 17,
 								"matrix_mode_async" : 1,
-								"name" : "terrain",
+								"name" : "thing",
 								"ortho" : 0,
 								"output_matrix" : 0,
-								"output_texture" : 0,
-								"phys_worldname" : "u894005606",
-								"position" : [ 0, 0, 0 ],
+								"output_texture" : 1,
+								"phys_worldname" : "u697000602",
+								"position" : [ 0.0, 0.0, 0.0 ],
 								"preserve_aspect" : 1,
-								"quat" : [ 0, 0, 0, 1 ],
-								"rect" : [ 44, 718, 444, 1090 ],
-								"rotate" : [ 0, 0, 0, 1 ],
-								"rotatexyz" : [ 0, 0, 0 ],
-								"scale" : [ 1, 1, 1 ],
+								"quat" : [ 0.0, 0.0, 0.0, 1.0 ],
+								"rect" : [ 64, 450, 704, 930 ],
+								"rotate" : [ 0.0, 0.0, 0.0, 1.0 ],
+								"rotatexyz" : [ 0.0, 0.0, 0.0 ],
+								"scale" : [ 1.0, 1.0, 1.0 ],
 								"shared" : 1,
-								"size" : [ 400, 372 ],
+								"size" : [ 640, 480 ],
 								"sync" : 1,
-								"visible" : 0,
-								"windowposition" : [ 44, 718 ]
+								"visible" : 1,
+								"windowposition" : [ 64, 450 ]
 							}
 ,
-							"ctx" : "terrain",
-							"dir" : "Macintosh HD:/Users/Oni/Projekte/Xenorama/XEN_Cloud/XENcloud/23-05_BWF_Brixen-Waterlight-Festival/BWF_03_WORK/BWF_03_MAXMSP/BWF_03_PROJECTS/bwf.fft.terrain/patchers/",
-							"filename" : "terrain_movie",
+							"ctx" : "thing",
+							"dir" : "Macintosh HD:/Users/Oni/Documents/Max 8/Packages/the.oneirotomy.patches/2024-02-25_function-visuals/",
+							"filename" : "thing_movie",
 							"dim" : [ 1920, 1080 ],
 							"container" : "mov",
 							"codec" : "jpeg",
@@ -97103,7 +97262,7 @@
 							"hhmmss" : [ 0, 0, 2 ],
 							"ms" : 2000,
 							"samples" : 88200,
-							"samples/frame" : 735,
+							"samples/frame" : 1764,
 							"overdrive" : 0,
 							"audio_interrupt" : 0,
 							"length_from_buffer" : "",
@@ -97133,8 +97292,7 @@
 ,
 							"cntrlr" : 0,
 							"ae" : 1,
-							"bogus_frames" : 0,
-							"realtime_texture_input" : 1
+							"bogus_frames" : 0
 						}
  ],
 					"saved_object_attributes" : 					{
@@ -97330,11 +97488,12 @@
 					"id" : "obj-276",
 					"maxclass" : "newobj",
 					"numinlets" : 2,
-					"numoutlets" : 4,
-					"outlettype" : [ "dictionary", "", "", "" ],
+					"numoutlets" : 5,
+					"outlettype" : [ "dictionary", "", "", "", "" ],
 					"patching_rect" : [ 1819.666666666666742, 1936.0, 122.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"embed" : 0,
+						"legacy" : 1,
 						"parameter_enable" : 0,
 						"parameter_mappable" : 0
 					}
@@ -97367,9 +97526,13 @@
 					"id" : "obj-270",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
+					"numoutlets" : 2,
+					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 1819.666666666666742, 1854.0, 111.0, 22.0 ],
+					"saved_object_attributes" : 					{
+						"legacy" : 0
+					}
+,
 					"text" : "dict.unpack render:",
 					"textcolor" : [ 0.901961, 0.862745, 0.756863, 1.0 ]
 				}
@@ -97487,8 +97650,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 5,
-							"revision" : 2,
+							"minor" : 6,
+							"revision" : 0,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -98362,8 +98525,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 5,
-											"revision" : 2,
+											"minor" : 6,
+											"revision" : 0,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -99046,7 +99209,7 @@
 									"bgcolor" : [ 0.768627, 0.658824, 0.580392, 1.0 ],
 									"color" : [ 0.458824, 0.733333, 0.690196, 1.0 ],
 									"id" : "obj-4",
-									"linecount" : 2,
+									"linecount" : 3,
 									"maxclass" : "newobj",
 									"numinlets" : 0,
 									"numoutlets" : 1,
@@ -99203,7 +99366,7 @@
 									"numoutlets" : 5,
 									"outlettype" : [ "preset", "int", "preset", "int", "" ],
 									"patching_rect" : [ 737.0, 762.266986072063446, 313.0, 33.0 ],
-									"pattrstorage" : "terrain_queue",
+									"pattrstorage" : "thing_queue",
 									"presentation" : 1,
 									"presentation_rect" : [ 7.0, 393.0, 706.0, 32.0 ]
 								}
@@ -99537,8 +99700,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 5,
-											"revision" : 2,
+											"minor" : 6,
+											"revision" : 0,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -106209,11 +106372,12 @@
 									"id" : "obj-43",
 									"maxclass" : "newobj",
 									"numinlets" : 2,
-									"numoutlets" : 4,
-									"outlettype" : [ "dictionary", "", "", "" ],
+									"numoutlets" : 5,
+									"outlettype" : [ "dictionary", "", "", "", "" ],
 									"patching_rect" : [ 324.0, 901.0, 191.0, 22.0 ],
 									"saved_object_attributes" : 									{
 										"embed" : 0,
+										"legacy" : 1,
 										"parameter_enable" : 0,
 										"parameter_mappable" : 0
 									}
@@ -113535,8 +113699,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 5,
-							"revision" : 2,
+							"minor" : 6,
+							"revision" : 0,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -114133,7 +114297,6 @@
 , 			{
 				"box" : 				{
 					"fontname" : "Lato",
-					"hidden" : 1,
 					"hint" : "When jit.world is visible during rendering (currently necessary) and a designated texture is being rendered, a text notification will be displayed on the main rendering window throughout the rendering process to remind us that we're not rendering what we're looking at.",
 					"id" : "obj-24",
 					"maxclass" : "textbutton",
@@ -114156,7 +114319,6 @@
 , 			{
 				"box" : 				{
 					"fontname" : "Lato",
-					"hidden" : 1,
 					"hint" : "When jit.world is visible during rendering (currently necessary) and a designated texture is being rendered, a text notification will be displayed on the main rendering window throughout the rendering process to remind us that we're not rendering what we're looking at.",
 					"id" : "obj-23",
 					"maxclass" : "textbutton",
@@ -114182,7 +114344,7 @@
 					"embedstate" : [ [ "defaultfont", 0 ] ],
 					"filename" : "the.patcher.js",
 					"id" : "obj-221",
-					"jsarguments" : [ "jit.gl.terrain~", "notags" ],
+					"jsarguments" : [ "jit.gl.thing~", "notags" ],
 					"maxclass" : "jsui",
 					"numinlets" : 1,
 					"numoutlets" : 1,
@@ -114231,7 +114393,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1103.0, 1328.0, 95.0, 22.0 ],
+					"patching_rect" : [ 1103.0, 1328.0, 100.0, 22.0 ],
 					"text" : "r #0_renderer",
 					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 				}
@@ -114249,7 +114411,7 @@
 					"patching_rect" : [ 2920.0, 3161.5, 294.0, 49.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 139.523824896131373, 48.0, 478.5, 49.0 ],
-					"text" : "terrain",
+					"text" : "string",
 					"textjustification" : 2
 				}
 
@@ -114292,8 +114454,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 5,
-							"revision" : 2,
+							"minor" : 6,
+							"revision" : 0,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -114430,7 +114592,6 @@
 									"bgcolor" : [ 0.713726, 0.87451, 0.831373, 1.0 ],
 									"color" : [ 0.768627, 0.521569, 0.392157, 1.0 ],
 									"id" : "obj-3",
-									"linecount" : 2,
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
@@ -114459,7 +114620,6 @@
 									"bgcolor" : [ 0.768627, 0.658824, 0.580392, 1.0 ],
 									"color" : [ 0.458824, 0.733333, 0.690196, 1.0 ],
 									"id" : "obj-222",
-									"linecount" : 2,
 									"maxclass" : "newobj",
 									"numinlets" : 0,
 									"numoutlets" : 1,
@@ -120949,7 +121109,7 @@
 					"maxclass" : "inlet",
 					"numinlets" : 0,
 					"numoutlets" : 1,
-					"outlettype" : [ "bang" ],
+					"outlettype" : [ "" ],
 					"patching_rect" : [ 958.0, 20.999991178512573, 30.0, 30.0 ]
 				}
 
@@ -122701,7 +122861,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-485", 1 ],
-					"midpoints" : [ 3990.5, 1204.0, 5316.5, 1204.0 ],
+					"midpoints" : [ 3990.5, 1204.0, 4920.5, 1204.0 ],
 					"order" : 0,
 					"source" : [ "obj-488", 0 ]
 				}
@@ -122792,7 +122952,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-444", 0 ],
-					"midpoints" : [ 3008.5, 3019.5, 2721.5, 3019.5 ],
+					"midpoints" : [ 2982.166666666666515, 3019.5, 2721.5, 3019.5 ],
 					"source" : [ "obj-511", 1 ]
 				}
 
